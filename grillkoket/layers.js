@@ -555,23 +555,26 @@ function setExploded(v) {
   $("#dl-toggle").textContent = v ? "Stapla ihop" : "Dela upp";
   $("#dl-toggle").setAttribute("aria-pressed", String(v));
 }
-const STRIPS = 14;
+/* Where each real layer sits in the photo (fractions of the height), found from the gaps between layers.
+   cuts = band edges top→bottom, shift = how far each band moves to stack tight before it opens. */
+const CUTS = {"black-white": {"cuts": [0.0, 0.205, 0.2992, 0.4358, 0.5667, 0.6892, 1.0], "shift": [0.1004, 0.0454, 0.0004, -0.0388, -0.0721, -0.1088]}, "dubbel": {"cuts": [0.0, 0.2025, 0.275, 0.37, 0.4492, 0.535, 0.6125, 0.6942, 0.7775, 1.0], "shift": [0.1188, 0.0804, 0.0446, 0.0188, -0.0071, -0.0388, -0.0646, -0.0904, -0.1221]}, "falafeltallrik": {"cuts": [0.0, 0.2458, 0.4242, 0.5875, 1.0], "shift": [0.0538, 0.0046, -0.0321, -0.0729]}, "file-oscar": {"cuts": [0.0, 0.1883, 0.3642, 0.5242, 0.6792, 1.0], "shift": [0.0658, 0.0183, -0.0225, -0.0667, -0.0925]}, "fisk": {"cuts": [0.0, 0.2883, 0.4633, 0.6125, 1.0], "shift": [0.0446, 0.0088, -0.0171, -0.0429]}, "flaskfileplanka": {"cuts": [0.0, 0.2667, 0.4333, 0.5933, 0.6883, 1.0], "shift": [0.0862, 0.0296, -0.0312, -0.0838, -0.1096]}, "gosplanka": {"cuts": [0.0, 0.2433, 0.4067, 0.5808, 0.7267, 1.0], "shift": [0.095, 0.0425, -0.0067, -0.055, -0.1042]}, "grekisk-sallad": {"cuts": [0.0, 0.2358, 0.3125, 0.3992, 0.4725, 0.5325, 0.6017, 0.6792, 1.0], "shift": [0.0833, 0.0575, 0.0225, -0.0092, -0.0408, -0.0725, -0.1033, -0.1292]}, "halloumi": {"cuts": [0.0, 0.2325, 0.3358, 0.4733, 0.5842, 0.6792, 0.7192, 1.0], "shift": [0.0804, 0.0454, 0.0154, -0.0104, -0.0362, -0.0621, -0.0879]}, "hamburgare": {"cuts": [0.0, 0.2475, 0.335, 0.4108, 0.5375, 0.7283, 1.0], "shift": [0.0771, 0.0379, 0.0121, -0.0179, -0.0529, -0.0788]}, "hawaii": {"cuts": [0.0, 0.2783, 0.4375, 1.0], "shift": [0.0192, -0.0067, -0.0325]}, "kebab-brod": {"cuts": [0.0, 0.23, 0.3508, 0.43, 0.5642, 0.6642, 1.0], "shift": [0.0667, 0.0267, 0.0008, -0.025, -0.0508, -0.0767]}, "kebabpizza": {"cuts": [0.0, 0.2033, 0.3333, 0.495, 1.0], "shift": [0.0162, -0.0146, -0.0404, -0.0662]}, "kebabrulle": {"cuts": [0.0, 0.2117, 0.3125, 0.45, 0.5283, 0.645, 1.0], "shift": [0.0892, 0.0467, 0.0083, -0.03, -0.0658, -0.0925]}, "kebabtallrik": {"cuts": [0.0, 0.1983, 0.335, 0.5142, 0.6767, 1.0], "shift": [0.0854, 0.0288, -0.0154, -0.0571, -0.0962]}, "kottbullar": {"cuts": [0.0, 0.2225, 0.34, 0.4683, 0.6, 0.7617, 1.0], "shift": [0.0946, 0.0446, 0.0004, -0.0254, -0.0612, -0.1029]}, "kyckling-burgare": {"cuts": [0.0, 0.275, 0.4625, 0.5758, 0.7092, 0.7942, 1.0], "shift": [0.0788, 0.0362, -0.0021, -0.0312, -0.0654, -0.1013]}, "kycklingsallad": {"cuts": [0.0, 0.195, 0.3242, 0.4083, 0.5242, 0.6383, 1.0], "shift": [0.0558, 0.03, -0.005, -0.0442, -0.075, -0.1008]}, "kycklingspett": {"cuts": [0.0, 0.2017, 0.3367, 0.5258, 0.6758, 0.7917, 1.0], "shift": [0.0833, 0.0275, 0.0017, -0.0242, -0.0608, -0.0867]}, "ostbacon": {"cuts": [0.0, 0.2367, 0.3325, 0.4317, 0.5417, 0.6308, 0.7317, 0.7983, 1.0], "shift": [0.1054, 0.0712, 0.0454, 0.0138, -0.0221, -0.0512, -0.0838, -0.1179]}, "ostburgare": {"cuts": [0.0, 0.31, 0.3517, 0.5542, 1.0], "shift": [0.0383, 0.0125, -0.0133, -0.0392]}, "oxfileplanka": {"cuts": [0.0, 0.2317, 0.3375, 0.5075, 0.6342, 0.7608, 1.0], "shift": [0.0879, 0.0412, -0.0088, -0.0546, -0.0921, -0.1204]}, "schnitzel": {"cuts": [0.0, 0.2242, 0.35, 0.4775, 0.655, 1.0], "shift": [0.0558, 0.0175, -0.0167, -0.0542, -0.0908]}, "vesuvio": {"cuts": [0.0, 0.345, 0.5442, 0.7025, 1.0], "shift": [0.0421, -0.0029, -0.0388, -0.0838]}};
 function playPhotoLayers(d, file) {
   inner.classList.remove("open"); inner.innerHTML = "";
   const w = Math.min(stage.clientWidth || 360, 560), h = Math.min(w * 4 / 3, innerHeight * .62), ww = h * .75;
   stage.style.height = h + "px";
   inner.style.cssText = `width:${ww}px;height:${h}px;left:50%;transform:translateX(-50%)`;
   inner.className = "dl-inner real";
-  const src = `img/exploded/${file}.webp`;
-  for (let k = 0; k < STRIPS; k++) {
-    const sh = h / STRIPS, c = (STRIPS - 1) / 2, el = document.createElement("div");
+  const src = `img/exploded/${file}.webp?v=2`, cut = CUTS[file] || { cuts: [0, 1], shift: [0] };
+  const n = cut.cuts.length - 1;
+  for (let k = 0; k < n; k++) {
+    const y0 = cut.cuts[k] * h, y1 = cut.cuts[k + 1] * h, el = document.createElement("div");
     el.className = "strip";
-    el.style.cssText = `top:${k * sh}px;height:${sh + 1}px;background-image:url("${src}");background-size:${ww}px ${h}px;background-position:0 ${-k * sh}px;--sq:${(c - k) * sh * .62}px;--i:${Math.abs(c - k)}`;
+    el.style.cssText = `top:${y0}px;height:${y1 - y0 + 1}px;background-image:url("${src}");background-size:${ww}px ${h}px;background-position:0 ${-y0}px;--sq:${(cut.shift[k] || 0) * h}px;--i:${Math.abs((n - 1) / 2 - k)};z-index:${n - k}`;
     inner.append(el);
   }
   const keys = recipeFor(d).filter((k) => ING[k]);
   $("#dl-list").innerHTML = [...keys].reverse().map((k) => `<li>${ING[k].l}</li>`).join("");
-  const im = new Image(); im.onload = () => requestAnimationFrame(() => requestAnimationFrame(() => open && cur === d && setExploded(true))); im.src = src;
+  const im = new Image(); im.onload = () => setTimeout(() => open && cur === d && setExploded(true), reduce ? 0 : 450); im.src = src;
   $("#dl-note").textContent = "Bild skapad med AI för att visa rättens delar. Riktiga rätten kan se lite annorlunda ut.";
   $("#dl-chips").innerHTML = [...new Set([...keys].reverse().map((k) => ING[k].l))].map((l) => `<span>${l}</span>`).join("");
 }
