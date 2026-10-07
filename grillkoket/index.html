@@ -109,7 +109,8 @@ p{margin:0}
 .hero-copy{max-width:34em;color:var(--cream);opacity:0;transform:translateY(10px);transition:opacity 1s ease,transform 1s ease;font-size:18px;text-shadow:0 1px 18px rgba(0,0,0,.6)}
 .hero .status{opacity:0;transition:opacity 1s ease .3s}.hero.done .status{opacity:1}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 1s ease .15s,transform 1s ease .15s}
-.hero.done .hero-copy,.hero.done .hero-cta{opacity:1;transform:none}
+.hero.done .hero-copy,.hero.done .hero-cta,.hero.done .prize-pill{opacity:1;transform:none}
+.hero .prize-pill{opacity:0;transition:opacity 1s ease .4s,border-color .3s,background .3s}
 .status{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--sage)}
 .status i{width:8px;height:8px;border-radius:50%;background:var(--sage)}
 .status.open i{background:#8ad497;box-shadow:0 0 0 0 rgba(138,212,151,.5);animation:ping 2.4s infinite}
@@ -372,6 +373,32 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .lunch .week{font:400 64px/1 var(--f-mark);color:var(--ember);letter-spacing:.04em}
 @media (max-width:880px){.extras-grid{grid-template-columns:1fr}}
 @media (max-width:560px){.gift{grid-template-columns:1fr}.gift img{min-height:240px;max-height:300px}}
+
+/* ---- Huset ---- */
+.house{padding-block:100px 40px}
+.house-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px 40px;margin-bottom:28px}
+.house-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:260px 260px;gap:10px}
+.house-grid figure{position:relative;margin:0;overflow:hidden;background:var(--moss)}
+.house-grid figure:first-child{grid-row:span 2}
+.house-grid img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.house-grid figure:hover img{transform:scale(1.1)}
+.house-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(5,14,9,.82));font:500 13px var(--f-body);letter-spacing:.06em;color:var(--cream)}
+@media (max-width:820px){.house-grid{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:200px}.house-grid figure:first-child{grid-column:span 2;grid-row:auto;height:auto}}
+/* ---- I stan ---- */
+.town{padding-block:90px;border-top:1px solid var(--rule)}
+.town-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center;margin-top:28px}
+.clip{position:relative;justify-self:center;max-width:440px;width:100%;transform:rotate(-2deg);box-shadow:0 30px 60px rgba(0,0,0,.5);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.clip:hover{transform:rotate(0) scale(1.02)}
+.clip img{display:block;width:100%;height:auto}
+.clip::after{content:"";position:absolute;left:50%;top:-14px;width:90px;height:28px;transform:translateX(-50%) rotate(3deg);background:rgba(236,227,207,.55)}
+.town-list{display:grid;gap:0}
+.town-item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 22px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.town-item:first-child{padding-top:0}
+.town-item .when{font:400 14px/1.4 var(--f-mark);letter-spacing:.14em;color:var(--ember);min-width:8.5em}
+.town-item h3{font-size:24px}
+.town-item p{grid-column:2;color:var(--sage)}
+.town-item .big{font:400 40px/1 var(--f-head);color:var(--cream);font-variant-numeric:lining-nums tabular-nums}
+@media (max-width:820px){.town-grid{grid-template-columns:1fr}.town-item{grid-template-columns:1fr}.town-item p{grid-column:1}}
 </style>
 </head>
 <body>
@@ -399,7 +426,7 @@ mark{background:rgba(201,122,69,.28);color:inherit}
       <h1 class="sr">Grillköket Lindesberg</h1>
       <div class="mark" id="heroMark" aria-hidden="true"></div>
       <p class="hero-copy">Plankor, grill, pizza och hamburgare på Molinders väg i Lindesberg. Äta här eller hämta, alla dagar i veckan.</p>
-      <div class="hero-cta"><a class="btn btn-solid" href="#meny">Se menyn</a><a class="btn btn-line" href="#boka">Boka bord</a></div>
+      <div class="hero-cta"><a class="btn btn-solid" href="#meny">Se menyn</a><a class="btn btn-line" href="https://online.inzzii.com/order/59aec17e2da648caa48ea8a3d3ffe967?deliverytype=pickup" target="_blank" rel="noopener">Beställ online</a><a class="btn btn-line" href="#boka">Boka bord</a></div>
       <p class="status" id="status"><i></i><span>Öppet alla dagar</span></p>
       <a class="prize-pill" href="#pris"><svg viewBox="0 0 44 26" aria-hidden="true"><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="22" y1="24" x2="22" y2="3"/><line x1="22" y1="24" x2="10" y2="6"/><line x1="22" y1="24" x2="34" y2="6"/><line x1="22" y1="24" x2="3" y2="14"/><line x1="22" y1="24" x2="41" y2="14"/></g></svg>Årets Företagare · Lindesberg 2026</a>
     </div>
@@ -445,6 +472,20 @@ mark{background:rgba(201,122,69,.28);color:inherit}
     <div class="strip-track" id="strip"></div>
   </div>
   <p class="wrap strip-cap">Riktiga tallrikar från vårt kök.</p>
+
+  <section class="house wrap" aria-labelledby="hus-h">
+    <div class="house-head rv">
+      <div><p class="eyebrow">Huset</p><h2 id="hus-h" style="margin-top:12px">Bland tallarna på Molinders väg</h2></div>
+      <p class="muted" style="max-width:30em">En matsal med stora fönster mot skogen och en uteservering under tak, med egen bar på sommaren.</p>
+    </div>
+    <div class="house-grid rv">
+      <figure><img src="img/interior.webp" alt="Matsalen med stora fönster och gröna växter" loading="lazy"><figcaption>Matsalen</figcaption></figure>
+      <figure><img src="img/terrace.webp" alt="Uteserveringen under tak med skog runt om" loading="lazy"><figcaption>Uteserveringen under tak</figcaption></figure>
+      <figure><img src="img/interior2.webp" alt="Matsalen på kvällen" loading="lazy"><figcaption>På kvällen</figcaption></figure>
+      <figure><img src="img/terrace2.webp" alt="Altanen med baren bland tallarna en solig dag" loading="lazy"><figcaption>Altanen och baren</figcaption></figure>
+      <figure><img src="img/sunset.webp" alt="Solnedgång bakom tallarna, sett från Grillköket" loading="lazy"><figcaption>Utsikten en vinterkväll</figcaption></figure>
+    </div>
+  </section>
 
   <section class="menu" id="meny" aria-labelledby="meny-h">
     <div class="wrap">
@@ -523,6 +564,21 @@ mark{background:rgba(201,122,69,.28);color:inherit}
     </div>
   </section>
 
+  <section class="town" aria-labelledby="stan-h">
+    <div class="wrap">
+      <p class="eyebrow rv">Mer än en restaurang</p>
+      <h2 id="stan-h" class="rv" style="margin-top:12px">En del av Lindesberg</h2>
+      <div class="town-grid">
+        <figure class="clip rv" style="margin:0"><img src="img/press.webp" alt="Tidningsurklipp: Grillköket sluter upp i kampen mot barncancer, med bild på restaurangen" loading="lazy"></figure>
+        <div class="town-list rv">
+          <div class="town-item"><span class="when">MAJ 2026</span><div><h3>Årets Företagare i Lindesberg</h3></div><p>Priset från Företagarna gick till Walat Dino och Grillköket. <a href="#pris" style="color:var(--cream)">Läs mer</a></p></div>
+          <div class="town-item"><span class="when">SEPT 2023</span><div><span class="big">13 825 kr</span><h3 style="margin-top:6px">till Barncancerfonden</h3></div><p>Hälften av intäkterna från barnmenyerna gick till insamlingen, och gästerna skänkte resten. Lokaltidningen skrev om det.</p></div>
+          <div class="town-item"><span class="when">SEPT 2026</span><div><h3>Pizzabagare för en dag</h3></div><p>Elever från Anpassad grundskola kom till köket och fick prova på att baka pizza.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="extras" aria-label="Presentkort och veckans lunch">
     <div class="wrap extras-grid">
       <div class="gift rv">
@@ -594,28 +650,31 @@ const UNS = {
 };
 const own = (k, w = 1600) => `${OWN[k]}=w${w}`;
 const uns = (k, w = 1600) => `https://images.unsplash.com/${UNS[k][0]}?auto=format&fit=crop&w=${w}&q=72`;
-const img = (src, w) => src.startsWith("own:") ? own(src.slice(4), w) : uns(src.slice(4), w);
+/* ig: = Grillkökets egna foton från Instagram, sparade i mappen img/ */
+const ig = (k) => `img/${k}.webp`;
+const img = (src, w) => src.startsWith("ig:") ? ig(src.slice(3)) : src.startsWith("own:") ? own(src.slice(4), w) : uns(src.slice(4), w);
 
 /* HERO: kamerans "tagningar" i ordning. Ändra bild, zoom (s) och panorering (x,y i %). */
 const SHOTS = [
-  { src: "uns:fire",       from: [1.05, 0, 2],  to: [1.28, -2, -3], ms: 3000 },
-  { src: "own:plankRoom",  from: [1.02, 0, 0],  to: [1.22, 0, 4],   ms: 5200 },
-  { src: "own:plankDark",  from: [1.20, 3, 0],  to: [1.04, -2, 0],  ms: 6000 },
-  { src: "own:burgers",    from: [1.04, 0, -2], to: [1.20, 2, 2],   ms: 6000 },
-  { src: "own:plankVeg",   from: [1.18, -2, 2], to: [1.03, 2, -2],  ms: 6000 },
+  { src: "ig:sunset",       from: [1.02, 0, 0],  to: [1.22, 0, -3],  ms: 3600 },
+  { src: "ig:terrace",      from: [1.04, 0, 0],  to: [1.26, 0, 3],   ms: 4800 },
+  { src: "ig:interior",     from: [1.06, 0, -3], to: [1.28, 0, 3],   ms: 5000 },
+  { src: "ig:plank-steak",  from: [1.20, 2, 0],  to: [1.04, -2, 0],  ms: 5600 },
+  { src: "ig:burger-cheese",from: [1.04, 0, -2], to: [1.20, 2, 2],   ms: 5600 },
+  { src: "ig:plank-beer",   from: [1.18, -2, 2], to: [1.03, 2, -2],  ms: 5600 },
 ];
 
 /* FAVORITER: kort på startsidan. own = vårt eget foto. */
 const DISHES = [
-  { name: "Oxfiléplanka",  price: "249 kr",       text: "Potatismos, stekta grönsaker, rödvinssås & bearnaisesås.", src: "own:plankRoom" },
-  { name: "Hamburgare",    price: "från 100 kr",  text: "90, 150 eller 200 g. Serveras som meny.",                  src: "own:burgers" },
-  { name: "Plankor",       price: "från 229 kr",  text: "Fläskfilé, gös, Black & White och Filé Oscar.",             src: "own:plankDark" },
+  { name: "Oxfiléplanka",  price: "249 kr",       text: "Potatismos, stekta grönsaker, rödvinssås & bearnaisesås.", src: "ig:plank-beer" },
+  { name: "Hamburgare",    price: "från 100 kr",  text: "90, 150 eller 200 g. Serveras som meny.",                  src: "ig:burger-cheese" },
+  { name: "Plankor",       price: "från 229 kr",  text: "Fläskfilé, gös, Black & White och Filé Oscar.",             src: "ig:plank-steak" },
   { name: "Kebabpizza",    price: "125 kr",       text: "Nr 28. Kebab, bearnaisesås i ugn & cayenne.",              src: "uns:pizza" },
   { name: "Kebabtallrik",  price: "130 kr",       text: "Kebabkött med pommes eller ris.",                          src: "uns:kebab" },
 ];
-const STRIP = ["own:bearnaise", "own:plankVeg", "own:burgers", "own:plankRoom", "own:plankDark"];
+const STRIP = ["ig:burger-flag", "ig:ribs", "ig:plank-steak", "ig:interior2", "ig:burger-cheese", "ig:terrace", "ig:plank-beer", "ig:interior3"];
 /* Omslagsbild för varje del av menyn */
-const COVERS = { pizza: "uns:pizzaOven", alacarte: "own:plankVeg", burgare: "own:burgers", grill: "uns:schnitzel", kebab: "uns:kebab", sallad: "uns:spett", barn: "uns:burger", tillbehor: "uns:fire" };
+const COVERS = { pizza: "uns:pizzaOven", alacarte: "ig:plank-steak", burgare: "ig:burger-flag", grill: "uns:schnitzel", kebab: "uns:kebab", sallad: "uns:spett", barn: "uns:burger", tillbehor: "uns:fire" };
 
 /* ================= the mark ================= */
 const LETTERS = [..."GRILLKÖKET"], KEEP = new Set([0, 5]);
@@ -700,7 +759,7 @@ $("#stars").innerHTML = [1, 2, 3, 4, 5].map((n) => `<i style="--f:${Math.max(0, 
 /* favourites + strip */
 $("#dishes").innerHTML = DISHES.map((d, i) => `<a class="dish rv" href="#meny" data-find="${d.name}">
   <img src="${img(d.src, i === 0 ? 1400 : 900)}" alt="${d.name}" loading="lazy">
-  ${d.src.startsWith("own:") ? `<span class="tag-real">Från vårt kök</span>` : ""}
+  ${/^(own|ig):/.test(d.src) ? `<span class="tag-real">Från vårt kök</span>` : ""}
   <div class="dish-txt"><div class="row1"><h3>${d.name}</h3><span class="pr">${d.price}</span></div><p>${d.text}</p></div></a>`).join("");
 const stripHTML = STRIP.map((s) => `<img src="${img(s, 600)}" alt="" loading="lazy">`).join("");
 $("#strip").innerHTML = stripHTML + stripHTML;
@@ -908,7 +967,7 @@ tio.observe(tw);
 $("#party").textContent = 2;
 
 /* credits */
-$("#credits").innerHTML = "Matfoton märkta ”Från vårt kök” är Grillkökets egna. Övriga foton från Unsplash: " +
+$("#credits").innerHTML = "Foton märkta ”Från vårt kök”, lokalen och uteserveringen är Grillkökets egna (Instagram @grillkoket.lindesberg). Tidningsurklippet: foto Camilla Lagerman. Övriga foton från Unsplash: " +
   [...new Set(Object.values(UNS).map((u) => u[1] + "|" + u[2]))].map((s) => { const [n, u] = s.split("|"); return `<a href="https://unsplash.com/@${u}?utm_source=grillkoket&utm_medium=referral" target="_blank" rel="noopener">${esc(n)}</a>`; }).join(", ") + ".";
 
 /* reveals */
