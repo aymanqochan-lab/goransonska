@@ -155,6 +155,7 @@ export async function listLabels() {
  * @returns {Promise<{ menus: object[] }>}
  */
 export async function getFullMenu({ onlyVisible = true } = {}) {
+  const labelsP = listLabels(); // independent of the rest, start it right away
   const { menus } = await listMenus({ onlyVisible });
   if (!menus.length) return { menus: [] };
 
@@ -170,7 +171,7 @@ export async function getFullMenu({ onlyVisible = true } = {}) {
   const [variants, modifierGroups, labels] = await Promise.all([
     listVariants(variantIds),
     listModifierGroups(modifierGroupIds),
-    listLabels(),
+    labelsP,
   ]);
 
   const modifierIds = modifierGroups.flatMap((g) => (g.modifiers ?? []).map((m) => m.id));

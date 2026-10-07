@@ -84,17 +84,31 @@ const REVIEWS = [
 
 /* ---------- menu ---------- */
 let MENU = null;
+const MENU_KEY = "gs-menu-v1", LOC_KEY = "gs-loc-v1";
+const readCache = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } };
+const writeCache = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+function showMenus(menus) {
+  MENU = menus;
+  const lunch = menus.find((m) => /lunch/i.test(m.name));
+  const carte = menus.find((m) => !/lunch/i.test(m.name)) || menus[0];
+  renderLunch(lunch);
+  renderBordet(carte);
+  renderFullList(menus);
+}
 async function loadMenu() {
+  // show the last copy instantly, then refresh quietly from Wix
+  const cached = readCache(MENU_KEY);
+  if (cached?.menus?.length) showMenus(cached.menus);
   try {
     const { menus } = await getFullMenu();
-    MENU = menus;
-    const lunch = menus.find((m) => /lunch/i.test(m.name));
-    const carte = menus.find((m) => !/lunch/i.test(m.name)) || menus[0];
-    renderLunch(lunch);
-    renderBordet(carte);
-    renderFullList(menus);
+    writeCache(MENU_KEY, { menus });
+    if (cached && JSON.stringify(cached.menus) === JSON.stringify(menus)) return;
+    const keepTab = $("#tabs .tab[aria-selected='true']")?.textContent;
+    showMenus(menus);
+    if (keepTab) [...document.querySelectorAll("#tabs .tab")].find((t) => t.textContent === keepTab)?.click();
   } catch (e) {
     console.error(e);
+    if (cached?.menus?.length) return;
     $("#lunch-list").innerHTML = `<li><p class="ds">Lunchmenyn kunde inte hämtas just nu. Ladda om sidan om en stund.</p></li>`;
     $("#now").innerHTML = `<p class="n2">Menyn kunde inte hämtas just nu. Ladda om sidan om en stund.</p>`;
   }
@@ -187,7 +201,7 @@ function buildRing(section) {
     const media = ph?.own
       ? `<img src="${img(ph.url, w * 2, Math.round(h * 1.4))}" alt="${esc(it.image?.altText || it.name)}" loading="lazy" draggable="false">`
       : ph
-        ? `<img class="amb" src="${img(ph.url, w, Math.round(h * 0.75))}" alt="" loading="lazy" draggable="false"><span class="amb-name" aria-hidden="true">${esc(it.name)}</span>`
+        ? `<img class="amb" src="${img(ph.url, w, Math.round(h * 0.75)).replace(",q_82/", ",q_70,blur_3/")}" alt="" loading="lazy" draggable="false"><span class="amb-name" aria-hidden="true">${esc(it.name)}</span>`
         : `<span class="mono" aria-hidden="true">${esc(it.name)}</span>`;
     c.innerHTML = `<span class="cm">${media}</span><span class="cb"><span class="cn">${esc(it.name)}</span><span class="cp">${priceOf(it)}</span></span>`;
     c.setAttribute("aria-label", `${it.name}, ${priceOf(it)}`);
@@ -528,22 +542,29 @@ $("#ticket").addEventListener("submit", async (e) => {
   }
 });
 
-async function loadLocation() {
-  try {
-    const locs = await listReservationLocations();
-    LOC = locs.find((l) => l.default) || locs[0] || null;
+function useLocation(loc) {
+    LOC = loc;
     const cfg = LOC?.configuration?.onlineReservations || {};
     PERIODS = cfg.businessSchedule?.periods || [];
     S.min = cfg.partySize?.min || 1;
     S.max = cfg.partySize?.max || 20;
-    setParty(2);
+    setParty(S.party);
     renderHours();
     renderStatus();
     renderDays();
     if (cfg.onlineReservationsEnabled === false) $("#slots").innerHTML = `<p class="muted">Onlinebokning är pausad just nu.</p>`;
+}
+async function loadLocation() {
+  const cached = readCache(LOC_KEY);
+  if (cached) useLocation(cached);
+  try {
+    const locs = await listReservationLocations();
+    const loc = locs.find((l) => l.default) || locs[0] || null;
+    writeCache(LOC_KEY, loc);
+    if (!cached || JSON.stringify(cached) !== JSON.stringify(loc)) useLocation(loc);
   } catch (e) {
     console.error(e);
-    $("#slots").innerHTML = `<p class="err">Bokningen kunde inte laddas just nu. Ladda om sidan om en stund.</p>`;
+    if (!cached) $("#slots").innerHTML = `<p class="err">Bokningen kunde inte laddas just nu. Ladda om sidan om en stund.</p>`;
   }
 }
 
@@ -585,6 +606,11 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   }), { rootMargin: "-45% 0px -50% 0px" });
   secs.forEach((s) => nio.observe(s));
 }
+
+if ("IntersectionObserver" in window) {
+  const film = $("#film");
+  new IntersectionObserver((es) => film.classList.toggle("live", es[0].isIntersecting)).observe(film);
+} else $("#film").classList.add("live");
 
 drawTable(S.party);
 loadMenu();
