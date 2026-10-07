@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Göransonska Restaurang & Bar – Lindesberg</title>
+<meta name="description" content="Restaurang och bar på Kungsgatan 46 i Lindesberg. Vardagslunch, à la carte, cocktails och livemusik. Boka bord online.">
+<meta property="og:title" content="Göransonska Restaurang & Bar">
+<meta property="og:description" content="Restaurang och bar mitt i Lindesberg. Boka bord online.">
+<meta property="og:image" content="https://static.wixstatic.com/media/dbb097_6a6c052538eb473d822f370b7b468570~mv2.jpg/v1/fill/w_1200,h_630,q_85/og.jpg">
+<meta name="theme-color" content="#1c1a17">
+<link rel="icon" href="https://static.wixstatic.com/media/dbb097_6a680704229d4264a1da3038ce544f15~mv2.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Hoppa till innehållet</a>
+
+<header class="top" id="top">
+  <a class="brand" href="#hem" aria-label="Göransonska – till startsidan">
+    <img src="https://static.wixstatic.com/media/dbb097_6a680704229d4264a1da3038ce544f15~mv2.png/v1/fit/w_96,h_96,q_90/ring.png" alt="" width="40" height="40">
+    <span>Göransonska</span>
+  </a>
+  <nav class="nav" aria-label="Huvudmeny">
+    <a href="#lunch">Lunch</a>
+    <a href="#bordet">Meny</a>
+    <a href="#kvallar">Kvällar</a>
+    <a href="#hitta">Hitta hit</a>
+  </nav>
+  <a class="btn btn-gold btn-sm" href="#boka">Boka bord</a>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="hem">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1 class="wordmark">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M100 14 C152 14 186 50 186 100 C186 150 150 186 100 186 C50 186 14 152 14 100 C14 58 40 26 78 17" />
+        </svg>
+        <span class="wm-name">Göransonska</span>
+        <span class="wm-sub">Restaurang &amp; Bar</span>
+      </h1>
+      <p class="hero-lede">Husmanslunch på vardagar, à la carte och cocktails på kvällen. Mitt på Kungsgatan i Lindesberg.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#boka">Boka bord</a>
+        <a class="btn btn-line" href="#bordet">Se menyn</a>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="lunch" id="lunch" aria-labelledby="lunch-h">
+    <div class="wrap lunch-grid">
+      <div class="lunch-intro">
+        <h2 id="lunch-h">Vardagslunch</h2>
+        <p class="lunch-time" id="lunch-time">Tisdag–fredag 11:30–14:00</p>
+        <p id="lunch-incl">Salladsbuffé, kaffe, kaka, dessert och lättdryck ingår.</p>
+        <p class="muted">Pensionär 10 % · Student 15 %</p>
+      </div>
+      <ol class="lunch-list" id="lunch-list" aria-busy="true"></ol>
+    </div>
+  </section>
+
+  <section class="bordet" id="bordet" aria-labelledby="bordet-h">
+    <div class="wrap">
+      <div class="bordet-head">
+        <h2 id="bordet-h">Bordet</h2>
+        <p class="muted">Snurra bordet för att se vad köket lagar. Tryck på en rätt för detaljer.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs" aria-label="Menyns delar"></div>
+    </div>
+    <div class="stage" id="stage">
+      <button class="spin spin-prev" id="prev" aria-label="Föregående rätt">‹</button>
+      <div class="lazy" id="lazy" tabindex="0" aria-roledescription="karusell" aria-label="Rätter"></div>
+      <button class="spin spin-next" id="next" aria-label="Nästa rätt">›</button>
+      <div class="plate-shadow" aria-hidden="true"></div>
+    </div>
+    <div class="wrap">
+      <div class="now" id="now" aria-live="polite"></div>
+      <details class="fulllist">
+        <summary>Visa hela menyn som lista</summary>
+        <div id="fulllist"></div>
+      </details>
+    </div>
+  </section>
+
+  <section class="kvallar" id="kvallar" aria-labelledby="kv-h">
+    <div class="wrap">
+      <h2 id="kv-h">Kvällar på Göransonska</h2>
+      <p class="muted kv-lede">Trubadurer, quiz och DJ – och en innergård som fylls när det är varmt.</p>
+    </div>
+    <div class="film" id="film">
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_ab8c925f33b747ad964342acf8f367e5~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="Gäster dansar i lila ljus"><figcaption>Fredagskväll</figcaption></figure>
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_3326944b99c04a9dbaa7349ab74bfbcb~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="Duo spelar live i restaurangen"><figcaption>Trubadurer</figcaption></figure>
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_242631f1bed842aab1678f4a8093fd32~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="Livemusik på innergården"><figcaption>Innergården</figcaption></figure>
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_526f2e6eaca4483b9d5a565873bf7efa~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="Fullt vid baren"><figcaption>Baren</figcaption></figure>
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_ae60b35b958440d5b99bf172316de504~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="DJ spelar för gästerna"><figcaption>DJ</figcaption></figure>
+      <figure><img loading="lazy" src="https://static.wixstatic.com/media/dbb097_ca145fff18e24834bacc9f340ce6a21a~mv2.jpg/v1/fill/w_540,h_960,q_80/a.jpg" alt="Kvällsmusik i matsalen"><figcaption>Sen kväll</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="quotes" aria-labelledby="q-h">
+    <div class="wrap">
+      <h2 id="q-h" class="sr">Vad gästerna säger</h2>
+      <blockquote id="quote" aria-live="polite"></blockquote>
+      <p class="muted small">Omdömen från Google</p>
+    </div>
+  </section>
+
+  <section class="boka" id="boka" aria-labelledby="boka-h">
+    <div class="wrap boka-grid">
+      <div class="boka-intro">
+        <h2 id="boka-h">Boka bord</h2>
+        <p>Välj hur många ni är, dag och tid. Bokningen går direkt in i vårt system och du får en bekräftelse.</p>
+        <p class="muted small">Sällskap på 9 eller fler bekräftas manuellt av oss.</p>
+      </div>
+      <form class="ticket" id="ticket" novalidate>
+        <fieldset class="step" id="s1">
+          <legend><span class="n">1</span> Hur många?</legend>
+          <div class="party">
+            <button type="button" class="round" id="minus" aria-label="Färre gäster">−</button>
+            <output id="party" aria-live="polite">2</output>
+            <button type="button" class="round" id="plus" aria-label="Fler gäster">+</button>
+            <span class="party-l" id="party-l">gäster</span>
+          </div>
+        </fieldset>
+        <fieldset class="step" id="s2">
+          <legend><span class="n">2</span> Vilken dag?</legend>
+          <div class="days" id="days" role="radiogroup" aria-label="Datum"></div>
+        </fieldset>
+        <fieldset class="step" id="s3">
+          <legend><span class="n">3</span> Vilken tid?</legend>
+          <div class="slots" id="slots" role="radiogroup" aria-label="Lediga tider"><p class="muted">Välj en dag först.</p></div>
+        </fieldset>
+        <fieldset class="step" id="s4" disabled>
+          <legend><span class="n">4</span> Dina uppgifter</legend>
+          <div class="fields">
+            <label>Förnamn<input name="firstName" autocomplete="given-name" required></label>
+            <label>Efternamn<input name="lastName" autocomplete="family-name"></label>
+            <label>Mobilnummer<input name="phone" type="tel" autocomplete="tel" placeholder="070 123 45 67" required></label>
+            <label>E-post<input name="email" type="email" autocomplete="email"></label>
+          </div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-gold btn-wide" id="confirm" type="submit">Boka bordet</button>
+        </fieldset>
+        <div class="done" id="done" hidden tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="hitta" id="hitta" aria-labelledby="hitta-h">
+    <div class="wrap hitta-grid">
+      <div>
+        <h2 id="hitta-h">Hitta hit</h2>
+        <p class="addr">Kungsgatan 46<br>711 30 Lindesberg</p>
+        <p class="muted">Några minuters promenad från Rådhusplatsen, Lindesjön och stationen.</p>
+        <a class="btn btn-line" href="https://www.google.com/maps/dir/?api=1&destination=Kungsgatan+46%2C+711+30+Lindesberg" target="_blank" rel="noopener">Vägbeskrivning</a>
+      </div>
+      <div class="hours" id="hours"><h3>Öppettider</h3><dl id="hours-list"></dl></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <p class="foot-brand">Göransonska Restaurang &amp; Bar</p>
+    <p>Kungsgatan 46, 711 30 Lindesberg</p>
+    <p class="muted small">Hundar är välkomna, både inne och ute.</p>
+  </div>
+</footer>
+
+<dialog class="dish" id="dish" aria-labelledby="dish-name">
+  <form method="dialog"><button class="close" aria-label="Stäng">×</button></form>
+  <div class="dish-media" id="dish-media"></div>
+  <div class="dish-body">
+    <p class="dish-sec" id="dish-sec"></p>
+    <h3 id="dish-name"></h3>
+    <p id="dish-desc"></p>
+    <p class="dish-price" id="dish-price"></p>
+    <a class="btn btn-gold" href="#boka" id="dish-book">Boka bord</a>
+  </div>
+</dialog>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
