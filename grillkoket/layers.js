@@ -58,6 +58,16 @@ const RECIPES = {
   "Pommestallrik":     ["plate", "fries"],
 };
 
+/* Realistic exploded photos (AI-generated with Higgsfield, img/exploded/). Key = menu name. */
+const EXPLODED = {
+  "Hamburgare": "hamburgare", "Ostburgare": "ostburgare", "Ost & baconburgare": "ostbacon", "Dubbel ost & baconburgare": "dubbel",
+  "Halloumiburgare": "halloumi", "Fiskburgare": "fisk", "Kycklingburgare": "kyckling-burgare",
+  "Oxfiléplanka": "oxfileplanka", "Fläskfiléplanka": "flaskfileplanka", "Gösplanka": "gosplanka", "Black & White": "black-white",
+  "Filé Oscar": "file-oscar", "Kycklingspett": "kycklingspett", "Kebabpizza": "kebabpizza", "Vesuvio": "vesuvio", "Hawaii": "hawaii",
+  "Kebabrulle": "kebabrulle", "Kebabtallrik": "kebabtallrik", "Kebab i bröd": "kebab-brod", "Kycklingsallad": "kycklingsallad",
+  "Grekisk sallad": "grekisk-sallad", "Schnitzel": "schnitzel", "Köttbullar": "kottbullar", "Falafeltallrik": "falafeltallrik",
+  "barn:Hamburgare": "hamburgare", "barn:Köttbullar": "kottbullar",
+};
 /* Fillings we add to rolls, plates and pita (the menu only names the meat). */
 const ROLL_FILL  = ["lettuceShred", "tomatoDice", "cucumber", "onionRings2", "sauceCream"];
 const PLATE_FILL = ["lettuceShred", "tomatoDice", "sauceCream"];
@@ -545,7 +555,31 @@ function setExploded(v) {
   $("#dl-toggle").textContent = v ? "Stapla ihop" : "Dela upp";
   $("#dl-toggle").setAttribute("aria-pressed", String(v));
 }
+const STRIPS = 14;
+function playPhotoLayers(d, file) {
+  inner.classList.remove("open"); inner.innerHTML = "";
+  const w = Math.min(stage.clientWidth || 360, 560), h = Math.min(w * 4 / 3, innerHeight * .62), ww = h * .75;
+  stage.style.height = h + "px";
+  inner.style.cssText = `width:${ww}px;height:${h}px;left:50%;transform:translateX(-50%)`;
+  inner.className = "dl-inner real";
+  const src = `img/exploded/${file}.webp`;
+  for (let k = 0; k < STRIPS; k++) {
+    const sh = h / STRIPS, c = (STRIPS - 1) / 2, el = document.createElement("div");
+    el.className = "strip";
+    el.style.cssText = `top:${k * sh}px;height:${sh + 1}px;background-image:url("${src}");background-size:${ww}px ${h}px;background-position:0 ${-k * sh}px;--sq:${(c - k) * sh * .62}px;--i:${Math.abs(c - k)}`;
+    inner.append(el);
+  }
+  const keys = recipeFor(d).filter((k) => ING[k]);
+  $("#dl-list").innerHTML = [...keys].reverse().map((k) => `<li>${ING[k].l}</li>`).join("");
+  const im = new Image(); im.onload = () => requestAnimationFrame(() => requestAnimationFrame(() => open && cur === d && setExploded(true))); im.src = src;
+  $("#dl-note").textContent = "Bild skapad med AI för att visa rättens delar. Riktiga rätten kan se lite annorlunda ut.";
+  $("#dl-chips").innerHTML = [...new Set([...keys].reverse().map((k) => ING[k].l))].map((l) => `<span>${l}</span>`).join("");
+}
 function playLayers(d) {
+  const file = EXPLODED[d.cat + ":" + d.name] || (d.cat === "barn" ? null : EXPLODED[d.name]);
+  if (file) return playPhotoLayers(d, file);
+  inner.className = "dl-inner"; inner.style.cssText = ""; $("#dl-chips").innerHTML = "";
+  $("#dl-note").textContent = "Illustration av rättens lager. Riktiga rätten kan se lite annorlunda ut.";
   setExploded(false); inner.classList.add("drop");
   build(d);
   requestAnimationFrame(() => { inner.classList.remove("drop"); setTimeout(() => open && cur === d && setExploded(true), reduce ? 0 : 650); });
@@ -592,7 +626,7 @@ $("#dl-toggle").addEventListener("click", () => setExploded(!exploded));
 $("#dl-close").addEventListener("click", () => dlg.close());
 dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
 dlg.addEventListener("close", () => { open = false; });
-let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (dlg.open && cur && dlg.classList.contains("mode-layers")) { build(cur); setExploded(exploded); } }, 200); });
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (dlg.open && cur && dlg.classList.contains("mode-layers")) playLayers(cur); }, 200); });
 
 // for testing in the console: GKLayers.show({cat:"pizza",name:"Kebabpizza",desc:"kebab, bearnaisesås i ugn & cayenne",price:"125 kr"})
 window.GKLayers = { show, recipeFor, ING, RECIPES };
