@@ -61,7 +61,7 @@ p{margin:0}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 60% at 72% 55%,#173527 0%,transparent 70%),radial-gradient(40% 40% at 20% 85%,rgba(217,102,47,.08),transparent 70%)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:center}
 .hero-grid>*{min-width:0}
-.emblem-wrap{display:grid;justify-items:start;gap:22px}
+.emblem-wrap{display:grid;justify-items:start;gap:22px;container-type:inline-size;width:100%}
 .emblem{width:min(200px,46vw);height:auto;overflow:visible}
 .emblem .leaf{fill:none;stroke:var(--linen);stroke-width:1.15;stroke-linejoin:round;transform-box:fill-box;transform-origin:50% 100%;transform:scale(0);animation:leaf .6s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:calc(.9s + var(--d) * 1s)}
 .emblem .vein{stroke:var(--linen);stroke-width:.6;fill:none;opacity:.7}
@@ -74,7 +74,7 @@ p{margin:0}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes mound{to{transform:scaleY(1)}}
 @keyframes ignite{0%{opacity:.25}100%{opacity:.95}}
-.wordmark{font:500 clamp(48px,7.4vw,92px)/.9 var(--serif);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.wordmark{font:500 clamp(40px,12.6cqi,96px)/.9 var(--serif);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 .wordmark span{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(12px);animation:in .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.5s + var(--i) * 55ms)}
 @keyframes in{to{opacity:1;filter:none;transform:none}}
 .sub{display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;animation:in 1s ease 1.4s forwards}
@@ -100,8 +100,7 @@ p{margin:0}
 .labels svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .labels line{stroke:rgba(236,229,211,.5);stroke-width:1}
 .labels circle{fill:var(--brass)}
-.lab{position:absolute;transform:translateY(-50%);font:500 13px/1.25 var(--sans);color:var(--linen);white-space:nowrap;padding:5px 10px;border-radius:99px;background:rgba(12,31,22,.78);border:1px solid var(--rule);opacity:0;transition:opacity .35s}
-.lab.on{opacity:1}
+.lab{position:absolute;transform:translateY(-50%);font:500 13px/1.25 var(--sans);color:var(--linen);white-space:nowrap;padding:5px 10px;border-radius:99px;background:rgba(12,31,22,.82);border:1px solid var(--rule);opacity:0}
 .lab.l{transform:translate(-100%,-50%)}
 .studio-bar{position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;pointer-events:none}
 .studio-bar>*{pointer-events:auto}
@@ -284,7 +283,7 @@ mark{background:rgba(201,164,106,.25);color:inherit;border-radius:3px}
         <svg class="emblem" id="emblem" viewBox="0 0 200 230" aria-hidden="true"></svg>
         <h1 class="wordmark" id="wm" aria-label="Grillköket">Grillköket</h1>
         <div class="sub"><span class="place">Lindesberg</span><span class="wd">av Walat Dino</span></div>
-        <p class="hero-copy">Pizza, hamburgare, grill och plankor sedan många år på Molinders väg. <b>Pizza från 95 kr</b>, barnmeny 50 kr.</p>
+        <p class="hero-copy">Pizza, hamburgare, grill och plankor på Molinders väg i Lindesberg. <b>Pizza från 95 kr</b>, barnmeny 50 kr.</p>
         <div class="hero-cta"><a class="btn btn-brass" href="#meny">Se menyn</a><a class="btn btn-ghost" href="#boka">Boka bord</a></div>
         <p class="status" id="status"><i></i><span>Öppet alla dagar</span></p>
       </div>
@@ -675,7 +674,7 @@ function buildBurger(name) {
   });
   // keep each label once
   const seen = new Set(); parts.forEach((p) => { if (seen.has(p.label)) p.label = ""; seen.add(p.label); });
-  return { root, parts, center: new T.Vector3(0, y / 2, 0), dist: 6.2, expLift: layers.length * 0.21 };
+  return { root, parts, center: new T.Vector3(0, y / 2, 0), dist: 6.4, expLift: layers.length * 0.19, zoomOut: 0.12 * layers.length };
 }
 
 /* ---- pizza: toppings are read from the menu text ---- */
@@ -868,7 +867,7 @@ function Viewer(host) {
     dish.root.rotation.y = rotY;
     dish.parts.forEach((p) => { p.obj.position.y = p.obj.userData.base + (p.obj.userData.exp - p.obj.userData.base) * k; });
     const c = dish.center.clone(); c.y += (dish.expLift || 0.8) * k;
-    const tilt = dish.tilt || 0.32, dist = dish.dist * (1 + k * 0.25);
+    const tilt = dish.tilt || 0.32, dist = dish.dist * (1 + k * (dish.zoomOut || 0.3));
     cam.position.set(0, c.y + Math.sin(tilt) * dist, Math.cos(tilt) * dist); cam.lookAt(c);
     renderer.render(scene, cam);
     // labels: anchor -> side column
@@ -877,8 +876,8 @@ function Viewer(host) {
       const el = labelEls[i]; if (!el) return;
       v.copy(p.anchor); p.obj.localToWorld(v); v.project(cam);
       const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
-      const right = i % 2 === 0; const lx = right ? w * 0.8 : w * 0.2;
-      el.classList.toggle("on", k > 0.85); el.classList.toggle("l", !right);
+      const right = i % 2 === 0; const lx = right ? w * 0.76 : w * 0.24;
+      el.style.opacity = Math.max(0, Math.min(1, (k - 0.7) / 0.3)).toFixed(2); el.classList.toggle("l", !right);
       el.style.left = `${lx + (right ? 6 : -6)}px`; el.style.top = `${y}px`;
       if (k > 0.85) lines += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${lx.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/>`;
     });
