@@ -1,0 +1,35 @@
+name: Upscale images (Real-ESRGAN)
+
+on:
+  push:
+    branches: [upscale]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upscale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
+          pip install spandrel==0.4.0 pillow numpy
+          curl -sL -o RealESRGAN_x4plus.pth https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth
+          ls -la RealESRGAN_x4plus.pth
+      - name: Upscale
+        run: python tools/upscale/upscale.py RealESRGAN_x4plus.pth
+      - name: Commit results to branch "upscaled"
+        run: |
+          git config user.name "upscale-bot"
+          git config user.email "upscale-bot@users.noreply.github.com"
+          git checkout -b upscaled
+          git add grillkoket/img tools/upscale/out
+          git commit -m "Real-ESRGAN x4 upscaled images"
+          git push -f origin upscaled

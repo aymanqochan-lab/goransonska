@@ -1,0 +1,459 @@
+{
+ "base": "https://mybackoffice.blob.core.windows.net/plu-images/6452/",
+ "dishes": [
+  {
+   "key": "Fläskfiléplanka",
+   "path": "NYA BILDER 2026/A LA CARTE/fläskfileplanka.png",
+   "crop": 0,
+   "slug": "flaskfileplanka"
+  },
+  {
+   "key": "Gösplanka",
+   "path": "NYA BILDER 2026/A LA CARTE/gösplanka.png",
+   "crop": 0,
+   "slug": "gosplanka"
+  },
+  {
+   "key": "Black & White",
+   "path": "NYA BILDER 2026/A LA CARTE/b&w.png",
+   "crop": 0,
+   "slug": "black-white"
+  },
+  {
+   "key": "Filé Oscar",
+   "path": "NYA BILDER 2026/A LA CARTE/file oscar.png",
+   "crop": 0,
+   "slug": "file-oscar"
+  },
+  {
+   "key": "Kycklingspett",
+   "path": "NYA BILDER 2026/A LA CARTE/Kycjkling spett .png",
+   "crop": 0,
+   "slug": "kycklingspett"
+  },
+  {
+   "key": "Ägg & Bacon",
+   "path": "NYA BILDER 2026/A LA CARTE/bacon o ägg.png",
+   "crop": 0,
+   "slug": "agg-bacon"
+  },
+  {
+   "key": "Schnitzel",
+   "path": "NYA BILDER 2026/A LA CARTE/Schnitzel Meny.png",
+   "crop": 1,
+   "slug": "schnitzel"
+  },
+  {
+   "key": "Grillbiff",
+   "path": "NYA BILDER 2026/A LA CARTE/Grillbiff meny.png",
+   "crop": 1,
+   "slug": "grillbiff"
+  },
+  {
+   "key": "Lövbit",
+   "path": "NYA BILDER 2026/A LA CARTE/Lövbit meny.png",
+   "crop": 1,
+   "slug": "lovbit"
+  },
+  {
+   "key": "Pyttipanna",
+   "path": "NYA BILDER 2026/A LA CARTE/pytttipanna.jpg",
+   "crop": 0,
+   "slug": "pyttipanna"
+  },
+  {
+   "key": "Rödspätta",
+   "path": "NYA BILDER 2026/A LA CARTE/rödspättameny.jpg",
+   "crop": 0,
+   "slug": "rodspatta"
+  },
+  {
+   "key": "Tunnbrödsrulle",
+   "path": "NYA BILDER 2026/A LA CARTE/tunnbrödsrulle meny.png",
+   "crop": 1,
+   "slug": "tunnbrodsrulle"
+  },
+  {
+   "key": "Bamsemeny",
+   "path": "NYA BILDER 2026/A LA CARTE/bamse meny.png",
+   "crop": 1,
+   "slug": "bamsemeny"
+  },
+  {
+   "key": "Köttbullar",
+   "path": "NYA BILDER 2026/KORVMENY/Köttbulle Meny.png",
+   "crop": 1,
+   "slug": "kottbullar"
+  },
+  {
+   "key": "Korvmeny",
+   "path": "korvmeny.png",
+   "crop": 0,
+   "slug": "korvmeny"
+  },
+  {
+   "key": "Chicken Bits",
+   "path": "NYA BILDER 2026/A LA CARTE/Chickenbits meny.png",
+   "crop": 1,
+   "slug": "chicken-bits"
+  },
+  {
+   "key": "French hot dog-meny",
+   "path": "NYA BILDER 2026/KORVMENY/Fransk Hotdog.png",
+   "crop": 1,
+   "slug": "french-hot-dog-meny"
+  },
+  {
+   "key": "Margarita",
+   "path": "NYA BILDER 2026/PIZZOR/margherita1-pizza.png",
+   "crop": 0,
+   "slug": "margarita"
+  },
+  {
+   "key": "Vesuvio",
+   "path": "NYA BILDER 2026/PIZZOR/vesuvio-pizza.png",
+   "crop": 0,
+   "slug": "vesuvio"
+  },
+  {
+   "key": "Capricciosa",
+   "path": "NYA BILDER 2026/PIZZOR/capricciosa-pizza.png",
+   "crop": 0,
+   "slug": "capricciosa"
+  },
+  {
+   "key": "Altono",
+   "path": "NYA BILDER 2026/PIZZOR/altonno-pizza.png",
+   "crop": 0,
+   "slug": "altono"
+  },
+  {
+   "key": "Calzone",
+   "path": "NYA BILDER 2026/PIZZOR/CALZONE-pizza.png",
+   "crop": 0,
+   "slug": "calzone"
+  },
+  {
+   "key": "Cazatora",
+   "path": "NYA BILDER 2026/PIZZOR/caciatore-pizza.png",
+   "crop": 0,
+   "slug": "cazatora"
+  },
+  {
+   "key": "La Bussola",
+   "path": "NYA BILDER 2026/PIZZOR/bussola-pizza.png",
+   "crop": 0,
+   "slug": "la-bussola"
+  },
+  {
+   "key": "Hawaii",
+   "path": "NYA BILDER 2026/PIZZOR/hawaii-pizza.png",
+   "crop": 0,
+   "slug": "hawaii"
+  },
+  {
+   "key": "Marinara",
+   "path": "NYA BILDER 2026/PIZZOR/marinara-pizza.png",
+   "crop": 0,
+   "slug": "marinara"
+  },
+  {
+   "key": "Bananarama",
+   "path": "NYA BILDER 2026/PIZZOR/banane-pizza.png",
+   "crop": 0,
+   "slug": "bananarama"
+  },
+  {
+   "key": "Calzone Special",
+   "path": "NYA BILDER 2026/PIZZOR/CALZONE_PIZZA_INBAKAD.png",
+   "crop": 0,
+   "slug": "calzone-special"
+  },
+  {
+   "key": "Quattro",
+   "path": "NYA BILDER 2026/PIZZOR/quattro_stagioni-pizza.png",
+   "crop": 0,
+   "slug": "quattro"
+  },
+  {
+   "key": "Acapulco",
+   "path": "NYA BILDER 2026/PIZZOR/acapulco_pizza.png",
+   "crop": 0,
+   "slug": "acapulco"
+  },
+  {
+   "key": "Kebabpizza",
+   "path": "NYA BILDER 2026/PIZZOR/KEBAB_PIZZA.png",
+   "crop": 0,
+   "slug": "kebabpizza"
+  },
+  {
+   "key": "Vikingbåt",
+   "path": "NYA BILDER 2026/PIZZOR/viking-pizza.png",
+   "crop": 0,
+   "slug": "vikingbat"
+  },
+  {
+   "key": "Azteka",
+   "path": "NYA BILDER 2026/PIZZOR/azteka-pizza.png",
+   "crop": 0,
+   "slug": "azteka"
+  },
+  {
+   "key": "Grekisk pizza",
+   "path": "NYA BILDER 2026/PIZZOR/Grekisk_pizza.png",
+   "crop": 0,
+   "slug": "grekisk-pizza"
+  },
+  {
+   "key": "Veg Pizza",
+   "path": "NYA BILDER 2026/PIZZOR/VEGETARIAN_PIZZA.png",
+   "crop": 0,
+   "slug": "veg-pizza"
+  },
+  {
+   "key": "Hamburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/hamburgare meny.png",
+   "crop": 1,
+   "slug": "hamburgare"
+  },
+  {
+   "key": "Ostburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/ostburgare meny.png",
+   "crop": 1,
+   "slug": "ostburgare"
+  },
+  {
+   "key": "Ost & baconburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/ostobaconburgare.png",
+   "crop": 1,
+   "slug": "ost-baconburgare"
+  },
+  {
+   "key": "Dubbel ost & baconburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/dubbel ost burgare.jpg",
+   "crop": 0,
+   "slug": "dubbel-ost-baconburgare"
+  },
+  {
+   "key": "Halloumiburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/halluomi burgare meny.jpg",
+   "crop": 0,
+   "slug": "halloumiburgare"
+  },
+  {
+   "key": "Fiskburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/Fiskburgare meny.png",
+   "crop": 1,
+   "slug": "fiskburgare"
+  },
+  {
+   "key": "Kycklingburgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/Kycklingburgare meny.png",
+   "crop": 1,
+   "slug": "kycklingburgare"
+  },
+  {
+   "key": "Månadens burgare",
+   "path": "NYA BILDER 2026/HAMBURGARE/månadens burgare.png",
+   "crop": 0,
+   "slug": "manadens-burgare"
+  },
+  {
+   "key": "Kycklingrulle",
+   "path": "NYA BILDER 2026/KEBAB/kyckling_rulle.png",
+   "crop": 0,
+   "slug": "kycklingrulle"
+  },
+  {
+   "key": "Kebabrulle",
+   "path": "NYA BILDER 2026/KEBAB/kebab_rulle.png",
+   "crop": 0,
+   "slug": "kebabrulle"
+  },
+  {
+   "key": "Megarulle",
+   "path": "NYA BILDER 2026/KEBAB/GYROS_RULLE.png",
+   "crop": 0,
+   "slug": "mixrulle"
+  },
+  {
+   "key": "Skinkrulle",
+   "path": "NYA BILDER 2026/KEBAB/skink_rulle.png",
+   "crop": 0,
+   "slug": "skinkrulle"
+  },
+  {
+   "key": "Falafelrulle",
+   "path": "NYA BILDER 2026/KEBAB/falafel_rulle.png",
+   "crop": 0,
+   "slug": "falafelrulle"
+  },
+  {
+   "key": "Räkrulle",
+   "path": "NYA BILDER 2026/KEBAB/Räk_Rulle.png",
+   "crop": 0,
+   "slug": "rakrulle"
+  },
+  {
+   "key": "Kycklingtallrik",
+   "path": "NYA BILDER 2026/KEBAB/Kyckling_kebab_tallrik.png",
+   "crop": 0,
+   "slug": "kycklingtallrik"
+  },
+  {
+   "key": "Kebabtallrik",
+   "path": "NYA BILDER 2026/KEBAB/Kebab_Tallrik.png",
+   "crop": 0,
+   "slug": "kebabtallrik"
+  },
+  {
+   "key": "Mixtallrik",
+   "path": "NYA BILDER 2026/KEBAB/mix_tallrik.png",
+   "crop": 0,
+   "slug": "mixtallrik"
+  },
+  {
+   "key": "Falafeltallrik",
+   "path": "NYA BILDER 2026/KEBAB/falafel tallrik.png",
+   "crop": 0,
+   "slug": "falafeltallrik"
+  },
+  {
+   "key": "Kebab i bröd",
+   "path": "NYA BILDER 2026/KEBAB/KEBAB_MED_BRÖD_NÖT.png",
+   "crop": 0,
+   "slug": "kebab-i-brod"
+  },
+  {
+   "key": "Kyckling i bröd",
+   "path": "NYA BILDER 2026/KEBAB/KYCKLING_KEBAB_MED_BRÖD.png",
+   "crop": 0,
+   "slug": "kyckling-i-brod"
+  },
+  {
+   "key": "Falafel i bröd",
+   "path": "NYA BILDER 2026/KEBAB/falafel_med_bröd.png",
+   "crop": 0,
+   "slug": "falafel-i-brod"
+  },
+  {
+   "key": "Kycklingsallad",
+   "path": "NYA BILDER 2026/SALLADER/kyckling_sallad.png",
+   "crop": 0,
+   "slug": "kycklingsallad"
+  },
+  {
+   "key": "Kebabsallad",
+   "path": "NYA BILDER 2026/SALLADER/kebab_sallad.png",
+   "crop": 0,
+   "slug": "kebabsallad"
+  },
+  {
+   "key": "Skinksallad",
+   "path": "NYA BILDER 2026/SALLADER/ost&skink_sallad.png",
+   "crop": 0,
+   "slug": "skinksallad"
+  },
+  {
+   "key": "Räksallad",
+   "path": "NYA BILDER 2026/SALLADER/Räksallad.png",
+   "crop": 0,
+   "slug": "raksallad"
+  },
+  {
+   "key": "Tonfisksallad",
+   "path": "NYA BILDER 2026/SALLADER/tonfisk_sallad.png",
+   "crop": 0,
+   "slug": "tonfisksallad"
+  },
+  {
+   "key": "Grekisk sallad",
+   "path": "NYA BILDER 2026/SALLADER/grekisk_sallad.png",
+   "crop": 0,
+   "slug": "grekisk-sallad"
+  },
+  {
+   "key": "Falafelsallad",
+   "path": "NYA BILDER 2026/SALLADER/falafel_sallad.png",
+   "crop": 0,
+   "slug": "falafelsallad"
+  },
+  {
+   "key": "Caesarsallad",
+   "path": "caesar_salladd.png",
+   "crop": 0,
+   "slug": "caesarsallad"
+  },
+  {
+   "key": "barn:Hamburgare",
+   "path": "NYA BILDER 2026/BARN RÄTTER/barnburgare.png",
+   "crop": 0,
+   "slug": "barn-hamburgare"
+  },
+  {
+   "key": "barn:Chicken Bits",
+   "path": "NYA BILDER 2026/BARN RÄTTER/barn chickenbits.png",
+   "crop": 0,
+   "slug": "barn-chicken-bits"
+  },
+  {
+   "key": "barn:Pannkaka",
+   "path": "NYA BILDER 2026/BARN RÄTTER/barn pankaka meny.png",
+   "crop": 0,
+   "slug": "barn-pannkaka"
+  },
+  {
+   "key": "barn:Korv",
+   "path": "NYA BILDER 2026/BARN RÄTTER/barn korv menhy.png",
+   "crop": 0,
+   "slug": "barn-korv"
+  },
+  {
+   "key": "Chili cheese",
+   "path": "NYA BILDER 2026/TILLBEHÖR/CHILI CHEEZE.png",
+   "crop": 0,
+   "slug": "chili-cheese"
+  },
+  {
+   "key": "Mozzarella sticks",
+   "path": "NYA BILDER 2026/TILLBEHÖR/MOZARELLA STICKS.png",
+   "crop": 0,
+   "slug": "mozzarella-sticks"
+  },
+  {
+   "key": "Hot wings",
+   "path": "NYA BILDER 2026/TILLBEHÖR/HOT WINGS.png",
+   "crop": 0,
+   "slug": "hot-wings"
+  },
+  {
+   "key": "Nuggets",
+   "path": "NYA BILDER 2026/TILLBEHÖR/NUGGETS.png",
+   "crop": 0,
+   "slug": "nuggets"
+  },
+  {
+   "key": "Pommestallrik",
+   "path": "NYA BILDER 2026/TILLBEHÖR/pommes.png",
+   "crop": 0,
+   "slug": "pommestallrik"
+  }
+ ],
+ "site": [
+  "terrace",
+  "terrace2",
+  "interior",
+  "interior2",
+  "interior3",
+  "sunset",
+  "plank-beer",
+  "plank-steak",
+  "burger-flag",
+  "burger-cheese",
+  "ribs",
+  "award",
+  "presentkort",
+  "press"
+ ]
+}
