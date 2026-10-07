@@ -391,7 +391,7 @@ animation:paint 2.2s cubic-bezier(.6,.05,.25,1) .3s forwards}
 <button type="button" class="round" id="plus" aria-label="Fler gäster">+</button>
 <span class="party-l" id="party-l">gäster</span>
 </div>
-<div class="table-viz" aria-hidden="true"><svg id="tableviz" viewBox="-160 -120 320 240"></svg></div>
+<div class="table-viz" aria-hidden="true"><svg id="tableviz" viewBox="-105 -88 210 176"></svg></div>
 </fieldset>
 <fieldset class="step" id="s2">
 <legend><span class="n">2</span> Vilken dag?</legend>
@@ -1059,7 +1059,7 @@ if (!tvTable) initTable();
 const R = tableRadius(n);
 tvTable.setAttribute("r", R); tvTable.style.r = `${R}px`;
 tvCloth.setAttribute("r", R - 8); tvCloth.style.r = `${R - 8}px`;
-const sc = Math.min(1, 120 / (R + 34));
+const sc = Math.min(1, 84 / (R + 32));
 tv.style.transform = `scale(${sc})`;
 tv.style.transition = "transform .5s cubic-bezier(.3,1.3,.5,1)";
 while (tvSeats.length > n) {

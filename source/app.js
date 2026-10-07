@@ -377,7 +377,7 @@ function drawTable(n) {
   const R = tableRadius(n);
   tvTable.setAttribute("r", R); tvTable.style.r = `${R}px`;
   tvCloth.setAttribute("r", R - 8); tvCloth.style.r = `${R - 8}px`;
-  const sc = Math.min(1, 120 / (R + 34));
+  const sc = Math.min(1, 84 / (R + 32));
   tv.style.transform = `scale(${sc})`;
   tv.style.transition = "transform .5s cubic-bezier(.3,1.3,.5,1)";
   while (tvSeats.length > n) {
