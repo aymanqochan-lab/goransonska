@@ -416,20 +416,17 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .gala-k{font:600 11.5px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 @media (max-width:640px){.gala-img{aspect-ratio:4/3}.gala-img img{object-position:40% 28%}}
 
-/* flame from Grillkökets own GK logo: lit in the seal, it evaporates into steam when the name opens */
-.mark .flame{position:absolute;left:50%;bottom:calc(100% - .1em);width:.62em;height:.62em;transform:translateX(-50%) scale(.4);opacity:0;overflow:visible;transition:transform 1.2s cubic-bezier(.65,0,.25,1),opacity .9s,filter .9s}
-.mark .flame .f-out{fill:var(--fg);stroke:none}
-.mark .flame .f-in{fill:#7a3424;opacity:.9}
-.mark.seal .flame{opacity:1;transform:translateX(-50%) scale(.9);transition-delay:.7s}
-.mark.vapor .flame{opacity:0;transform:translateX(-50%) translateY(-.5em) scale(1.25,1.5);filter:blur(5px);transition-duration:1.4s;transition-delay:0s}
-.hero.title .mark.seal .flame{animation:flick 3.4s ease-in-out 1.6s infinite}
-@keyframes flick{0%,100%{transform:translateX(-50%) scale(.9)}40%{transform:translateX(-50%) scale(.9,.96) skewX(-2deg)}70%{transform:translateX(-50%) scale(.9,.86) skewX(1.5deg)}}
-.mark .steam{position:absolute;left:50%;bottom:calc(100% - .2em);width:1.2em;height:1.4em;transform:translateX(-50%);overflow:visible;pointer-events:none}
-.mark .steam path{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;opacity:0;stroke-dasharray:120;stroke-dashoffset:120}
-.mark.vapor .steam path{animation:vapor 2.6s ease-out forwards}
-.mark.vapor .steam path:nth-child(2){animation-delay:.25s}
-.mark.vapor .steam path:nth-child(3){animation-delay:.5s}
-@keyframes vapor{0%{opacity:0;stroke-dashoffset:120;transform:translateY(12px)}25%{opacity:.75}70%{opacity:.35}100%{opacity:0;stroke-dashoffset:0;transform:translateY(-34px) scaleX(1.25)}}
+/* flame from Grillkökets own GK logo: lit in the seal; when the name opens the same flame dissolves into steam */
+.mark .flame{position:absolute;left:50%;bottom:calc(100% - .2em);width:.86em;height:.92em;transform:translateX(-50%) scale(.5);opacity:0;overflow:visible;transform-origin:50% 90%;transition:transform 1.2s cubic-bezier(.45,0,.2,1),opacity .9s ease}
+.mark .flame .fk{transform-box:fill-box;transform-origin:50% 100%}
+.mark .flame .f-out{fill:var(--fg);transition:fill 1s ease}
+.mark .flame .f-in{fill:#7a3424;opacity:.9;transition:opacity .7s ease}
+.mark.seal .flame{opacity:1;transform:translateX(-50%) scale(1);transition-delay:.8s}
+.hero.title .mark.seal .flame .fk{animation:flick 2.8s ease-in-out 2s infinite}
+@keyframes flick{0%,100%{transform:scale(1,1)}35%{transform:scale(.98,1.04) skewX(-1.5deg)}70%{transform:scale(1.02,.97) skewX(1deg)}}
+.mark.vapor .flame{opacity:0;transform:translateX(-50%) translateY(-.55em) scale(1.3,1.7);transition:transform 2.6s cubic-bezier(.2,.6,.3,1),opacity 2.2s ease .35s}
+.mark.vapor .flame .f-out{fill:rgba(236,227,207,.55)}
+.mark.vapor .flame .f-in{opacity:0}
 .brand .mark .flame{display:none}
 /* the frame flashes when the seal swaps the picture */
 .hero .flash{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(40% 40% at 50% 46%,rgba(226,180,106,.22),transparent 70%);opacity:0;transition:opacity 1.2s ease}
@@ -845,10 +842,11 @@ function buildMark(el) {
     <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" stroke-width="1.4"/><circle cx="100" cy="100" r="90" stroke-width=".8"/>
     <text x="100" y="146" text-anchor="middle" style="font-size:9.5px;letter-spacing:5px">LINDESBERG</text>
     <text x="100" y="168" text-anchor="middle" style="font-size:12px;letter-spacing:3px">WD</text></svg>
-    <svg class="flame" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="fg${++flameId}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c97a45"/><stop offset=".55" stop-color="#e2b46a"/><stop offset="1" stop-color="#f3dfaa"/></linearGradient></defs>
+    <svg class="flame" viewBox="-20 -40 140 150" aria-hidden="true"><defs><linearGradient id="fg${++flameId}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#c97a45"/><stop offset=".55" stop-color="#e2b46a"/><stop offset="1" stop-color="#f3dfaa"/></linearGradient>
+      <filter id="vf${flameId}" x="-60%" y="-80%" width="220%" height="260%"><feTurbulence type="fractalNoise" baseFrequency="0.035 0.09" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+      <g class="fl" filter="url(#vf${flameId})"><g class="fk">
       <path class="f-out" style="--fg:url(#fg${flameId})" d="M50 4C58 22 78 32 76 58C74 80 60 94 50 94C38 94 24 82 24 62C24 46 34 40 36 28C42 36 44 40 44 46C50 36 50 20 50 4Z"/>
-      <path class="f-in" d="M50 50C56 59 62 66 60 78C58 86 54 90 50 90C45 90 40 85 40 77C40 69 46 63 50 50Z"/></svg>
-    <svg class="steam" viewBox="0 0 100 120" aria-hidden="true"><path d="M50 116c-10-14 10-22 0-38s10-24 0-40"/><path d="M34 112c-8-12 8-18 0-32s8-20 0-32"/><path d="M66 112c-8-12 8-18 0-32s8-20 0-32"/></svg>`;
+      <path class="f-in" d="M50 50C56 59 62 66 60 78C58 86 54 90 50 90C45 90 40 85 40 77C40 69 46 63 50 50Z"/></g></g></svg>`;
 }
 document.querySelectorAll("[data-mark]").forEach(buildMark);
 buildMark($("#heroMark"));
@@ -872,6 +870,19 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 burger.addEventListener("click", () => { const o = !nav.classList.contains("open"); nav.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); onScroll(); });
 nav.addEventListener("click", (e) => { if (e.target.closest("a")) { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); onScroll(); } });
 
+
+/* the flame turns into steam: the same shape rises, pales and is torn into wisps */
+function vaporize(m) {
+  m.classList.add("vapor"); m.classList.remove("seal");
+  const f = m.querySelector(".flame filter"), dm = f && f.querySelector("feDisplacementMap"), tb = f && f.querySelector("feTurbulence");
+  const t0 = performance.now(), D = 2600;
+  (function step(t) {
+    const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 2);
+    if (dm) dm.setAttribute("scale", (e * 34).toFixed(1));
+    if (tb) tb.setAttribute("baseFrequency", `${(0.035 + e * 0.02).toFixed(3)} ${(0.09 - e * 0.05).toFixed(3)}`);
+    if (k < 1 && !reduce) requestAnimationFrame(step); else setTimeout(() => { m.classList.remove("vapor"); if (dm) dm.setAttribute("scale", "0"); }, 300);
+  })(t0);
+}
 /* ================= hero: cinematic sequence ================= */
 const hero = $("#hem"), shotsBox = $("#shots"), mark = $("#heroMark");
 const shotEls = SHOTS.map((s) => { const d = document.createElement("div"); d.className = "shot"; d.dataset.src = img(s.src, innerWidth > 900 ? 2000 : 1100); shotsBox.append(d); return d; });
@@ -896,7 +907,7 @@ async function play() {
   await loaded(shotEls[1]); move(1); hero.classList.add("lift");
   await wait(900); if (!finished) hero.classList.add("title");
   await wait(1900); if (!finished) mark.classList.add("seal");
-  await wait(2600); if (!finished) { mark.classList.add("vapor"); mark.classList.remove("seal"); setTimeout(() => mark.classList.remove("vapor"), 2700); }
+  await wait(2600); if (!finished) vaporize(mark);
   await wait(700); finish();
   cur = 1;
   /* the logo closes into the seal, the picture changes while it is closed, then the logo opens again */
@@ -907,8 +918,8 @@ async function play() {
     mark.classList.add("seal");                       // 1. the name folds into the GK seal (1.6 s)
     await wait(1900); hero.classList.add("swap"); move(next); cur = next;   // 2. picture changes while it is closed
     await wait(2200); hero.classList.remove("swap");  // 3. hold the seal with the flame
-    mark.classList.add("vapor"); mark.classList.remove("seal");             // 4. it opens and the flame turns to steam
-    await wait(2900); mark.classList.remove("vapor");
+    vaporize(mark);                                   // 4. it opens and the flame turns to steam
+    await wait(2900);
     loop();
   };
   loop();
