@@ -251,7 +251,7 @@ lazy.addEventListener("keydown", (e) => {
   if (e.key === "Enter") { const it = ring.items[frontIndex()]; if (it) openDish(it, ring.section); }
 });
 
-let dragX = null, dragStartAngle = 0, dragMoved = false;
+let dragX = null, dragStartAngle = 0, dragMoved = false, dragRaf = 0;
 const stage = $("#stage");
 stage.addEventListener("pointerdown", (e) => {
   if (e.target.closest(".spin")) return;
@@ -263,9 +263,12 @@ addEventListener("pointermove", (e) => {
   const dx = e.clientX - dragX;
   if (Math.abs(dx) > 6) dragMoved = true;
   ring.angle = dragStartAngle + dx * 0.32;
-  lazy.style.transform = `translateZ(${-ring.radius}px) rotateY(${ring.angle}deg)`;
+  if (!dragRaf) dragRaf = requestAnimationFrame(() => {
+    dragRaf = 0;
+    lazy.style.transform = `translateZ(${-ring.radius}px) rotateY(${ring.angle}deg)`;
+  });
 });
-addEventListener("pointerup", () => {
+const endDrag = () => {
   if (dragX == null) return;
   dragX = null;
   lazy.classList.remove("dragging");
@@ -273,7 +276,9 @@ addEventListener("pointerup", () => {
   if (frontIndex() >= ring.items.length) rotateTo(frontIndex() > ring.items.length / 2 + ring.N / 2 ? 0 : ring.items.length - 1);
   applyRing();
   setTimeout(() => (dragMoved = false), 0);
-});
+};
+addEventListener("pointerup", endDrag);
+addEventListener("pointercancel", endDrag);
 let resizeT;
 addEventListener("resize", () => {
   clearTimeout(resizeT);
@@ -611,6 +616,54 @@ if ("IntersectionObserver" in window) {
   const film = $("#film");
   new IntersectionObserver((es) => film.classList.toggle("live", es[0].isIntersecting)).observe(film);
 } else $("#film").classList.add("live");
+
+/* kvällar: slides along by itself, one photo at a time; any touch pauses it */
+{
+  const film = $("#film");
+  const figs = [...film.querySelectorAll("figure")];
+  const dots = el("div", "film-dots");
+  let idx = 0, pausedUntil = 0, hovering = false, visible = false;
+  const maxLeft = () => film.scrollWidth - film.clientWidth - 4;
+  const leftOf = (i) => figs[i].offsetLeft - figs[0].offsetLeft;
+  const mark = () => {
+    [...dots.children].forEach((d, i) => d.setAttribute("aria-current", i === idx ? "true" : "false"));
+  };
+  const go = (i) => {
+    idx = (i + figs.length) % figs.length;
+    film.scrollTo({ left: leftOf(idx), behavior: reduceMotion ? "auto" : "smooth" });
+    mark();
+  };
+  const hold = (ms = 8000) => (pausedUntil = Date.now() + ms);
+  figs.forEach((f, i) => {
+    const b = el("button");
+    b.type = "button";
+    b.setAttribute("aria-label", `Visa ${f.querySelector("figcaption")?.textContent || "bild " + (i + 1)}`);
+    b.addEventListener("click", () => { hold(); go(i); });
+    dots.append(b);
+  });
+  film.after(dots);
+  mark();
+  let st;
+  film.addEventListener("scroll", () => {
+    clearTimeout(st);
+    st = setTimeout(() => {
+      const x = film.scrollLeft;
+      let best = 0;
+      figs.forEach((_, i) => { if (Math.abs(leftOf(i) - x) < Math.abs(leftOf(best) - x)) best = i; });
+      idx = x >= maxLeft() ? figs.length - 1 : best;
+      mark();
+    }, 120);
+  }, { passive: true });
+  ["pointerdown", "touchstart", "wheel"].forEach((ev) => film.addEventListener(ev, () => hold(), { passive: true }));
+  film.addEventListener("mouseenter", () => (hovering = true));
+  film.addEventListener("mouseleave", () => (hovering = false));
+  if ("IntersectionObserver" in window) new IntersectionObserver((es) => (visible = es[0].isIntersecting), { threshold: 0.35 }).observe(film);
+  else visible = true;
+  if (!reduceMotion) setInterval(() => {
+    if (!visible || hovering || Date.now() < pausedUntil || document.hidden) return;
+    go(film.scrollLeft >= maxLeft() ? 0 : idx + 1);
+  }, 2600);
+}
 
 drawTable(S.party);
 loadMenu();
