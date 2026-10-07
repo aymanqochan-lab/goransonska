@@ -287,6 +287,40 @@ mark{background:rgba(201,122,69,.28);color:inherit}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .js .rv{opacity:1;transform:none}
 }
+
+/* ---- "Se rätten" layered popup ---- */
+.item[data-name]{cursor:pointer;transition:background .2s}
+.item[data-name]:hover{background:linear-gradient(90deg,transparent,rgba(201,122,69,.07),transparent)}
+.item[data-name]:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.see{display:inline-flex;align-items:center;gap:6px;font:600 11.5px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ember);padding:6px 9px;border:1px solid rgba(201,122,69,.45);border-radius:2px;margin-left:auto}
+.see svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.item[data-name]:hover .see{background:var(--ember);color:var(--pine)}
+.dish-dlg{border:1px solid var(--rule);padding:0;background:radial-gradient(110% 80% at 40% 55%,#1d3b2b,var(--pine) 70%);color:var(--cream);width:min(900px,100vw - 20px);max-height:calc(100dvh - 20px);border-radius:4px;overflow:auto}
+.dish-dlg::backdrop{background:rgba(4,12,8,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.dish-dlg[open]{animation:dlgIn .45s cubic-bezier(.2,.8,.3,1)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(24px) scale(.98)}}
+.dl-head{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;padding:20px 20px 0}
+.dl-head h3{font-size:clamp(26px,4vw,40px)}
+.dl-head p{color:var(--sage);font-size:15px;margin-top:6px;max-width:46ch}
+.dl-price{font:600 18px var(--f-body);color:var(--ember);white-space:nowrap;font-variant-numeric:tabular-nums}
+.dl-x{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--rule);background:transparent;color:var(--cream);font-size:24px;line-height:1;cursor:pointer}
+.dl-stage{position:relative;overflow:hidden;margin:4px 12px 0}
+.dl-inner{position:absolute;left:0;top:0;transform-origin:0 0}
+.dl-layer{position:absolute;transition:transform 1s cubic-bezier(.5,0,.15,1);transition-delay:calc(var(--i) * 45ms)}
+.dl-layer canvas{display:block;transition:opacity .5s,transform .7s cubic-bezier(.2,.8,.3,1);transition-delay:calc(var(--i) * 70ms)}
+.dl-inner.drop .dl-layer canvas{opacity:0;transform:translateY(-60px);transition:none}
+.dl-inner.open .dl-layer{transform:translateY(var(--lift))}
+.dl-inner.open .dl-layer canvas{animation:bob 5s ease-in-out infinite;animation-delay:calc(var(--i) * -.6s)}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.dl-label{position:absolute;left:556px;transform:translateY(-50%);display:flex;align-items:center;gap:12px;font:500 30px/1.2 var(--f-head);color:var(--cream);white-space:nowrap;opacity:0;transition:opacity .5s;transition-delay:calc(.5s + var(--i) * 60ms)}
+.dl-label i{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--ember));position:relative}
+.dl-label i::after{content:"";position:absolute;right:-3px;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--ember)}
+.dl-inner.open .dl-label{opacity:1}
+.dl-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:6px 20px 20px}
+.dl-foot small{color:var(--sage);font-size:13px}
+.dl-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:560px){.dl-head{padding:16px 14px 0}.dl-foot{padding:6px 14px 16px}.dl-stage{margin-inline:4px}}
+@media (prefers-reduced-motion:reduce){.dl-layer,.dl-layer canvas,.dl-label{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -632,6 +666,7 @@ const MENU = [
 
 
 
+MENU.forEach((c) => c.groups.forEach((g) => g.items.forEach((it) => { it.cat = c.id; it.grp = g.name || ""; })));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const norm = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const hl = (txt, q) => { if (!q) return esc(txt); const i = norm(txt).indexOf(q); return i < 0 ? esc(txt) : esc(txt.slice(0, i)) + "<mark>" + esc(txt.slice(i, i + q.length)) + "</mark>" + esc(txt.slice(i + q.length)); };
@@ -646,10 +681,11 @@ MENU.forEach((c) => {
 });
 function itemHTML(it, k, q) {
   const [no, name, desc, price, tags = []] = it; const sized = Array.isArray(price);
-  return `<div class="item" style="--k:${k}">
-    <span class="no">${no}</span><span class="nm">${hl(name, q)}</span><span class="price">${sized ? `från ${price[0][1]} kr` : `${price} kr`}</span>
+  const pTxt = sized ? `från ${price[0][1]} kr` : `${price} kr`;
+  return `<div class="item" style="--k:${k}" role="button" tabindex="0" aria-haspopup="dialog" data-cat="${it.cat}" data-grp="${esc(it.grp)}" data-name="${esc(name)}" data-desc="${esc(desc)}" data-price="${pTxt}">
+    <span class="no">${no}</span><span class="nm">${hl(name, q)}</span><span class="price">${pTxt}</span>
     ${desc ? `<p class="ds">${hl(desc, q)}</p>` : ""}
-    ${(sized || tags.length) ? `<div class="meta">${sized ? price.map(([s, p]) => `<span class="sz">${s}<b>${p} kr</b></span>`).join("") : ""}${tags.map((t) => `<span class="tg">${t}</span>`).join("")}</div>` : ""}
+    <div class="meta">${sized ? price.map(([s, p]) => `<span class="sz">${s}<b>${p} kr</b></span>`).join("") : ""}${tags.map((t) => `<span class="tg">${t}</span>`).join("")}<span class="see"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M5 12h14M4 17h16"/></svg>Se rätten</span></div>
   </div>`;
 }
 let lastCover = "";
@@ -794,5 +830,16 @@ if ("IntersectionObserver" in window && !reduce) {
 } else document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
 })();
 </script>
+
+<dialog class="dish-dlg" id="dish-dlg" aria-labelledby="dl-name">
+  <div class="dl-head">
+    <div><h3 id="dl-name"></h3><p id="dl-desc"></p></div>
+    <div style="display:flex;gap:14px;align-items:center"><span class="dl-price" id="dl-price"></span><button class="dl-x" id="dl-close" type="button" aria-label="Stäng">×</button></div>
+  </div>
+  <div class="dl-stage" id="dl-stage"><div class="dl-inner" id="dl-inner"></div></div>
+  <ul class="dl-list" id="dl-list"></ul>
+  <div class="dl-foot"><small>Illustration av rättens lager. Riktiga rätten kan se lite annorlunda ut.</small><button class="btn btn-line" id="dl-toggle" type="button" aria-pressed="true">Stapla ihop</button></div>
+</dialog>
+<script src="layers.js" defer></script>
 </body>
 </html>
