@@ -500,7 +500,8 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .dl-photo img{max-width:100%;max-height:100%;object-fit:contain;display:block;transform:scale(.92);opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s}
 .dl-photo.ready img{transform:none;opacity:1}
 .dl-photo.crop{height:min(52dvh,440px)}
-.dl-photo.crop img{width:100%;height:150%;max-height:none;object-fit:cover;object-position:50% 0;align-self:start}
+.dl-photo.crop{place-items:start center}
+.dl-photo.crop img{height:158%;width:auto;max-width:none;max-height:none;object-fit:contain}
 .dl-photo figcaption{position:absolute;left:12px;bottom:10px;font:600 10.5px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--cream);background:rgba(7,18,12,.7);padding:6px 9px;border:1px solid var(--rule)}
 .dish-dlg.mode-layers .dl-photo,.dish-dlg.nophoto .dl-photo{display:none}
 .dish-dlg.mode-photo .dl-stage{display:none}
@@ -1151,11 +1152,11 @@ if ("IntersectionObserver" in window && !reduce) {
   <div class="dl-modes" id="dl-modes" role="tablist" aria-label="Visa rätten som">
     <button type="button" role="tab" id="dl-m-photo" aria-selected="true">Foto</button><button type="button" role="tab" id="dl-m-layers" aria-selected="false">Ingredienser</button>
   </div>
-  <figure class="dl-photo" id="dl-photo"><img id="dl-img" alt=""><figcaption>Grillkökets eget foto</figcaption></figure>
+  <figure class="dl-photo" id="dl-photo"><img id="dl-img" alt=""><figcaption>Bild från Grillkökets beställningssida</figcaption></figure>
   <div class="dl-stage" id="dl-stage"><div class="dl-inner" id="dl-inner"></div></div>
   <ul class="dl-list" id="dl-list"></ul>
   <div class="dl-foot"><small id="dl-note">Illustration av rättens lager. Riktiga rätten kan se lite annorlunda ut.</small><button class="btn btn-line" id="dl-toggle" type="button" aria-pressed="true">Stapla ihop</button></div>
 </dialog>
-<script src="layers.js?v=3" defer></script>
+<script src="layers.js?v=4" defer></script>
 </body>
 </html>
