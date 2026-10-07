@@ -19,6 +19,7 @@ const RECIPES = {
   "Dubbel ost & baconburgare": ["bunBottom", "dressing", "lettuce", "patty", "cheddar", "patty", "cheddar", "bacon", "bunTop"],
   "Halloumiburgare":           ["bunBottom", "dressing", "lettuce", "tomatoSlices", "halloumi", "redOnion", "bunTop"],
   "Fiskburgare":               ["bunBottom", "remoulade", "lettuce", "fishBreaded", "bunTop"],
+  "Månadens burgare":          ["bunBottom", "dressing", "lettuce", "redOnion", "patty", "cheddar", "patty", "cheddar", "bunTop"],
   "Kycklingburgare":           ["bunBottom", "dressing", "lettuce", "tomatoSlices", "chickenFillet", "bunTop"],
   // À la carte
   "Oxfiléplanka":    ["board", "mashPiping", "vegMix", "steak", "redWine", "bearnaise"],
@@ -27,6 +28,7 @@ const RECIPES = {
   "Black & White":   ["board", "friedPotato", "vegMix", "steak", "porkSteak", "redWine", "bearnaise"],
   "Filé Oscar":      ["board", "friedPotato", "vegMix", "steak", "shrimpTop", "bearnaise"],
   "Kycklingspett":   ["board", "wedges", "vegMix", "skewer", "ajvar", "tzatziki"],
+  "Ägg & Bacon":     ["plate", "friedPotato", "bacon", "friedEgg"],
   // Grill
   "Schnitzel":           ["plate", "fries", "schnitzel", "bearnaise"],
   "Grillbiff":           ["plate", "fries", "steak", "bearnaise"],
@@ -543,20 +545,42 @@ function setExploded(v) {
   $("#dl-toggle").textContent = v ? "Stapla ihop" : "Dela upp";
   $("#dl-toggle").setAttribute("aria-pressed", String(v));
 }
+function playLayers(d) {
+  setExploded(false); inner.classList.add("drop");
+  build(d);
+  requestAnimationFrame(() => { inner.classList.remove("drop"); setTimeout(() => open && cur === d && setExploded(true), reduce ? 0 : 650); });
+}
+function setMode(m) {
+  dlg.classList.toggle("mode-photo", m === "photo"); dlg.classList.toggle("mode-layers", m === "layers");
+  $("#dl-m-photo").setAttribute("aria-selected", String(m === "photo")); $("#dl-m-layers").setAttribute("aria-selected", String(m === "layers"));
+  if (m === "layers") playLayers(cur);
+}
 function show(d) {
   cur = d;
   $("#dl-name").textContent = d.name;
   $("#dl-price").textContent = d.price;
   $("#dl-desc").textContent = d.desc || "";
+  const ph = $("#dl-photo"), im = $("#dl-img");
+  ph.classList.remove("ready", "burst"); ph.classList.toggle("crop", d.crop === "1");
+  dlg.classList.toggle("nophoto", !d.photo);
   if (!dlg.open) dlg.showModal();
   open = true;
-  setExploded(false); inner.classList.add("drop");
-  build(d);
-  requestAnimationFrame(() => { inner.classList.remove("drop"); setTimeout(() => open && cur === d && setExploded(true), reduce ? 0 : 650); });
+  if (d.photo) {
+    im.onload = () => ph.classList.add("ready");
+    im.onerror = () => { dlg.classList.add("nophoto"); setMode("layers"); };
+    im.alt = d.name; im.src = d.photo; if (im.complete && im.naturalWidth) ph.classList.add("ready");
+    setMode("photo");
+  } else setMode("layers");
 }
 function readItem(el) {
-  return { cat: el.dataset.cat, grp: el.dataset.grp || "", name: el.dataset.name, desc: el.dataset.desc || "", price: el.dataset.price || "" };
+  return { cat: el.dataset.cat, grp: el.dataset.grp || "", name: el.dataset.name, desc: el.dataset.desc || "", price: el.dataset.price || "", photo: el.dataset.photo || "", crop: el.dataset.crop || "0" };
 }
+$("#dl-m-photo").addEventListener("click", () => setMode("photo"));
+$("#dl-m-layers").addEventListener("click", () => {
+  if (dlg.classList.contains("mode-layers")) return;
+  const ph = $("#dl-photo"); if (reduce || !ph.classList.contains("ready")) return setMode("layers");
+  ph.classList.add("burst"); setTimeout(() => { ph.classList.remove("burst"); setMode("layers"); }, 480);
+});
 document.addEventListener("click", (e) => {
   const it = e.target.closest(".item[data-name]"); if (!it) return;
   show(readItem(it));
@@ -568,7 +592,7 @@ $("#dl-toggle").addEventListener("click", () => setExploded(!exploded));
 $("#dl-close").addEventListener("click", () => dlg.close());
 dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
 dlg.addEventListener("close", () => { open = false; });
-let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (dlg.open && cur) { build(cur); setExploded(exploded); } }, 200); });
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (dlg.open && cur && dlg.classList.contains("mode-layers")) { build(cur); setExploded(exploded); } }, 200); });
 
 // for testing in the console: GKLayers.show({cat:"pizza",name:"Kebabpizza",desc:"kebab, bearnaisesås i ugn & cayenne",price:"125 kr"})
 window.GKLayers = { show, recipeFor, ING, RECIPES };
