@@ -572,7 +572,8 @@ function textures() {
   TEX.fish = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#f1e6cf"; g.fillRect(0, 0, w, h); g.strokeStyle = "rgba(210,190,150,.6)"; g.lineWidth = 2; for (let i = 0; i < 14; i++) { g.beginPath(); g.moveTo(i * 20, 0); g.quadraticCurveTo(i * 20 + 30, h / 2, i * 20, h); g.stroke(); } const s = g.createLinearGradient(0, 0, w, 0); s.addColorStop(0, "rgba(200,140,60,.55)"); s.addColorStop(0.3, "rgba(200,140,60,0)"); g.fillStyle = s; g.fillRect(0, 0, w, h); });
   TEX.dough = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#e4bf86"; g.fillRect(0, 0, w, h); specks(g, w, h, 500, ["#c9934f", "#f1d6a6", "#b8782f"], 1, 6, 0.5); specks(g, w, h, 60, ["#7a3f14", "#5a2a0c"], 3, 9, 0.5); });
   TEX.sauce = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#b3301c"; g.fillRect(0, 0, w, h); specks(g, w, h, 500, ["#8e2210", "#cf4a2e", "#6e8c2e"], 1, 3, 0.6); });
-  TEX.pizzaCheese = canvasTex(512, 512, (g, w, h) => { g.fillStyle = "#f3dda4"; g.fillRect(0, 0, w, h); specks(g, w, h, 260, ["#fbeac0", "#efcd7c"], 8, 26, 0.7); specks(g, w, h, 90, ["#c98a3a", "#a8682a"], 4, 14, 0.55); specks(g, w, h, 70, ["#b3301c"], 4, 12, 0.35); });
+  TEX.pizzaCheese = canvasTex(512, 512, (g, w, h) => { g.fillStyle = "#eec774"; g.fillRect(0, 0, w, h); specks(g, w, h, 300, ["#f6dc98", "#e2b155", "#f3d07e"], 8, 28, 0.75); specks(g, w, h, 140, ["#b8742e", "#9a5a22", "#c98a3a"], 4, 16, 0.6); specks(g, w, h, 90, ["#b3301c", "#c4471f"], 4, 14, 0.45); });
+  TEX.crust = canvasTex(256, 256, (g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#c98a45"); gr.addColorStop(.5, "#e0ac62"); gr.addColorStop(1, "#b7742f"); g.fillStyle = gr; g.fillRect(0, 0, w, h); specks(g, w, h, 160, ["#7a3f14", "#5a2a0c", "#9a5520"], 2, 8, 0.6); specks(g, w, h, 300, ["#f0cf94"], 1, 3, 0.4); });
   TEX.cayenne = canvasTex(512, 512, (g, w, h) => { g.clearRect(0, 0, w, h); specks(g, w, h, 1600, ["#b11e0e", "#d23b18", "#7a1004"], 0.8, 2.2, 0.9); });
   TEX.salami = canvasTex(128, 128, (g, w, h) => { g.fillStyle = "#9c1f22"; g.fillRect(0, 0, w, h); specks(g, w, h, 70, ["#f0c6b0", "#e7a68f"], 2, 5, 0.9); });
   TEX.ceramic = canvasTex(64, 64, (g, w, h) => { g.fillStyle = "#f2efe8"; g.fillRect(0, 0, w, h); });
@@ -694,7 +695,7 @@ const PIECE = {
   ham: [() => new T.BoxGeometry(0.3, 0.025, 0.24), 0xe7a39a, 14], mush: [() => { const g = new T.CylinderGeometry(0.16, 0.16, 0.03, 16, 1, false, 0, Math.PI); return g; }, 0xd9c8a6, 14],
   shrimp: [() => new T.TorusGeometry(0.11, 0.05, 8, 16, 4.2), 0xf08a6a, 10], scampi: [() => new T.TorusGeometry(0.15, 0.06, 8, 16, 4.2), 0xf07a52, 9],
   mussel: [() => { const g = new T.SphereGeometry(0.08, 10, 8); g.scale(1.4, 0.5, 0.9); return g; }, 0x2b2420, 8], pine: [() => new T.BoxGeometry(0.16, 0.06, 0.12), 0xf4d35e, 14],
-  salami: [() => new T.CylinderGeometry(0.24, 0.24, 0.025, 24), 0xffffff, 9, "salami"], kebab: [() => { const g = new T.BoxGeometry(0.38, 0.05, 0.11, 6, 1, 1); bump(g, 0.15, 9); return g; }, 0x7a4422, 26],
+  salami: [() => new T.CylinderGeometry(0.24, 0.24, 0.025, 24), 0xffffff, 9, "salami"], kebab: [() => { const g = new T.BoxGeometry(0.34, 0.045, 0.09, 6, 1, 1); bump(g, 0.18, 9); return g; }, 0x4e2a14, 46],
   mince: [() => new T.DodecahedronGeometry(0.06), 0x6a3a20, 40], beef: [() => { const g = new T.BoxGeometry(0.32, 0.06, 0.13, 4, 1, 1); bump(g, 0.1, 8); return g; }, 0x6b3520, 16],
   pork: [() => { const g = new T.BoxGeometry(0.3, 0.06, 0.13, 4, 1, 1); bump(g, 0.1, 8); return g; }, 0xb98a63, 14], chicken: [() => { const g = new T.BoxGeometry(0.17, 0.08, 0.14, 2, 1, 2); bump(g, 0.08, 8); return g; }, 0xe0b37a, 16],
   onion: [() => new T.TorusGeometry(0.13, 0.018, 6, 24), 0xf3ead8, 12], redonion: [() => new T.TorusGeometry(0.13, 0.018, 6, 24), 0x9d4c8f, 12],
@@ -708,7 +709,7 @@ const PIECE = {
   zucchini: [() => new T.CylinderGeometry(0.13, 0.13, 0.03, 20), 0x8fb860, 10], sundried: [() => { const g = new T.SphereGeometry(0.09, 8, 6); g.scale(1.3, 0.35, 0.9); return g; }, 0x7e1f12, 12],
   falafel: [() => { const g = new T.SphereGeometry(0.12, 12, 10); bump(g, 0.12, 14); return g; }, 0x7a5326, 10], quorn: [() => new T.BoxGeometry(0.12, 0.08, 0.12), 0xd8c39a, 16],
   fries: [() => new T.BoxGeometry(0.42, 0.07, 0.07), 0xf2c25a, 18], iceberg: [() => { const g = new T.PlaneGeometry(0.4, 0.06, 6, 1); g.rotateX(-Math.PI / 2); return g; }, 0xbde08a, 40],
-  bearn: [() => { const g = new T.SphereGeometry(0.17, 16, 10); g.scale(1, 0.38, 1); return g; }, 0xf2cf6a, 9], mozz: [() => { const g = new T.SphereGeometry(0.15, 12, 8); g.scale(1, 0.35, 1); return g; }, 0xfaf3df, 8],
+  bearn: [() => { const g = new T.SphereGeometry(0.22, 16, 10); g.scale(1, 0.3, 1); bump(g, 0.06, 12); return g; }, 0xe9b94a, 14], mozz: [() => { const g = new T.SphereGeometry(0.15, 12, 8); g.scale(1, 0.35, 1); return g; }, 0xfaf3df, 8],
   garlic: [() => new T.DodecahedronGeometry(0.035), 0xf4efd8, 30], drizzle: [() => new T.TorusGeometry(0.4, 0.025, 6, 40, 3), 0x7a2a10, 4],
 };
 function scatter(type, color, count, geoFn, mapName, yBase) {
@@ -730,8 +731,8 @@ function buildPizza(item) {
   // dough + crust
   const dough = new T.Group();
   const base = new T.Mesh(new T.CylinderGeometry(2.05, 2.0, 0.1, 96), mat({ map: X.dough, roughness: 0.9 })); base.position.y = 0.05;
-  const crustGeo = new T.TorusGeometry(2.02, 0.16, 18, 120); crustGeo.rotateX(Math.PI / 2); bump(crustGeo, 0.04, 6);
-  const crust = new T.Mesh(crustGeo, mat({ map: X.dough, roughness: 0.85, color: 0xe2b070 })); crust.position.y = 0.13;
+  const crustGeo = new T.TorusGeometry(2.02, 0.17, 18, 140); crustGeo.rotateX(Math.PI / 2); bump(crustGeo, 0.012, 9);
+  const crust = new T.Mesh(crustGeo, mat({ map: X.crust, roughness: 0.8 })); crust.position.y = 0.13;
   dough.add(base, crust); layer(dough, "Pizzadeg", 0, 2.1);
   const sauce = new T.Mesh(new T.CircleGeometry(1.88, 96), mat({ map: X.sauce, roughness: 0.4 })); sauce.rotation.x = -Math.PI / 2; sauce.position.y = 0.105;
   const sg = new T.Group(); sg.add(sauce); layer(sg, "Tomatsås", 0.55);
@@ -783,7 +784,7 @@ function buildPlank(name) {
   if (cfg.side === "mash") {
     const g = new T.Group(); const blob = new T.SphereGeometry(0.17, 14, 10); blob.scale(1, 1.1, 1); bump(blob, 0.08, 18);
     const tip = new T.ConeGeometry(0.1, 0.16, 10);
-    const n = 46, im = new T.InstancedMesh(blob, mat({ color: 0xf0dca6, roughness: 0.7 }), n), it = new T.InstancedMesh(tip, mat({ color: 0xd9a95a, roughness: 0.7 }), n);
+    const n = 46, im = new T.InstancedMesh(blob, mat({ color: 0xe6c983, roughness: 0.75 }), n), it = new T.InstancedMesh(tip, mat({ color: 0xb9782e, roughness: 0.7 }), n);
     const m4 = new T.Matrix4();
     for (let i = 0; i < n; i++) { const a = (i / n) * 6.283; const x = Math.cos(a) * 2.05, z = Math.sin(a) * 1.05; m4.makeTranslation(x, top + 0.12, z); im.setMatrixAt(i, m4); m4.makeTranslation(x, top + 0.3, z); it.setMatrixAt(i, m4); }
     g.add(im, it); add(g, "Potatismos, gratinerat", 0.75, new T.Vector3(2.05, top + 0.2, 0));
