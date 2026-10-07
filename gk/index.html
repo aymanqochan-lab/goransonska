@@ -342,6 +342,7 @@ mark{background:rgba(201,164,106,.25);color:inherit;border-radius:3px}
         <div class="floor" aria-hidden="true">
           <svg id="floor" viewBox="0 0 360 230"></svg>
           <div class="floor-cap"><span id="floor-cap">Bord som passar 2 gäster</span><span id="floor-zone">Inne</span></div>
+          <p class="muted" style="font-size:12px;margin-top:6px">Skiss. Vi väljer det bord som passar bäst när vi bekräftar.</p>
         </div>
       </div>
       <form class="ticket rv" id="ticket" novalidate>
@@ -1022,7 +1023,7 @@ function drawFloor() {
   const svg = $("#floor"); const ts = TABLES[B.zone];
   let best = -1, bestS = 99; ts.forEach((t, i) => { if (t.s >= B.party && t.s < bestS) { best = i; bestS = t.s; } });
   let html = `<rect class="room" x="6" y="10" width="348" height="210" rx="10"/>`;
-  html += B.zone === "Inne" ? `<text class="lbl" x="18" y="212">Entré</text><rect class="room" x="290" y="18" width="56" height="26" rx="4"/><text class="lbl" x="298" y="35">Kassa</text>` : `<text class="lbl" x="18" y="212">Uteservering</text>`;
+  html += B.zone === "Inne" ? `<text class="lbl" x="18" y="212">Matsal</text>` : `<text class="lbl" x="18" y="212">Uteservering</text>`;
   ts.forEach((t, i) => {
     const fit = t.s >= B.party, pick = i === best;
     const r = 10 + t.s * 1.6, seats = Array.from({ length: t.s }, (_, k) => { const a = (k / t.s) * 6.283 - 1.57; return `<circle class="seat${pick && k < B.party ? " on" : ""}" cx="${(t.x + Math.cos(a) * (r + 8)).toFixed(1)}" cy="${(t.y + Math.sin(a) * (r + 8)).toFixed(1)}" r="4.2"/>`; }).join("");
