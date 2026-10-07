@@ -363,7 +363,7 @@ const tv = $("#tableviz");
 const svgEl = (tag, attrs) => { const n = document.createElementNS(SVGNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
 let tvSeats = [], tvTable, tvCloth, tvGlow;
 function initTable() {
-  tv.append(svgEl("defs", {})).innerHTML = `<radialGradient id="tvglow"><stop offset="0" stop-color="#f2c76b" stop-opacity=".45"/><stop offset="1" stop-color="#f2c76b" stop-opacity="0"/></radialGradient>`;
+  tv.appendChild(svgEl("defs", {})).innerHTML = `<radialGradient id="tvglow"><stop offset="0" stop-color="#f2c76b" stop-opacity=".45"/><stop offset="1" stop-color="#f2c76b" stop-opacity="0"/></radialGradient>`;
   tvTable = tv.appendChild(svgEl("circle", { class: "tv-table", cx: 0, cy: 0, r: 40 }));
   tvCloth = tv.appendChild(svgEl("circle", { class: "tv-cloth", cx: 0, cy: 0, r: 32 }));
   tvGlow = tv.appendChild(svgEl("circle", { class: "tv-glow", cx: 0, cy: -8, r: 22 }));
