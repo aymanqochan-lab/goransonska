@@ -1,0 +1,1079 @@
+<title>Grillköket Lindesberg</title>
+<meta name="description" content="Pizza, hamburgare, grill och plankor på Molinders väg 2 i Lindesberg. Öppet alla dagar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a serious grill house on Lindesberg green. Hero = emblem (the town's linden on glowing coals) beside a live 3D dish studio.
+   Menu reads one course at a time; booking is a calm reservation card. */
+:root{
+  --forest:#0c1f16;   /* page */
+  --pine:#13291e;     /* raised panels */
+  --rule:#284a37;     /* lines */
+  --linen:#ece5d3;    /* text */
+  --sage:#a7b8a3;     /* secondary text */
+  --brass:#c9a46a;    /* accent: buttons, prices */
+  --coal:#d9662f;     /* fire, used only on the coals and live glow */
+  --serif:"Bodoni Moda",Didot,"Times New Roman",serif;
+  --sans:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{background:var(--forest);color:var(--linen);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.02;text-wrap:balance}
+h2{font-size:clamp(40px,6vw,74px);letter-spacing:-.01em}
+h2 em,h1 em{font-style:italic;font-weight:400;color:var(--brass)}
+h3{font-size:24px}
+p{margin:0}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+.eyebrow{font:600 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--brass)}
+.muted{color:var(--sage)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:6px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font:600 15px/1 var(--sans);letter-spacing:.02em;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .25s,border-color .25s,color .25s,transform .2s}
+.btn-brass{background:var(--brass);color:#1a160e}
+.btn-brass:hover{background:#d8b57c}
+.btn-ghost{border-color:var(--rule);color:var(--linen);background:transparent}
+.btn-ghost:hover{border-color:var(--sage)}
+.btn:active{transform:scale(.98)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(12,31,22,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.top.solid{border-color:var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:26px;min-height:66px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand svg{width:30px;height:34px}
+.brand b{font:500 20px/1 var(--serif);letter-spacing:.14em;text-transform:uppercase}
+.nav{display:flex;gap:26px;margin-left:auto}
+.nav a{position:relative;text-decoration:none;font-weight:500;font-size:15px;color:var(--sage);padding:6px 0;transition:color .25s}
+.nav a::after{content:"";position:absolute;left:50%;right:50%;bottom:0;height:1px;background:var(--brass);transition:left .3s,right .3s}
+.nav a:hover,.nav a.on{color:var(--linen)}
+.nav a:hover::after,.nav a.on::after{left:0;right:0}
+.top .btn{min-height:40px;padding:0 18px;font-size:14px}
+@media (max-width:860px){.nav{display:none}.top .btn{margin-left:auto}}
+
+/* hero */
+.hero{position:relative;padding-block:48px 40px;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 60% at 72% 55%,#173527 0%,transparent 70%),radial-gradient(40% 40% at 20% 85%,rgba(217,102,47,.08),transparent 70%)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:center}
+.hero-grid>*{min-width:0}
+.emblem-wrap{display:grid;justify-items:start;gap:22px}
+.emblem{width:min(200px,46vw);height:auto;overflow:visible}
+.emblem .leaf{fill:none;stroke:var(--linen);stroke-width:1.15;stroke-linejoin:round;transform-box:fill-box;transform-origin:50% 100%;transform:scale(0);animation:leaf .6s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:calc(.9s + var(--d) * 1s)}
+.emblem .vein{stroke:var(--linen);stroke-width:.6;fill:none;opacity:.7}
+.emblem .trunk{fill:none;stroke:var(--linen);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.2s cubic-bezier(.6,.1,.2,1) .15s forwards}
+.emblem .coal{fill:url(#coalGrad);transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);animation:mound .7s cubic-bezier(.2,.8,.3,1) forwards}
+.emblem .coal:nth-of-type(2){animation-delay:.1s}.emblem .coal:nth-of-type(3){animation-delay:.2s}
+.emblem .glow{opacity:0;animation:ignite 3s ease-in-out 1.4s infinite alternate}
+.emblem .frame{fill:none;stroke:var(--brass);stroke-width:.8;stroke-dasharray:4 0}
+@keyframes leaf{to{transform:scale(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes mound{to{transform:scaleY(1)}}
+@keyframes ignite{0%{opacity:.25}100%{opacity:.95}}
+.wordmark{font:500 clamp(48px,7.4vw,92px)/.9 var(--serif);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.wordmark span{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(12px);animation:in .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.5s + var(--i) * 55ms)}
+@keyframes in{to{opacity:1;filter:none;transform:none}}
+.sub{display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;animation:in 1s ease 1.4s forwards}
+.sub .place{font:600 12px/1 var(--sans);letter-spacing:.42em;text-transform:uppercase;color:var(--sage)}
+.wd{display:inline-flex;align-items:center;gap:8px;font:italic 400 15px/1 var(--serif);color:var(--brass)}
+.wd::before{content:"";width:28px;height:1px;background:var(--brass);opacity:.6}
+.hero-copy{max-width:30em;color:var(--sage);font-size:18px;opacity:0;animation:in 1s ease 1.6s forwards}
+.hero-copy b{color:var(--linen);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;opacity:0;animation:in 1s ease 1.75s forwards}
+.status{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--sage);opacity:0;animation:in 1s ease 1.9s forwards}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--sage)}
+.status.open i{background:#83d48f;box-shadow:0 0 0 0 rgba(131,212,143,.5);animation:ping 2.4s infinite}
+.status b{color:var(--linen);font-weight:600}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(131,212,143,0)}100%{box-shadow:0 0 0 0 rgba(131,212,143,0)}}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:28px}.emblem-wrap{justify-items:center;text-align:center}.sub,.hero-cta,.status{justify-content:center}}
+
+/* 3D studio */
+.studio{position:relative;border-radius:22px;background:radial-gradient(120% 90% at 50% 30%,#1b3a2a 0%,#0f2419 70%);border:1px solid var(--rule);overflow:hidden;aspect-ratio:1/1;max-height:640px;width:100%}
+.studio .stage{position:absolute;inset:0}
+.studio canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+.studio canvas:active{cursor:grabbing}
+.labels{position:absolute;inset:0;pointer-events:none}
+.labels svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.labels line{stroke:rgba(236,229,211,.5);stroke-width:1}
+.labels circle{fill:var(--brass)}
+.lab{position:absolute;transform:translateY(-50%);font:500 13px/1.25 var(--sans);color:var(--linen);white-space:nowrap;padding:5px 10px;border-radius:99px;background:rgba(12,31,22,.78);border:1px solid var(--rule);opacity:0;transition:opacity .35s}
+.lab.on{opacity:1}
+.lab.l{transform:translate(-100%,-50%)}
+.studio-bar{position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;pointer-events:none}
+.studio-bar>*{pointer-events:auto}
+.pick{display:flex;gap:6px;flex-wrap:wrap}
+.pick button,.xbtn{min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);background:rgba(12,31,22,.8);color:var(--linen);font:500 14px var(--sans);cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,background .2s,color .2s}
+.pick button[aria-pressed="true"]{background:var(--linen);color:var(--forest);border-color:var(--linen)}
+.xbtn{background:var(--brass);color:#1a160e;border-color:var(--brass);font-weight:600}
+.xbtn[aria-pressed="true"]{background:transparent;color:var(--brass)}
+.studio-top{position:absolute;left:18px;top:16px;right:18px;display:flex;justify-content:space-between;gap:12px;pointer-events:none}
+.studio-top .nm{font:500 22px/1.1 var(--serif)}
+.studio-top .pr{font:600 16px var(--sans);color:var(--brass);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hint{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-size:13px;color:var(--sage);background:rgba(12,31,22,.7);padding:6px 12px;border-radius:99px;pointer-events:none;transition:opacity .5s}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--sage);font-size:14px}
+
+/* strip of facts under hero */
+.facts{border-block:1px solid var(--rule);margin-top:40px}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.facts div{padding:22px 18px;border-left:1px solid var(--rule)}
+.facts div:first-child{border-left:0;padding-left:0}
+.facts b{display:block;font:500 30px/1 var(--serif);color:var(--linen);font-variant-numeric:lining-nums tabular-nums}
+.facts span{font-size:14px;color:var(--sage)}
+@media (max-width:760px){.facts .wrap{grid-template-columns:1fr 1fr}.facts div:nth-child(3){border-left:0;padding-left:0}.facts div{border-top:1px solid var(--rule)}.facts div:nth-child(-n+2){border-top:0}}
+
+/* menu */
+.menu{padding-block:100px 90px}
+.menu-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:18px 40px;margin-bottom:30px}
+.menu-head p{max-width:28em}
+.menu-body{display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px;align-items:start}
+.courses{position:sticky;top:96px;display:grid;gap:2px}
+.course{display:flex;justify-content:space-between;align-items:baseline;gap:10px;text-align:left;padding:12px 14px;border-radius:10px;border:0;background:transparent;color:var(--sage);font:500 16px var(--sans);cursor:pointer;transition:background .2s,color .2s}
+.course small{font-size:12px;color:var(--sage);opacity:.7;font-variant-numeric:tabular-nums}
+.course:hover{color:var(--linen)}
+.course[aria-selected="true"]{background:var(--pine);color:var(--linen)}
+.course[aria-selected="true"]::before{content:"";width:3px;align-self:stretch;margin:-4px 0 -4px -6px;border-radius:2px;background:var(--brass)}
+.panel{min-width:0}
+.panel-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:6px}
+.panel-top h3{font-size:clamp(30px,3.6vw,44px)}
+.search{position:relative;flex:0 1 300px}
+.search input{width:100%;min-height:42px;border-radius:999px;border:1px solid var(--rule);background:var(--pine);color:var(--linen);padding:0 16px 0 40px;font:500 16px var(--sans)}
+.search input::placeholder{color:var(--sage)}
+.search input:focus{outline:none;border-color:var(--brass)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--sage);fill:none;stroke-width:2}
+.subs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.sub-b{min-height:36px;padding:0 13px;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--sage);font:500 14px var(--sans);cursor:pointer}
+.sub-b[aria-pressed="true"]{border-color:var(--brass);color:var(--linen)}
+.sub-b small{color:var(--brass);margin-left:6px;font-variant-numeric:tabular-nums}
+.note{color:var(--sage);font-size:15px;margin-top:8px}
+.items{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;margin-top:10px}
+.item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:2px 12px;padding:15px 0;border-bottom:1px solid var(--rule);align-items:baseline;animation:fade .45s ease both;animation-delay:calc(var(--k) * 30ms)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.no{font:500 14px/1 var(--serif);color:var(--brass);min-width:24px;font-variant-numeric:lining-nums tabular-nums}
+.nm{font:600 17px/1.3 var(--sans)}
+.price{font:600 16px var(--sans);color:var(--brass);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ds{grid-column:2/-1;color:var(--sage);font-size:14.5px;line-height:1.5}
+.meta{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
+.tg{font:500 11.5px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:99px;border:1px solid var(--rule);color:var(--sage)}
+.sz{font-size:13px;color:var(--sage);padding:4px 9px;border-radius:8px;background:var(--pine)}
+.sz b{color:var(--linen);font-weight:600;margin-left:4px;font-variant-numeric:tabular-nums}
+.view3d{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 11px;border-radius:99px;border:1px solid var(--brass);background:transparent;color:var(--brass);font:600 12.5px var(--sans);cursor:pointer;transition:background .2s,color .2s}
+.view3d:hover{background:var(--brass);color:#1a160e}
+.view3d svg{width:14px;height:14px}
+.empty{padding:30px 0;color:var(--sage)}
+mark{background:rgba(201,164,106,.25);color:inherit;border-radius:3px}
+@media (max-width:900px){.menu-body{grid-template-columns:1fr;gap:16px}.courses{position:sticky;top:66px;z-index:10;display:flex;overflow-x:auto;scrollbar-width:none;background:var(--forest);padding-block:10px;margin-inline:-16px;padding-inline:16px;border-bottom:1px solid var(--rule)}.courses::-webkit-scrollbar{display:none}.course{flex:none;padding:9px 14px;border:1px solid var(--rule);border-radius:99px}.course small{display:none}.course[aria-selected="true"]{background:var(--linen);color:var(--forest);border-color:var(--linen)}.course[aria-selected="true"]::before{display:none}.items{grid-template-columns:1fr}}
+
+/* booking */
+.book{padding-block:100px;background:var(--pine);border-block:1px solid var(--rule)}
+.book-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.book-intro p{margin-top:16px;color:var(--sage);max-width:26em}
+.floor{margin-top:28px;border:1px solid var(--rule);border-radius:var(--r);padding:16px;background:var(--forest)}
+.floor svg{width:100%;height:auto;display:block}
+.floor .room{fill:none;stroke:var(--rule);stroke-width:1.2}
+.floor .lbl{fill:var(--sage);font:500 10px var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.floor .tbl{fill:#1a3526;stroke:var(--rule);stroke-width:1;transition:fill .4s,stroke .4s}
+.floor .tbl.fit{fill:#284a37;stroke:var(--sage)}
+.floor .tbl.pick{fill:var(--brass);stroke:var(--brass)}
+.floor .seat{fill:var(--rule);transition:fill .4s}
+.floor .seat.on{fill:var(--linen)}
+.floor-cap{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:13px;color:var(--sage)}
+.ticket{background:var(--forest);border:1px solid var(--rule);border-radius:20px;padding:8px 26px 26px}
+.row{padding:20px 0;border-bottom:1px solid var(--rule)}
+.row:last-of-type{border-bottom:0}
+.row h4{margin:0 0 12px;font:600 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.party{display:flex;align-items:center;gap:16px}
+.party output{font:500 52px/1 var(--serif);min-width:1.4em;text-align:center;font-variant-numeric:lining-nums tabular-nums}
+.round{width:46px;height:46px;border-radius:50%;border:1px solid var(--rule);background:transparent;color:var(--linen);font:400 22px/1 var(--sans);cursor:pointer}
+.round:hover:not(:disabled){border-color:var(--sage)}
+.round:disabled{opacity:.3;cursor:default}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--rule);background:transparent;color:var(--linen);font:500 14px var(--sans);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--linen);color:var(--forest);border-color:var(--linen)}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:58px;padding:9px 0;border-radius:12px;border:1px solid var(--rule);background:transparent;color:var(--linen);font:inherit;cursor:pointer;text-align:center;line-height:1.15}
+.day small{display:block;font-size:11px;color:var(--sage);text-transform:capitalize}
+.day b{display:block;font:500 22px var(--serif);margin:3px 0;font-variant-numeric:lining-nums}
+.day[aria-pressed="true"]{border-color:var(--brass);background:rgba(201,164,106,.12)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px}
+.slot{min-height:40px;border-radius:10px;border:1px solid var(--rule);background:transparent;color:var(--linen);font:600 14px var(--sans);cursor:pointer;font-variant-numeric:tabular-nums}
+.slot[aria-pressed="true"]{background:var(--brass);color:#1a160e;border-color:var(--brass)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields label{display:grid;gap:6px;font-size:13px;color:var(--sage)}
+.fields input,.fields textarea{min-height:46px;border-radius:10px;border:1px solid var(--rule);background:var(--pine);color:var(--linen);padding:10px 12px;font:16px var(--sans);resize:vertical}
+.fields .wide{grid-column:1/-1}
+.fields input:focus,.fields textarea:focus{outline:none;border-color:var(--brass)}
+.err{color:#e79a7a;font-size:14px;min-height:1.4em;margin:12px 0 4px}
+.summary{display:none}
+.summary.on{display:block;padding:22px 0 4px}
+.summary .big{font:500 28px/1.2 var(--serif);margin:6px 0 14px}
+.summary .copyline{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.summary pre{white-space:pre-wrap;font:14px/1.5 var(--sans);color:var(--sage);background:var(--pine);border-radius:10px;padding:12px;margin:12px 0 0}
+@media (max-width:900px){.book-grid{grid-template-columns:1fr;gap:32px}}
+@media (max-width:520px){.fields{grid-template-columns:1fr}.ticket{padding:4px 16px 20px}}
+
+/* visit */
+.visit{padding-block:100px}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:30px}
+.visit-grid>*{min-width:0}
+.addr{font:500 clamp(28px,3vw,36px)/1.2 var(--serif);margin:12px 0 20px}
+.phone{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.phone .num{font:500 26px var(--serif);user-select:all;font-variant-numeric:lining-nums}
+.copy{min-height:34px;padding:0 13px;border-radius:99px;border:1px solid var(--rule);background:transparent;color:var(--linen);font:500 13px var(--sans);cursor:pointer}
+.hours dl{display:grid;grid-template-columns:1fr auto;margin:14px 0 0}
+.hours dt,.hours dd{margin:0;padding:12px 0;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+.hours dt{color:var(--sage)}
+.hours .today{color:var(--linen);font-weight:600}
+.hours dd.today::before{content:"I dag";font:600 10.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-right:12px}
+@media (max-width:820px){.visit-grid{grid-template-columns:1fr;gap:34px}}
+.foot{border-top:1px solid var(--rule);padding-block:34px 50px}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;justify-content:space-between;color:var(--sage);font-size:14px}
+
+/* modal for 3D */
+.dlg{border:0;padding:0;background:transparent;color:var(--linen);width:min(860px,100vw - 24px);max-height:calc(100dvh - 24px)}
+.dlg::backdrop{background:rgba(5,14,9,.82);backdrop-filter:blur(6px)}
+.dlg[open]{animation:pop .4s cubic-bezier(.2,.8,.3,1)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.dlg .studio{aspect-ratio:auto;height:min(78dvh,620px);max-height:none}
+.dlg .close{position:absolute;right:12px;top:12px;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:rgba(12,31,22,.85);color:var(--linen);font-size:22px;line-height:1;cursor:pointer}
+.dlg .studio-top{right:64px}
+
+/* reveal: visible at rest */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.3,1)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js .rv{opacity:1;transform:none}
+}
+</style>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#hem" aria-label="Grillköket – till toppen">
+      <svg viewBox="0 0 60 68" aria-hidden="true"><use href="#emblem-min"/></svg>
+      <b>Grillköket</b>
+    </a>
+    <nav class="nav" aria-label="Huvudmeny">
+      <a href="#meny">Meny</a>
+      <a href="#boka">Boka bord</a>
+      <a href="#hitta">Hitta hit</a>
+    </nav>
+    <a class="btn btn-brass" href="#boka">Boka bord</a>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="coalGrad" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#ffb066"/><stop offset=".45" stop-color="#d9662f"/><stop offset="1" stop-color="#3a1c10"/></radialGradient>
+    <symbol id="emblem-min" viewBox="0 0 60 68">
+      <path d="M30 60 V36 M30 44 L21 34 M30 40 L39 31" stroke="#ece5d3" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M30 6 C44 6 54 16 52 28 C50 38 40 40 30 38 C20 40 10 38 8 28 C6 16 16 6 30 6Z" fill="none" stroke="#ece5d3" stroke-width="2.4"/>
+      <path d="M8 66 Q16 56 24 66 Q30 58 36 66 Q44 56 52 66Z" fill="#d9662f"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <section class="hero" id="hem">
+    <div class="wrap hero-grid">
+      <div class="emblem-wrap">
+        <svg class="emblem" id="emblem" viewBox="0 0 200 230" aria-hidden="true"></svg>
+        <h1 class="wordmark" id="wm" aria-label="Grillköket">Grillköket</h1>
+        <div class="sub"><span class="place">Lindesberg</span><span class="wd">av Walat Dino</span></div>
+        <p class="hero-copy">Pizza, hamburgare, grill och plankor sedan många år på Molinders väg. <b>Pizza från 95 kr</b>, barnmeny 50 kr.</p>
+        <div class="hero-cta"><a class="btn btn-brass" href="#meny">Se menyn</a><a class="btn btn-ghost" href="#boka">Boka bord</a></div>
+        <p class="status" id="status"><i></i><span>Öppet alla dagar</span></p>
+      </div>
+
+      <div class="studio" id="studio" aria-label="Rätt i 3D. Dra för att vrida.">
+        <div class="stage" id="stage"><div class="loading" id="loading">Tänder grillen…</div></div>
+        <div class="labels" id="labels"><svg id="lines"></svg></div>
+        <div class="studio-top"><span class="nm" id="s-name"></span><span class="pr" id="s-price"></span></div>
+        <div class="hint" id="hint">Dra för att vrida</div>
+        <div class="studio-bar">
+          <div class="pick" id="pick" role="group" aria-label="Välj rätt"></div>
+          <button class="xbtn" id="explode" type="button" aria-pressed="false">Visa ingredienser</button>
+        </div>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="wrap">
+        <div><b>43</b><span>pizzor, numrerade</span></div>
+        <div><b>95 kr</b><span>billigaste pizzan</span></div>
+        <div><b>844</b><span>omdömen på Google</span></div>
+        <div><b>7 dagar</b><span>öppet i veckan</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu" id="meny" aria-labelledby="meny-h">
+    <div class="wrap">
+      <div class="menu-head rv">
+        <div><p class="eyebrow">Menyn</p><h2 id="meny-h" style="margin-top:12px">Välj en <em>del</em> av menyn</h2></div>
+        <p class="muted">Rätter med 3D-knapp kan du vrida och se i lager, med alla ingredienser.</p>
+      </div>
+      <div class="menu-body">
+        <div class="courses" id="courses" role="tablist" aria-label="Menyns delar"></div>
+        <div class="panel" id="panel" role="tabpanel">
+          <div class="panel-top">
+            <h3 id="p-title"></h3>
+            <label class="search"><span class="sr">Sök i hela menyn</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+              <input id="q" type="search" placeholder="Sök i hela menyn" autocomplete="off">
+            </label>
+          </div>
+          <div class="subs" id="subs"></div>
+          <p class="note" id="p-note"></p>
+          <div class="items" id="items"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="boka" aria-labelledby="boka-h">
+    <div class="wrap book-grid">
+      <div class="book-intro rv">
+        <p class="eyebrow">Boka bord</p>
+        <h2 id="boka-h" style="margin-top:12px">Ett bord <em>för er</em></h2>
+        <p>Välj antal, dag och tid. Vi visar vilka bord som passar ert sällskap. Bokningen bekräftas när du ringt eller skickat förfrågan till oss.</p>
+        <div class="floor" aria-hidden="true">
+          <svg id="floor" viewBox="0 0 360 230"></svg>
+          <div class="floor-cap"><span id="floor-cap">Bord som passar 2 gäster</span><span id="floor-zone">Inne</span></div>
+        </div>
+      </div>
+      <form class="ticket rv" id="ticket" novalidate>
+        <div class="row">
+          <h4>Antal gäster</h4>
+          <div class="party">
+            <button class="round" type="button" id="minus" aria-label="Färre gäster">−</button>
+            <output id="party" aria-live="polite">2</output>
+            <button class="round" type="button" id="plus" aria-label="Fler gäster">+</button>
+            <div class="seg" id="zone" role="group" aria-label="Plats" style="margin-left:auto">
+              <button type="button" aria-pressed="true" data-z="Inne">Inne</button>
+              <button type="button" aria-pressed="false" data-z="Ute">Uteservering</button>
+            </div>
+          </div>
+        </div>
+        <div class="row"><h4>Dag</h4><div class="days" id="days"></div></div>
+        <div class="row"><h4>Tid</h4><div class="slots" id="slots"></div></div>
+        <div class="row" id="who">
+          <h4>Dina uppgifter</h4>
+          <div class="fields">
+            <label>Namn<input id="f-name" autocomplete="name" required></label>
+            <label>Mobilnummer<input id="f-phone" type="tel" autocomplete="tel" placeholder="070 123 45 67" required></label>
+            <label class="wide">Önskemål (valfritt)<textarea id="f-note" rows="2" placeholder="Barnstol, allergi, födelsedag…"></textarea></label>
+          </div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-brass" type="submit" style="width:100%">Granska bokningen</button>
+        </div>
+        <div class="summary" id="summary" tabindex="-1">
+          <p class="eyebrow">Din förfrågan</p>
+          <p class="big" id="sum-big"></p>
+          <p class="muted">Ring oss så bekräftar vi bordet direkt. Du kan också kopiera texten och skicka den.</p>
+          <pre id="sum-text"></pre>
+          <div class="copyline">
+            <a class="btn btn-brass" href="tel:+4658110074">Ring 0581-100 74</a>
+            <button class="btn btn-ghost" type="button" id="sum-copy">Kopiera förfrågan</button>
+            <button class="btn btn-ghost" type="button" id="sum-edit">Ändra</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="visit wrap" id="hitta" aria-labelledby="hitta-h">
+    <p class="eyebrow rv">Hitta hit</p>
+    <h2 id="hitta-h" class="rv" style="margin-top:12px">Molinders <em>väg 2</em></h2>
+    <div class="visit-grid">
+      <div class="rv">
+        <p class="addr">Molinders väg 2<br>711 35 Lindesberg</p>
+        <a class="btn btn-brass" href="https://www.google.com/maps/dir/?api=1&amp;destination=Grillk%C3%B6ket%20Lindesberg%2C%20Molinders%20v%C3%A4g%202" target="_blank" rel="noopener">Vägbeskrivning</a>
+        <div class="phone"><span class="num" id="num">0581-100 74</span><button class="copy" type="button" id="copy">Kopiera</button></div>
+        <p class="muted" style="margin-top:8px">Äta här eller hämta. Parkering vid restaurangen.</p>
+      </div>
+      <div class="hours rv"><h3>Öppettider</h3><dl id="hours"></dl></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="brand"><svg viewBox="0 0 60 68" width="24" height="28" aria-hidden="true"><use href="#emblem-min"/></svg><b style="font-size:16px">Grillköket</b></span>
+    <span>Molinders väg 2, 711 35 Lindesberg · 0581-100 74</span>
+    <span class="wd">W · D</span>
+  </div>
+</footer>
+
+<dialog class="dlg" id="dlg" aria-label="Rätten i 3D">
+  <button class="close" id="dlg-close" aria-label="Stäng">×</button>
+  <div class="studio" id="studio2">
+    <div class="stage" id="stage2"></div>
+    <div class="labels" id="labels2"><svg id="lines2"></svg></div>
+    <div class="studio-top"><span class="nm" id="s-name2"></span><span class="pr" id="s-price2"></span></div>
+    <div class="studio-bar">
+      <span class="muted" style="font-size:13px">Dra för att vrida</span>
+      <button class="xbtn" id="explode2" type="button" aria-pressed="false">Visa ingredienser</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("js");
+
+/* ================= emblem: Lindesberg's linden on three glowing coals ================= */
+(function emblem() {
+  const svg = $("#emblem"), NS = "http://www.w3.org/2000/svg";
+  const mk = (t, a) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); return n; };
+  svg.append(mk("ellipse", { class: "frame", cx: 100, cy: 108, rx: 96, ry: 104 }));
+  // glow under coals
+  const glow = mk("ellipse", { class: "glow", cx: 100, cy: 200, rx: 70, ry: 14, fill: "#d9662f", filter: "url(#blur)" });
+  const defs = mk("defs", {}); defs.innerHTML = `<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>`;
+  svg.append(defs, glow);
+  // three coals (the "treberg" of the town arms)
+  [["M44 206 Q60 176 78 206Z"], ["M70 206 Q100 160 130 206Z"], ["M122 206 Q140 176 156 206Z"]].forEach(([d]) => svg.append(mk("path", { class: "coal", d })));
+  // trunk + branches
+  const trunks = ["M100 186 C99 168 101 150 100 128", "M100 150 C92 140 82 134 72 126", "M100 142 C108 132 118 126 130 120", "M100 132 C96 118 90 108 84 96", "M101 128 C106 114 112 104 118 92", "M100 126 C100 110 100 96 100 80"];
+  trunks.forEach((d) => { const p = mk("path", { class: "trunk", d }); svg.append(p); const L = p.getTotalLength ? p.getTotalLength() : 100; p.style.setProperty("--len", L); });
+  // linden leaves: heart shapes on a dome, nearest the trunk first
+  const heart = "M0 0 C-5 -4 -9 -9 -8 -14 C-7 -18 -2 -19 0 -15 C2 -19 7 -18 8 -14 C9 -9 5 -4 0 0Z";
+  const leaves = [];
+  const cx = 100, cy = 92;
+  for (let ring = 0; ring < 4; ring++) {
+    const n = [5, 9, 12, 14][ring], rx = [18, 38, 56, 70][ring], ry = [14, 30, 44, 54][ring];
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI + (i + (ring % 2 ? 0.5 : 0)) * (Math.PI / (n - 1 || 1));
+      const x = cx + Math.cos(a) * rx, y = cy + Math.sin(a) * ry * (a > Math.PI * 1.02 && a < Math.PI * 1.98 ? 1 : 0.4);
+      const rot = (a * 180) / Math.PI + 90 + (Math.random() - 0.5) * 30;
+      leaves.push({ x, y, rot, s: 1 + ring * 0.08, d: ring * 0.18 + i * 0.02 });
+    }
+  }
+  // lower skirt of the crown
+  for (let i = 0; i < 9; i++) { const x = 40 + i * 15; leaves.push({ x, y: 112 + Math.sin(i) * 4, rot: 180 + (Math.random() - 0.5) * 40, s: 1.1, d: 0.75 + i * 0.03 }); }
+  leaves.forEach((l) => {
+    const g = mk("g", { transform: `translate(${l.x.toFixed(1)} ${l.y.toFixed(1)}) rotate(${l.rot.toFixed(0)}) scale(${l.s})` });
+    const p = mk("path", { class: "leaf", d: heart }); p.style.setProperty("--d", l.d.toFixed(2));
+    g.append(p, mk("path", { class: "vein", d: "M0 0 L0 -13" }));
+    svg.append(g);
+  });
+})();
+{ const wm = $("#wm"); wm.innerHTML = [...wm.textContent].map((c, i) => `<span style="--i:${i}" aria-hidden="true">${c}</span>`).join(""); }
+
+const top = $("#top");
+addEventListener("scroll", () => top.classList.toggle("solid", scrollY > 30), { passive: true });
+
+/* ================= menu data (from Grillköket's own menu) ================= */
+const V = "Vegetarisk", G = "Glutenfri", M = "Mild hetta";
+const MENU = [
+  { id: "pizza", name: "Pizza", groups: [
+    { name: "Klass 1", price: 95, items: [[1,"Margarita","ost",95,[V]],[2,"Vesuvio","skinka",95],[3,"Capricciosa","skinka & champinjoner",95],[4,"Altono","tonfisk",95],[5,"Calzone","skinka (inbakad)",95],[6,"Cazatora","salami",95],[7,"La Bussola","skinka & räkor",95],[8,"Hawaii","skinka & ananas",95],[9,"Bolo","köttfärs",95],[10,"Marinara","musslor & räkor",95]] },
+    { name: "Klass 2", price: 110, items: [[11,"Bananarama","skinka, banan, ananas & curry",110],[12,"Calzone Special","skinka & räkor (inbakad)",110],[13,"Companjona","skinka, champinjoner & räkor",110],[14,"St Louis","skinka, räkor & ananas",110],[15,"La Mare","skinka, champinjoner, salami & lök",110,[M]],[16,"Romeo","skinka, bacon, räkor & lök",110,[M]],[17,"Hot Pepper","skinka, salami, lök & jalapeño",110,[M]],[18,"Quattro","skinka, räkor, champinjoner, musslor & kronärtskocka",110]] },
+    { name: "Ox & fläskfilé", price: 130, items: [[19,"Oxfilé","oxfilé, tomater, lök, färska champinjoner & bearnaisesås",130],[20,"Acapulco","oxfilé, champinjoner, gul lök, jalapeño, tacosås, kryddmix & färsk vitlök",130,[M]],[21,"Sicilli","fläskfilé, champinjoner, lök, färsk vitlök & bearnaisesås",130],[22,"Jägare","oxfilé, fläskfilé, färsk vitlök, bacon, lök & bearnaisesås",130],[23,"Bla Bla","oxfilé, champinjoner, gorgonzola & bearnaisesås",130],[24,"Salina","oxfilé, fläskfilé, champinjoner, lök, santafesås & bearnaisesås",130]] },
+    { name: "Kyckling", price: 115, items: [[25,"Lions Special","kycklingfilé, isbergssallad & valfri sås",115],[26,"Chicken Special","kycklingfilé, banan, ananas, jordnötter & curry",115],[27,"BBQ Chicken","kycklingfilé, ananas & BBQ-sås",115]] },
+    { name: "Kebab", items: [[28,"Kebabpizza","kebab, bearnaisesås i ugn & cayenne",125,[M]],[29,"Vikingbåt","kebab, tomat, isbergssallad, lök, gurka, fefferoni & valfri sås",120],[30,"Superkebabpizza","kebab, isbergssallad, tomat, lök, gurka, fefferoni, pommes & valfri sås",125]] },
+    { name: "Mexikanska", items: [[31,"Azteka","skinka, jalapeño, tacosås, kryddmix & valfri sås",115,[M]],[32,"Amigo","köttfärssås, stekt paprika, lök, ananas & jalapeño",120,[M]]] },
+    { name: "Vegetariska", price: 110, items: [[33,"Viva","falafel, isbergssallad, gurka, tomat, lök & valfri sås",110,[V]],[34,"Grekisk pizza","lök, champinjoner, paprika, fetaost, oliver & ruccola",110,[V]],[35,"Tulpan","färska champinjoner, soltorkade tomater, stekt zucchini & lök",110,[V]],[36,"Veg Pizza","quornbitar, isbergssallad, tomat, lök & valfri sås",110,[V]]] },
+    { name: "Husets favoriter", items: [[37,"Lindas Special","kycklingfilé, färska champinjoner, paprika, lök, bearnaisesås i ugn & cayenne",130,[M]],[38,"Båt 1","oxfilé, stekt paprika, färsk vitlök & lök (halvinbakad)",125],[39,"La Älskling","oxfilé, färska champinjoner, scampi, rödlök & bearnaisesås",130],[40,"New Mexico","oxfilé, bearnaisesås i ugn & cayenne",125,[M]],[41,"Lambada","oxfilé, fläskfilé, bearnaisesås i ugn & cayenne",125,[M]],[42,"Husets Special","oxfilé, färska champinjoner, lök, paprika, tomat, räkor, bearnaisesås i ugn & cayenne",130,[M]],[43,"LindeGym Special","marinerad scampi & mozzarella",130]] },
+  ]},
+  { id: "alacarte", name: "À la carte", groups: [{ items: [
+    ["","Oxfiléplanka","potatismos, stekta grönsaker, rödvinssås & bearnaisesås",249,[G]],
+    ["","Fläskfiléplanka","potatismos, stekta grönsaker & bearnaisesås",229,[G]],
+    ["","Gösplanka","potatismos, stekta grönsaker & räkdillsås",229,[G]],
+    ["","Black & White","stekt potatis, stekta grönsaker, rödvinssås & bearnaisesås",249,[G]],
+    ["","Filé Oscar","stekt potatis, stekta grönsaker, räkor & bearnaisesås",229,[G]],
+    ["","Kycklingspett","klyftpotatis, stekta grönsaker, ajvar & tzatziki",190,[G]],
+  ]}]},
+  { id: "burgare", name: "Hamburgare", groups: [{ note: "Alla burgare serveras som meny.", items: [
+    ["","Hamburgare","",[["90 g",100],["150 g",110],["200 g",120]]],
+    ["","Ostburgare","",[["90 g",105],["150 g",120],["200 g",130]]],
+    ["","Ost & baconburgare","",[["90 g",110],["150 g",130],["200 g",140]]],
+    ["","Dubbel ost & baconburgare","300 g",190],
+    ["","Halloumiburgare","",115,[V]],["","Fiskburgare","",90],["","Kycklingburgare","",110],
+  ]}]},
+  { id: "grill", name: "Grill", groups: [{ items: [
+    ["","Schnitzel","med pommes och bearnaisesås eller persiljesmör",139],["","Grillbiff","med pommes och bearnaisesås eller persiljesmör",139],["","Lövbit","med pommes och bearnaisesås eller persiljesmör",139,[G]],["","Pyttipanna","med ägg & rödbetor",139],["","Falukorv","med stekt potatis & ägg",139],["","Rödspätta","med potatismos och remouladsås",139],["","Tunnbrödsrulle","kokt eller grillad korv med potatismos, bostongurka, senap & ketchup",129],["","Bamsemeny","stekt korv med potatismos eller pommes, bostongurka, senap & ketchup",129],["","Köttbullar","10 st med potatismos & lingon",125],["","Korvmeny","kokt eller grillad korv med potatismos eller pommes, bostongurka, senap & ketchup",119],["","Chicken Bits","6 st med pommes och dippsås",100],["","French hot dog-meny","kokt eller grillad korv med valfri dressing",60],
+  ]}]},
+  { id: "kebab", name: "Kebab & rullar", groups: [
+    { name: "Rullar", items: [["","Kycklingrulle","stekt kycklingfilé",100],["","Kebabrulle","kebabkött",100],["","Mixrulle","kycklingfilé och kebabkött",110],["","Megarulle","kebabkött och pommes",110],["","Skinkrulle","skinka och ost",100],["","Falafelrulle","falafel",100,[V]],["","Räkrulle","ost & räkor",100]] },
+    { name: "Tallrikar", items: [["","Kycklingtallrik","stekt kycklingfilé med pommes eller ris",135],["","Kebabtallrik","kebabkött med pommes eller ris",130],["","Mixtallrik","kycklingfilé och kebabkött med pommes eller ris",140],["","Falafeltallrik","falafel med pommes eller ris",130,[V]]] },
+    { name: "Pita", items: [["","Kebab i bröd","kebabkött & fefferoni",90],["","Kyckling i bröd","stekt kycklingfilé",90],["","Falafel i bröd","falafel",90,[V]],["","Kerstin Special","skinka, räkor & ost. 30 cl dryck ingår",125]] },
+  ]},
+  { id: "sallad", name: "Sallader", groups: [{ note: "Alla sallader har isbergssallad, tomat, gurka, majs, ananas, rödlök & valfri sås.", items: [
+    ["","Kycklingsallad","stekt kycklingfilé",120],["","Kebabsallad","kebabkött & fefferoni",120],["","Skinksallad","skinka & ost",120],["","Räksallad","räkor & ost",125],["","Tonfisksallad","tonfisk i olivolja",120],["","Grekisk sallad","fetaost & oliver",120,[V]],["","Falafelsallad","falafel",120,[V]],["","Halloumisallad","halloumi",120,[V]],["","Caesarsallad","kyckling & bacon",130],
+  ]}]},
+  { id: "barn", name: "Barnmeny", groups: [{ note: "Festis ingår.", items: [
+    ["","Hamburgare","45 g med isbergssallad, ketchup, dressing och pommes",50],["","Chicken Bits","4 bitar med pommes & valfri dippsås",50],["","Köttbullar","5 st med potatismos & lingon",50],["","Pannkaka","2 st med grädde & sylt",50,[V]],["","Korv","kokt eller grillad korv med potatismos eller pommes",50],
+  ]}]},
+  { id: "tillbehor", name: "Tillbehör", groups: [{ items: [
+    ["","Dippsås","bearnaise, bearnaise jalapeño, vitlök, tryffel, Chicago, cheddar, hot mexicana, sourcream & onion, sweet chili",10],["","Chili cheese","4 st",29],["","Mozzarella sticks","4 st",29,[V]],["","Lökringar","4 st",29,[V]],["","Hot wings","4 st",35,[M]],["","Nuggets","4 st",29],["","Pommestallrik","",30,[V]],
+  ]}]},
+];
+
+/* ================= 3D: recipes are plain data so they are easy to edit ================= */
+/* Burger layers, bottom to top. Edit labels or order here. */
+const BURGERS = {
+  "Hamburgare":                ["bunBottom","dressing","lettuce","tomato","patty","onion","ketchup","bunTop"],
+  "Ostburgare":                ["bunBottom","dressing","lettuce","tomato","patty","cheese","onion","bunTop"],
+  "Ost & baconburgare":        ["bunBottom","dressing","lettuce","tomato","patty","cheese","bacon","onion","bunTop"],
+  "Dubbel ost & baconburgare": ["bunBottom","dressing","lettuce","patty","cheese","patty","cheese","bacon","onion","bunTop"],
+  "Halloumiburgare":           ["bunBottom","dressing","lettuce","tomato","halloumi","onion","bunTop"],
+  "Fiskburgare":               ["bunBottom","dressing","lettuce","fish","bunTop"],
+  "Kycklingburgare":           ["bunBottom","dressing","lettuce","tomato","chicken","bunTop"],
+};
+const PLANKS = {
+  "Oxfiléplanka":    { side: "mash", meat: ["beef"], sauces: ["rödvinssås", "bearnaisesås"] },
+  "Fläskfiléplanka": { side: "mash", meat: ["pork"], sauces: ["bearnaisesås"] },
+  "Gösplanka":       { side: "mash", meat: ["fish"], sauces: ["räkdillsås"] },
+  "Black & White":   { side: "fried", meat: ["beef", "pork"], sauces: ["rödvinssås", "bearnaisesås"] },
+  "Filé Oscar":      { side: "fried", meat: ["beef"], topping: "shrimp", sauces: ["bearnaisesås"] },
+};
+const HERO_DISHES = [
+  { label: "Burgare", name: "Ost & baconburgare", price: "från 110 kr" },
+  { label: "Planka", name: "Oxfiléplanka", price: "249 kr" },
+  { label: "Kebabpizza", name: "Kebabpizza", price: "125 kr", pizza: 28 },
+];
+
+/* --- engine --- */
+const T = window.THREE;
+const has3D = !!T && (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; } })();
+const rand = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
+const rr = (a, b) => a + rand() * (b - a);
+
+function canvasTex(w, h, draw, repeat) {
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const g = c.getContext("2d"); draw(g, w, h);
+  const t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.anisotropy = 4;
+  if (repeat) { t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(repeat, repeat); }
+  return t;
+}
+function specks(g, w, h, n, cols, r0, r1, a = 1) {
+  for (let i = 0; i < n; i++) { g.globalAlpha = a * rr(0.3, 1); g.fillStyle = cols[(rand() * cols.length) | 0]; g.beginPath(); g.ellipse(rand() * w, rand() * h, rr(r0, r1), rr(r0, r1) * rr(0.5, 1), rand() * 3, 0, 6.283); g.fill(); }
+  g.globalAlpha = 1;
+}
+const TEX = {};
+function textures() {
+  if (TEX.ready) return TEX;
+  TEX.bun = canvasTex(256, 256, (g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#f1d29a"); gr.addColorStop(0.18, "#d99a48"); gr.addColorStop(0.55, "#b8681f"); gr.addColorStop(1, "#9a5216"); g.fillStyle = gr; g.fillRect(0, 0, w, h); specks(g, w, h, 900, ["#a85a18", "#cf8c3e", "#e7b56d"], 1, 3, 0.35); });
+  TEX.crumb = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#e9d3a6"; g.fillRect(0, 0, w, h); specks(g, w, h, 1400, ["#d9bd88", "#f5e6c4", "#cfae73"], 1, 4, 0.6); });
+  TEX.patty = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#4a2a18"; g.fillRect(0, 0, w, h); specks(g, w, h, 2200, ["#2b170c", "#6b3d22", "#7d4a2a", "#1d0f07"], 1, 4, 0.8); }, 2);
+  TEX.cheese = canvasTex(64, 64, (g, w, h) => { g.fillStyle = "#f2b33a"; g.fillRect(0, 0, w, h); specks(g, w, h, 60, ["#f7c65a", "#e8a02a"], 2, 6, 0.4); });
+  TEX.lettuce = canvasTex(256, 256, (g, w, h) => { const gr = g.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w / 2); gr.addColorStop(0, "#e7f2c4"); gr.addColorStop(0.6, "#9fcf5a"); gr.addColorStop(1, "#5f9d2c"); g.fillStyle = gr; g.fillRect(0, 0, w, h); g.strokeStyle = "rgba(240,250,210,.55)"; g.lineWidth = 2; for (let i = 0; i < 18; i++) { const a = (i / 18) * 6.283; g.beginPath(); g.moveTo(w / 2, h / 2); g.quadraticCurveTo(w / 2 + Math.cos(a + 0.2) * 60, h / 2 + Math.sin(a + 0.2) * 60, w / 2 + Math.cos(a) * 128, h / 2 + Math.sin(a) * 128); g.stroke(); } });
+  TEX.tomato = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#c92a1b"; g.fillRect(0, 0, w, h); g.fillStyle = "#e5523a"; g.beginPath(); g.arc(128, 128, 112, 0, 6.283); g.fill(); for (let i = 0; i < 4; i++) { const a = (i / 4) * 6.283 + 0.4; g.fillStyle = "#f07a5a"; g.beginPath(); g.ellipse(128 + Math.cos(a) * 58, 128 + Math.sin(a) * 58, 34, 22, a, 0, 6.283); g.fill(); g.fillStyle = "#f5d27a"; for (let s = 0; s < 6; s++) { g.beginPath(); g.ellipse(128 + Math.cos(a) * rr(44, 70), 128 + Math.sin(a) * rr(44, 70), 4, 2.5, a, 0, 6.283); g.fill(); } } g.fillStyle = "#d8402c"; g.beginPath(); g.arc(128, 128, 22, 0, 6.283); g.fill(); });
+  TEX.wood = canvasTex(512, 256, (g, w, h) => { g.fillStyle = "#8a5a32"; g.fillRect(0, 0, w, h); for (let i = 0; i < 70; i++) { g.strokeStyle = rand() < 0.5 ? "rgba(60,32,14,.35)" : "rgba(190,140,90,.25)"; g.lineWidth = rr(0.5, 2.5); g.beginPath(); const y = rand() * h; g.moveTo(0, y); for (let x = 0; x <= w; x += 32) g.lineTo(x, y + Math.sin(x * 0.02 + i) * 3); g.stroke(); } const s = g.createRadialGradient(w * 0.5, h * 0.5, 20, w * 0.5, h * 0.5, w * 0.6); s.addColorStop(0, "rgba(0,0,0,0)"); s.addColorStop(1, "rgba(30,14,4,.45)"); g.fillStyle = s; g.fillRect(0, 0, w, h); });
+  TEX.sear = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#5a2f17"; g.fillRect(0, 0, w, h); specks(g, w, h, 1500, ["#3a1c0c", "#7a4422", "#2a1208"], 1, 4, 0.8); g.strokeStyle = "rgba(20,8,2,.85)"; g.lineWidth = 12; for (let i = -2; i < 6; i++) { g.beginPath(); g.moveTo(i * 60, 0); g.lineTo(i * 60 + 140, h); g.stroke(); } });
+  TEX.porkSear = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#b07a4c"; g.fillRect(0, 0, w, h); specks(g, w, h, 1200, ["#8c5530", "#c99366", "#704020"], 1, 4, 0.7); g.strokeStyle = "rgba(60,28,10,.8)"; g.lineWidth = 10; for (let i = -2; i < 6; i++) { g.beginPath(); g.moveTo(i * 60, 0); g.lineTo(i * 60 + 140, h); g.stroke(); } });
+  TEX.fish = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#f1e6cf"; g.fillRect(0, 0, w, h); g.strokeStyle = "rgba(210,190,150,.6)"; g.lineWidth = 2; for (let i = 0; i < 14; i++) { g.beginPath(); g.moveTo(i * 20, 0); g.quadraticCurveTo(i * 20 + 30, h / 2, i * 20, h); g.stroke(); } const s = g.createLinearGradient(0, 0, w, 0); s.addColorStop(0, "rgba(200,140,60,.55)"); s.addColorStop(0.3, "rgba(200,140,60,0)"); g.fillStyle = s; g.fillRect(0, 0, w, h); });
+  TEX.dough = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#e4bf86"; g.fillRect(0, 0, w, h); specks(g, w, h, 500, ["#c9934f", "#f1d6a6", "#b8782f"], 1, 6, 0.5); specks(g, w, h, 60, ["#7a3f14", "#5a2a0c"], 3, 9, 0.5); });
+  TEX.sauce = canvasTex(256, 256, (g, w, h) => { g.fillStyle = "#b3301c"; g.fillRect(0, 0, w, h); specks(g, w, h, 500, ["#8e2210", "#cf4a2e", "#6e8c2e"], 1, 3, 0.6); });
+  TEX.pizzaCheese = canvasTex(512, 512, (g, w, h) => { g.fillStyle = "#f3dda4"; g.fillRect(0, 0, w, h); specks(g, w, h, 260, ["#fbeac0", "#efcd7c"], 8, 26, 0.7); specks(g, w, h, 90, ["#c98a3a", "#a8682a"], 4, 14, 0.55); specks(g, w, h, 70, ["#b3301c"], 4, 12, 0.35); });
+  TEX.cayenne = canvasTex(512, 512, (g, w, h) => { g.clearRect(0, 0, w, h); specks(g, w, h, 1600, ["#b11e0e", "#d23b18", "#7a1004"], 0.8, 2.2, 0.9); });
+  TEX.salami = canvasTex(128, 128, (g, w, h) => { g.fillStyle = "#9c1f22"; g.fillRect(0, 0, w, h); specks(g, w, h, 70, ["#f0c6b0", "#e7a68f"], 2, 5, 0.9); });
+  TEX.ceramic = canvasTex(64, 64, (g, w, h) => { g.fillStyle = "#f2efe8"; g.fillRect(0, 0, w, h); });
+  TEX.shadow = canvasTex(256, 256, (g, w, h) => { const r = g.createRadialGradient(128, 128, 10, 128, 128, 128); r.addColorStop(0, "rgba(0,0,0,.6)"); r.addColorStop(0.55, "rgba(0,0,0,.25)"); r.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = r; g.fillRect(0, 0, w, h); });
+  TEX.ready = true;
+  return TEX;
+}
+const mat = (o) => new T.MeshStandardMaterial(Object.assign({ roughness: 0.75, metalness: 0 }, o));
+function bump(geo, amt, freq = 3) {
+  const p = geo.attributes.position, v = new T.Vector3();
+  for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); const n = Math.sin(v.x * freq * 1.7 + v.z * freq) * Math.cos(v.z * freq * 1.3 - v.y * freq) + Math.sin((v.x + v.z) * freq * 3.1) * 0.5; v.multiplyScalar(1 + n * amt); p.setXYZ(i, v.x, v.y, v.z); }
+  geo.computeVertexNormals(); return geo;
+}
+function lathe(pts, seg = 64) { return new T.LatheGeometry(pts.map(([x, y]) => new T.Vector2(x, y)), seg); }
+
+/* ---- burger parts: each returns { obj, h, label } ---- */
+function partBurger(kind) {
+  const X = textures(), g = new T.Group(); let h = 0.1, label = "";
+  switch (kind) {
+    case "bunBottom": {
+      const side = new T.Mesh(lathe([[0, 0], [0.95, 0.02], [1.08, 0.12], [1.1, 0.3], [1.06, 0.36], [0, 0.36]]), mat({ map: X.bun, roughness: 0.6 }));
+      const cut = new T.Mesh(new T.CircleGeometry(1.06, 64), mat({ map: X.crumb, roughness: 0.95 })); cut.rotation.x = -Math.PI / 2; cut.position.y = 0.361;
+      g.add(side, cut); h = 0.36; label = "Hamburgerbröd"; break;
+    }
+    case "bunTop": {
+      const pts = []; for (let i = 0; i <= 16; i++) { const a = (i / 16) * Math.PI / 2; pts.push([Math.cos(a) * 1.1, Math.sin(a) * 0.72]); }
+      pts[0] = [1.1, 0]; pts.push([0, 0.72]);
+      const dome = new T.Mesh(lathe([[0, 0], ...pts]), mat({ map: X.bun, roughness: 0.5 }));
+      const cut = new T.Mesh(new T.CircleGeometry(1.08, 64), mat({ map: X.crumb, roughness: 0.95 })); cut.rotation.x = Math.PI / 2; cut.position.y = 0.002;
+      g.add(dome, cut);
+      const seed = new T.SphereGeometry(0.035, 8, 6); seed.scale(1, 0.45, 1.9);
+      const sm = new T.InstancedMesh(seed, mat({ color: 0xf6e9c8, roughness: 0.5 }), 80); const m4 = new T.Matrix4(), q = new T.Quaternion(), e = new T.Euler();
+      for (let i = 0; i < 80; i++) { const a = rand() * 6.283, t = Math.acos(rr(0.35, 1)); const x = Math.sin(t) * Math.cos(a) * 1.1, z = Math.sin(t) * Math.sin(a) * 1.1, y = Math.cos(t) * 0.72; e.set(t * Math.sin(a), rand() * 6, -t * Math.cos(a)); q.setFromEuler(e); m4.compose(new T.Vector3(x, y, z), q, new T.Vector3(1, 1, 1)); sm.setMatrixAt(i, m4); }
+      g.add(sm); h = 0.72; label = "Sesambröd"; break;
+    }
+    case "patty": {
+      const geo = new T.CylinderGeometry(1.08, 1.1, 0.3, 64, 4); bump(geo, 0.035, 4);
+      g.add(new T.Mesh(geo, mat({ map: X.patty, roughness: 0.85 }))); g.children[0].position.y = 0.15; h = 0.3; label = "Nötkött, grillat"; break;
+    }
+    case "cheese": {
+      const geo = new T.PlaneGeometry(2, 2, 40, 40); geo.rotateX(-Math.PI / 2); geo.rotateY(Math.PI / 4);
+      const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i), r = Math.hypot(x, z); if (r > 0.95) p.setY(i, -Math.pow(r - 0.95, 1.6) * 0.9); }
+      geo.computeVertexNormals();
+      const m = new T.Mesh(geo, mat({ map: X.cheese, roughness: 0.35, side: T.DoubleSide })); m.position.y = 0.03; g.add(m); h = 0.05; label = "Cheddarost"; break;
+    }
+    case "bacon": {
+      for (let k = 0; k < 2; k++) {
+        const geo = new T.PlaneGeometry(2, 0.34, 40, 4); const p = geo.attributes.position;
+        for (let i = 0; i < p.count; i++) p.setZ(i, Math.sin(p.getX(i) * 6 + k) * 0.06);
+        geo.computeVertexNormals();
+        const tex = textures().salami;
+        const m = new T.Mesh(geo, mat({ color: 0x9a3a22, map: tex, roughness: 0.5, side: T.DoubleSide }));
+        m.rotation.x = -Math.PI / 2; m.rotation.z = k ? 0.5 : -0.3; m.position.set(0, 0.06, k ? 0.25 : -0.25); g.add(m);
+      }
+      h = 0.12; label = "Bacon"; break;
+    }
+    case "lettuce": {
+      const geo = new T.CircleGeometry(1.22, 96, 0, 6.283); geo.rotateX(-Math.PI / 2);
+      const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i), r = Math.hypot(x, z), a = Math.atan2(z, x); p.setY(i, Math.sin(a * 11) * 0.07 * r * r + Math.sin(a * 5 + 1) * 0.05 * r); }
+      geo.computeVertexNormals();
+      const m = new T.Mesh(geo, mat({ map: X.lettuce, roughness: 0.45, side: T.DoubleSide })); m.position.y = 0.08; g.add(m); h = 0.14; label = "Isbergssallad"; break;
+    }
+    case "tomato": {
+      [[0.45, 0.3], [-0.45, 0.2], [0, -0.5]].forEach(([x, z]) => { const geo = new T.CylinderGeometry(0.52, 0.52, 0.08, 40); const m = new T.Mesh(geo, [mat({ color: 0xc8301e, roughness: 0.35 }), mat({ map: X.tomato, roughness: 0.3 }), mat({ map: X.tomato, roughness: 0.3 })]); m.position.set(x, 0.04, z); m.rotation.y = rand() * 3; g.add(m); });
+      h = 0.08; label = "Tomat"; break;
+    }
+    case "onion": {
+      for (let i = 0; i < 6; i++) { const m = new T.Mesh(new T.TorusGeometry(rr(0.18, 0.34), 0.03, 8, 40), mat({ color: rand() < 0.5 ? 0xf4ece0 : 0xb47ab0, roughness: 0.4 })); m.rotation.x = Math.PI / 2; m.position.set(rr(-0.6, 0.6), 0.03, rr(-0.6, 0.6)); g.add(m); }
+      h = 0.06; label = "Lök"; break;
+    }
+    case "dressing": case "ketchup": {
+      const geo = new T.CircleGeometry(0.95, 64); geo.rotateX(-Math.PI / 2);
+      const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i), a = Math.atan2(z, x), r = Math.hypot(x, z); const s = 1 + Math.sin(a * 7) * 0.08; p.setX(i, x * s * 0.85); p.setZ(i, z * s * 0.85); p.setY(i, (1 - r) * 0.04); }
+      geo.computeVertexNormals();
+      const m = new T.Mesh(geo, mat({ color: kind === "ketchup" ? 0xa8170e : 0xf1e2b8, roughness: 0.2 })); m.position.y = 0.01; g.add(m);
+      h = 0.03; label = kind === "ketchup" ? "Ketchup" : "Dressing"; break;
+    }
+    case "halloumi": {
+      for (let i = 0; i < 2; i++) { const m = new T.Mesh(new T.BoxGeometry(1.7, 0.16, 0.7), [mat({ color: 0xf3ead6 }), mat({ color: 0xf3ead6 }), mat({ map: X.porkSear, color: 0xffffff, roughness: 0.6 }), mat({ color: 0xf3ead6 }), mat({ color: 0xf3ead6 }), mat({ color: 0xf3ead6 })]); m.position.set(0, 0.08, i ? 0.38 : -0.38); g.add(m); }
+      h = 0.16; label = "Grillad halloumi"; break;
+    }
+    case "fish": case "chicken": {
+      const geo = new T.CylinderGeometry(1.0, 1.02, 0.26, 48, 3); geo.scale(1.1, 1, 0.8); bump(geo, 0.05, 6);
+      g.add(new T.Mesh(geo, mat({ color: kind === "fish" ? 0xd99a4a : 0xc9813a, roughness: 0.9 }))); g.children[0].position.y = 0.13;
+      h = 0.26; label = kind === "fish" ? "Panerad fisk" : "Panerad kycklingfilé"; break;
+    }
+  }
+  return { obj: g, h, label };
+}
+function buildBurger(name) {
+  const layers = BURGERS[name] || BURGERS["Hamburgare"];
+  const root = new T.Group(), parts = [];
+  let y = 0;
+  layers.forEach((k, i) => {
+    const p = partBurger(k);
+    p.obj.userData.base = y; p.obj.userData.exp = y + i * 0.42; p.obj.position.y = y;
+    root.add(p.obj); parts.push({ obj: p.obj, label: p.label, anchor: new T.Vector3(0.9, p.h / 2, 0) });
+    y += p.h * 0.9;
+  });
+  // keep each label once
+  const seen = new Set(); parts.forEach((p) => { if (seen.has(p.label)) p.label = ""; seen.add(p.label); });
+  return { root, parts, center: new T.Vector3(0, y / 2, 0), dist: 6.2, expLift: layers.length * 0.21 };
+}
+
+/* ---- pizza: toppings are read from the menu text ---- */
+const TOPPINGS = [
+  [/skinka/, "ham", "Skinka"], [/champinjon/, "mush", "Champinjoner"], [/räkor/, "shrimp", "Räkor"], [/scampi/, "scampi", "Scampi"],
+  [/musslor/, "mussel", "Musslor"], [/ananas/, "pine", "Ananas"], [/salami/, "salami", "Salami"], [/kebab/, "kebab", "Kebabkött"],
+  [/köttfärs/, "mince", "Köttfärs"], [/oxfilé/, "beef", "Oxfilé"], [/fläskfilé/, "pork", "Fläskfilé"], [/kyckling/, "chicken", "Kycklingfilé"],
+  [/rödlök/, "redonion", "Rödlök"], [/(^|[ ,])(gul )?lök/, "onion", "Lök"], [/jalapeño/, "jala", "Jalapeño"], [/paprika/, "pepper", "Paprika"],
+  [/tonfisk/, "tuna", "Tonfisk"], [/banan/, "banana", "Banan"], [/bacon/, "bacon", "Bacon"], [/tomat(er)?([ ,&]|$)/, "tomato", "Tomat"],
+  [/gurka/, "cucumber", "Gurka"], [/fefferoni/, "pepperoni", "Fefferoni"], [/oliver/, "olive", "Oliver"], [/fetaost/, "feta", "Fetaost"],
+  [/ruccola/, "rocket", "Ruccola"], [/gorgonzola/, "gorgon", "Gorgonzola"], [/jordnötter/, "nuts", "Jordnötter"], [/kronärtskocka/, "artich", "Kronärtskocka"],
+  [/zucchini/, "zucchini", "Zucchini"], [/soltorkade/, "sundried", "Soltorkade tomater"], [/falafel/, "falafel", "Falafel"], [/quorn/, "quorn", "Quorn"],
+  [/pommes/, "fries", "Pommes"], [/isbergssallad/, "iceberg", "Isbergssallad"], [/bearnaise/, "bearn", "Bearnaisesås"], [/mozzarella/, "mozz", "Extra mozzarella"],
+  [/vitlök/, "garlic", "Färsk vitlök"], [/cayenne/, "cayenne", "Cayennepeppar"], [/curry/, "curry", "Curry"], [/tacosås|bbq|santafe/, "drizzle", "Sås"],
+];
+const PIECE = {
+  ham: [() => new T.BoxGeometry(0.3, 0.025, 0.24), 0xe7a39a, 14], mush: [() => { const g = new T.CylinderGeometry(0.16, 0.16, 0.03, 16, 1, false, 0, Math.PI); return g; }, 0xd9c8a6, 14],
+  shrimp: [() => new T.TorusGeometry(0.11, 0.05, 8, 16, 4.2), 0xf08a6a, 10], scampi: [() => new T.TorusGeometry(0.15, 0.06, 8, 16, 4.2), 0xf07a52, 9],
+  mussel: [() => { const g = new T.SphereGeometry(0.08, 10, 8); g.scale(1.4, 0.5, 0.9); return g; }, 0x2b2420, 8], pine: [() => new T.BoxGeometry(0.16, 0.06, 0.12), 0xf4d35e, 14],
+  salami: [() => new T.CylinderGeometry(0.24, 0.24, 0.025, 24), 0xffffff, 9, "salami"], kebab: [() => { const g = new T.BoxGeometry(0.38, 0.05, 0.11, 6, 1, 1); bump(g, 0.15, 9); return g; }, 0x7a4422, 26],
+  mince: [() => new T.DodecahedronGeometry(0.06), 0x6a3a20, 40], beef: [() => { const g = new T.BoxGeometry(0.32, 0.06, 0.13, 4, 1, 1); bump(g, 0.1, 8); return g; }, 0x6b3520, 16],
+  pork: [() => { const g = new T.BoxGeometry(0.3, 0.06, 0.13, 4, 1, 1); bump(g, 0.1, 8); return g; }, 0xb98a63, 14], chicken: [() => { const g = new T.BoxGeometry(0.17, 0.08, 0.14, 2, 1, 2); bump(g, 0.08, 8); return g; }, 0xe0b37a, 16],
+  onion: [() => new T.TorusGeometry(0.13, 0.018, 6, 24), 0xf3ead8, 12], redonion: [() => new T.TorusGeometry(0.13, 0.018, 6, 24), 0x9d4c8f, 12],
+  jala: [() => new T.TorusGeometry(0.07, 0.03, 6, 16), 0x3f8a2a, 14], pepper: [() => new T.BoxGeometry(0.34, 0.03, 0.06), 0xc8321e, 14],
+  tuna: [() => new T.DodecahedronGeometry(0.07), 0xd9c3a3, 22], banana: [() => new T.CylinderGeometry(0.1, 0.1, 0.035, 16), 0xf2e3a0, 14],
+  bacon: [() => { const g = new T.BoxGeometry(0.34, 0.03, 0.09, 8, 1, 1); bump(g, 0.2, 10); return g; }, 0x9a3a22, 12], tomato: [() => new T.CylinderGeometry(0.2, 0.2, 0.04, 24), 0xd4321f, 7],
+  cucumber: [() => new T.CylinderGeometry(0.16, 0.16, 0.03, 24), 0x6fa64a, 9], pepperoni: [() => new T.TorusGeometry(0.07, 0.03, 6, 16), 0xc9cf52, 12],
+  olive: [() => new T.TorusGeometry(0.06, 0.03, 6, 16), 0x1e1a18, 14], feta: [() => new T.BoxGeometry(0.11, 0.09, 0.11), 0xf7f4ea, 16],
+  rocket: [() => { const g = new T.PlaneGeometry(0.22, 0.09, 4, 1); g.rotateX(-Math.PI / 2); return g; }, 0x4e8a32, 22], gorgon: [() => new T.DodecahedronGeometry(0.08), 0xe6e6d6, 14],
+  nuts: [() => { const g = new T.SphereGeometry(0.05, 8, 6); g.scale(1.3, 0.8, 1); return g; }, 0xc79a5c, 26], artich: [() => { const g = new T.ConeGeometry(0.1, 0.18, 6); g.rotateZ(Math.PI / 2); return g; }, 0xa6b37a, 8],
+  zucchini: [() => new T.CylinderGeometry(0.13, 0.13, 0.03, 20), 0x8fb860, 10], sundried: [() => { const g = new T.SphereGeometry(0.09, 8, 6); g.scale(1.3, 0.35, 0.9); return g; }, 0x7e1f12, 12],
+  falafel: [() => { const g = new T.SphereGeometry(0.12, 12, 10); bump(g, 0.12, 14); return g; }, 0x7a5326, 10], quorn: [() => new T.BoxGeometry(0.12, 0.08, 0.12), 0xd8c39a, 16],
+  fries: [() => new T.BoxGeometry(0.42, 0.07, 0.07), 0xf2c25a, 18], iceberg: [() => { const g = new T.PlaneGeometry(0.4, 0.06, 6, 1); g.rotateX(-Math.PI / 2); return g; }, 0xbde08a, 40],
+  bearn: [() => { const g = new T.SphereGeometry(0.17, 16, 10); g.scale(1, 0.38, 1); return g; }, 0xf2cf6a, 9], mozz: [() => { const g = new T.SphereGeometry(0.15, 12, 8); g.scale(1, 0.35, 1); return g; }, 0xfaf3df, 8],
+  garlic: [() => new T.DodecahedronGeometry(0.035), 0xf4efd8, 30], drizzle: [() => new T.TorusGeometry(0.4, 0.025, 6, 40, 3), 0x7a2a10, 4],
+};
+function scatter(type, color, count, geoFn, mapName, yBase) {
+  const X = textures(); const geo = geoFn();
+  const m = new T.InstancedMesh(geo, mat({ color, roughness: type === "bearn" || type === "olive" ? 0.35 : 0.65, map: mapName ? X[mapName] : null, side: T.DoubleSide }), count);
+  const m4 = new T.Matrix4(), q = new T.Quaternion(), e = new T.Euler(), s = new T.Vector3(1, 1, 1);
+  for (let i = 0; i < count; i++) {
+    const a = rand() * 6.283, r = Math.sqrt(rand()) * 1.75;
+    const flat = /onion|redonion|jala|pepperoni|olive|shrimp|scampi|drizzle/.test(type);
+    e.set(flat ? Math.PI / 2 + rr(-0.2, 0.2) : rr(-0.15, 0.15), rand() * 6.283, flat ? 0 : rr(-0.15, 0.15)); q.setFromEuler(e);
+    s.setScalar(rr(0.85, 1.15)); m4.compose(new T.Vector3(Math.cos(a) * r, yBase + 0.03, Math.sin(a) * r), q, s); m.setMatrixAt(i, m4);
+  }
+  return m;
+}
+function buildPizza(item) {
+  const X = textures(); const desc = (item ? item[2] : "kebab, bearnaisesås i ugn & cayenne").toLowerCase();
+  const root = new T.Group(), parts = [];
+  const layer = (obj, label, lift, ax = 1.4) => { obj.userData.base = obj.position.y; obj.userData.exp = obj.position.y + lift; root.add(obj); parts.push({ obj, label, anchor: new T.Vector3(ax, 0.05, 0) }); };
+  // dough + crust
+  const dough = new T.Group();
+  const base = new T.Mesh(new T.CylinderGeometry(2.05, 2.0, 0.1, 96), mat({ map: X.dough, roughness: 0.9 })); base.position.y = 0.05;
+  const crustGeo = new T.TorusGeometry(2.02, 0.16, 18, 120); crustGeo.rotateX(Math.PI / 2); bump(crustGeo, 0.04, 6);
+  const crust = new T.Mesh(crustGeo, mat({ map: X.dough, roughness: 0.85, color: 0xe2b070 })); crust.position.y = 0.13;
+  dough.add(base, crust); layer(dough, "Pizzadeg", 0, 2.1);
+  const sauce = new T.Mesh(new T.CircleGeometry(1.88, 96), mat({ map: X.sauce, roughness: 0.4 })); sauce.rotation.x = -Math.PI / 2; sauce.position.y = 0.105;
+  const sg = new T.Group(); sg.add(sauce); layer(sg, "Tomatsås", 0.55);
+  const cheeseGeo = new T.CircleGeometry(1.86, 96); cheeseGeo.rotateX(-Math.PI / 2);
+  { const p = cheeseGeo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), z = p.getZ(i); p.setY(i, Math.max(0, Math.sin(x * 3.1) * Math.cos(z * 2.7)) * 0.025); } cheeseGeo.computeVertexNormals(); }
+  const cheese = new T.Mesh(cheeseGeo, mat({ map: X.pizzaCheese, roughness: 0.45 })); cheese.position.y = 0.115;
+  const cg = new T.Group(); cg.add(cheese); layer(cg, "Ost", 1.1);
+  // toppings
+  const found = []; const used = new Set();
+  TOPPINGS.forEach(([re, key, label]) => { if (re.test(desc) && !used.has(key)) { if (key === "onion" && used.has("redonion")) return; used.add(key); found.push([key, label]); } });
+  if (used.has("sundried") && !/(^|[ ,])tomat(er)?([ ,&]|$)/.test(desc.replace(/soltorkade tomater/, ""))) { const i = found.findIndex((f) => f[0] === "tomato"); if (i >= 0) found.splice(i, 1); }
+  let lift = 1.65;
+  found.forEach(([key, label]) => {
+    if (key === "cayenne" || key === "curry") {
+      const sp = new T.Mesh(new T.CircleGeometry(1.8, 64), new T.MeshStandardMaterial({ map: X.cayenne, transparent: true, roughness: 0.8, color: key === "curry" ? 0xe8b830 : 0xffffff }));
+      sp.rotation.x = -Math.PI / 2; sp.position.y = 0.2; const g = new T.Group(); g.add(sp); layer(g, label, lift); lift += 0.5; return;
+    }
+    const P = PIECE[key]; if (!P) return;
+    const g = new T.Group(); g.add(scatter(key, P[1], P[2], P[0], P[3], 0.12)); layer(g, label, lift); lift += 0.5;
+  });
+  if (/inbakad/.test(desc)) {
+    const fold = new T.Mesh(new T.SphereGeometry(2.0, 64, 24, 0, Math.PI, 0, Math.PI / 2), mat({ map: X.dough, roughness: 0.85, color: 0xe6b678, side: T.DoubleSide }));
+    fold.scale.y = 0.28; fold.position.y = 0.12; if (/halvinbakad/.test(desc)) fold.scale.set(0.5, 0.28, 1);
+    const g = new T.Group(); g.add(fold); layer(g, /halvinbakad/.test(desc) ? "Halvinbakad deg" : "Inbakad deg", lift + 0.3);
+  }
+  return { root, parts, center: new T.Vector3(0, 0.25, 0), dist: 7.4, expLift: lift * 0.5, tilt: 0.55 };
+}
+
+/* ---- plank / plate ---- */
+function bowl(color, label) {
+  const g = new T.Group();
+  const b = new T.Mesh(lathe([[0, 0], [0.28, 0], [0.36, 0.06], [0.4, 0.26], [0.36, 0.26], [0.32, 0.08], [0, 0.08]], 40), mat({ map: textures().ceramic, roughness: 0.2 }));
+  const s = new T.Mesh(new T.CircleGeometry(0.35, 32), mat({ color, roughness: 0.15 })); s.rotation.x = -Math.PI / 2; s.position.y = 0.22;
+  g.add(b, s); return g;
+}
+function buildPlank(name) {
+  const X = textures(); const cfg = PLANKS[name] || PLANKS["Oxfiléplanka"];
+  const root = new T.Group(), parts = [];
+  const add = (obj, label, lift, ax) => { obj.userData.base = obj.position.y; obj.userData.exp = obj.position.y + lift; root.add(obj); parts.push({ obj, label, anchor: ax || new T.Vector3(0, 0.2, 0) }); };
+  // board with handle
+  const shape = new T.Shape(); const W = 2.4, H = 1.35, r = 0.25;
+  shape.moveTo(-W + r, -H); shape.lineTo(W - r, -H); shape.quadraticCurveTo(W, -H, W, -H + r); shape.lineTo(W, -0.25); shape.lineTo(W + 0.7, -0.22); shape.quadraticCurveTo(W + 0.9, 0, W + 0.7, 0.22); shape.lineTo(W, 0.25); shape.lineTo(W, H - r); shape.quadraticCurveTo(W, H, W - r, H); shape.lineTo(-W + r, H); shape.quadraticCurveTo(-W, H, -W, H - r); shape.lineTo(-W, -H + r); shape.quadraticCurveTo(-W, -H, -W + r, -H);
+  const bgeo = new T.ExtrudeGeometry(shape, { depth: 0.22, bevelEnabled: true, bevelSize: 0.04, bevelThickness: 0.04, bevelSegments: 3 }); bgeo.rotateX(-Math.PI / 2);
+  { const uv = bgeo.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * 0.2 + 0.5, uv.getY(i) * 0.35 + 0.5); }
+  const board = new T.Mesh(bgeo, mat({ map: X.wood, roughness: 0.8 })); board.position.y = 0;
+  const bg = new T.Group(); bg.add(board); add(bg, "Ekplanka", 0, new T.Vector3(-2.1, 0.1, 1));
+  // piped mash border or fried potatoes
+  const top = 0.27;
+  if (cfg.side === "mash") {
+    const g = new T.Group(); const blob = new T.SphereGeometry(0.17, 14, 10); blob.scale(1, 1.1, 1); bump(blob, 0.08, 18);
+    const tip = new T.ConeGeometry(0.1, 0.16, 10);
+    const n = 46, im = new T.InstancedMesh(blob, mat({ color: 0xf0dca6, roughness: 0.7 }), n), it = new T.InstancedMesh(tip, mat({ color: 0xd9a95a, roughness: 0.7 }), n);
+    const m4 = new T.Matrix4();
+    for (let i = 0; i < n; i++) { const a = (i / n) * 6.283; const x = Math.cos(a) * 2.05, z = Math.sin(a) * 1.05; m4.makeTranslation(x, top + 0.12, z); im.setMatrixAt(i, m4); m4.makeTranslation(x, top + 0.3, z); it.setMatrixAt(i, m4); }
+    g.add(im, it); add(g, "Potatismos, gratinerat", 0.75, new T.Vector3(2.05, top + 0.2, 0));
+  } else {
+    const g = new T.Group(); const geo = new T.BoxGeometry(0.22, 0.18, 0.22); bump(geo, 0.1, 10);
+    const n = 20, im = new T.InstancedMesh(geo, mat({ color: 0xd9a24a, roughness: 0.6 }), n); const m4 = new T.Matrix4(), q = new T.Quaternion();
+    for (let i = 0; i < n; i++) { q.setFromEuler(new T.Euler(rand(), rand(), rand())); m4.compose(new T.Vector3(rr(0.9, 1.9), top + 0.1, rr(-0.9, 0.9)), q, new T.Vector3(1, 1, 1)); im.setMatrixAt(i, m4); }
+    g.add(im); add(g, "Stekt potatis", 0.75, new T.Vector3(1.4, top + 0.15, 0));
+  }
+  // meat
+  cfg.meat.forEach((kind, i) => {
+    const g = new T.Group(); const x = cfg.meat.length > 1 ? (i ? 0.25 : -0.95) : -0.4;
+    if (kind === "fish") {
+      const geo = new T.CapsuleGeometry ? new T.CapsuleGeometry(0.35, 1.1, 8, 16) : new T.SphereGeometry(0.6, 24, 16); geo.rotateZ(Math.PI / 2); geo.scale(1, 0.4, 1);
+      const m = new T.Mesh(geo, mat({ map: X.fish, roughness: 0.55 })); m.position.set(x, top + 0.14, -0.1); m.rotation.y = 0.3; g.add(m);
+      add(g, "Gösfilé", 1.3, new T.Vector3(x, top + 0.2, 0));
+    } else {
+      const geo = new T.CylinderGeometry(0.62, 0.66, kind === "beef" ? 0.5 : 0.36, 40, 3); bump(geo, 0.05, 5);
+      const side = mat({ map: X.sear, roughness: 0.7, color: kind === "pork" ? 0xc8946a : 0xffffff });
+      const topM = mat({ map: kind === "beef" ? X.sear : X.porkSear, roughness: 0.6 });
+      const m = new T.Mesh(geo, [side, topM, side]); m.position.set(x, top + (kind === "beef" ? 0.25 : 0.18), 0); g.add(m);
+      add(g, kind === "beef" ? "Oxfilé, medium" : "Fläskfilé", 1.3, new T.Vector3(x, top + 0.3, 0));
+    }
+  });
+  if (cfg.topping === "shrimp") { const P = PIECE.shrimp; const g = new T.Group(); const sc = scatter("shrimp", P[1], 8, P[0], null, 0); sc.scale.setScalar(0.4); sc.position.set(-0.4, top + 0.52, 0); g.add(sc); add(g, "Räkor", 1.85, new T.Vector3(-0.4, top + 0.55, 0)); }
+  // vegetables
+  { const g = new T.Group(); const m4 = new T.Matrix4(), q = new T.Quaternion();
+    const car = new T.InstancedMesh(new T.CylinderGeometry(0.05, 0.07, 0.6, 10), mat({ color: 0xe0782a, roughness: 0.5 }), 5);
+    const bro = new T.InstancedMesh((() => { const s = new T.SphereGeometry(0.15, 10, 8); bump(s, 0.15, 20); return s; })(), mat({ color: 0x3f7a2a, roughness: 0.8 }), 6);
+    const pep = new T.InstancedMesh(new T.BoxGeometry(0.5, 0.05, 0.1), mat({ color: 0xc8321e, roughness: 0.4 }), 4);
+    for (let i = 0; i < 5; i++) { q.setFromEuler(new T.Euler(Math.PI / 2, 0, rr(-0.6, 0.6))); m4.compose(new T.Vector3(rr(0.4, 1.0), top + 0.07, rr(0.55, 0.9)), q, new T.Vector3(1, 1, 1)); car.setMatrixAt(i, m4); }
+    for (let i = 0; i < 6; i++) { m4.makeTranslation(rr(-1.7, -1.0), top + 0.14, rr(0.3, 0.85)); bro.setMatrixAt(i, m4); }
+    for (let i = 0; i < 4; i++) { q.setFromEuler(new T.Euler(0, rr(-1, 1), 0)); m4.compose(new T.Vector3(rr(0.3, 1), top + 0.06, rr(-0.9, -0.5)), q, new T.Vector3(1, 1, 1)); pep.setMatrixAt(i, m4); }
+    g.add(car, bro, pep); add(g, "Stekta grönsaker", 1.0, new T.Vector3(-1.4, top + 0.2, 0.6)); }
+  // sauces
+  const sc = { "rödvinssås": 0x4a1810, "bearnaisesås": 0xf0c95a, "räkdillsås": 0xf2c7b0 };
+  cfg.sauces.forEach((s, i) => { const b = bowl(sc[s] || 0xeeeeee); b.position.set(1.55 - i * 0.9, top, cfg.side === "mash" ? 0.05 : -0.95); const g = new T.Group(); g.add(b); add(g, s[0].toUpperCase() + s.slice(1), 0.95 + i * 0.25, new T.Vector3(1.55 - i * 0.9, top + 0.3, 0)); });
+  return { root, parts, center: new T.Vector3(0, 0.3, 0), dist: 7.6, expLift: 0.9, tilt: 0.6 };
+}
+
+/* --- viewer --- */
+function Viewer(host) {
+  const stage = host.querySelector(".stage"), labelsEl = host.querySelector(".labels"), linesSvg = labelsEl.querySelector("svg");
+  const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+  renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
+  renderer.physicallyCorrectLights = true;
+  stage.appendChild(renderer.domElement);
+  const scene = new T.Scene();
+  // studio environment for soft reflections
+  const env = new T.Scene(); env.add(new T.Mesh(new T.BoxGeometry(20, 20, 20), new T.MeshBasicMaterial({ color: 0x1d3527, side: T.BackSide })));
+  const panel = (c, x, y, z, w, h) => { const m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ color: c, side: T.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); env.add(m); };
+  panel(new T.Color(6, 5.2, 4.4), 4, 7, 4, 6, 4); panel(new T.Color(1.6, 2.2, 1.8), -6, 3, -2, 4, 6); panel(new T.Color(2.4, 2.2, 2), 0, 2, -8, 8, 3);
+  const pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(env, 0.04).texture;
+  const key = new T.DirectionalLight(0xfff0dc, 2.6); key.position.set(4, 7, 5); scene.add(key);
+  const rim = new T.DirectionalLight(0xbfe6cf, 1.4); rim.position.set(-5, 3, -5); scene.add(rim);
+  scene.add(new T.HemisphereLight(0xfff6e8, 0x0c1f16, 0.6));
+  const shadow = new T.Mesh(new T.PlaneGeometry(1, 1), new T.MeshBasicMaterial({ map: textures().shadow, transparent: true, depthWrite: false })); shadow.rotation.x = -Math.PI / 2; scene.add(shadow);
+  const cam = new T.PerspectiveCamera(32, 1, 0.1, 100);
+  let dish = null, exploded = false, t = 0, rotY = -0.5, vel = 0, drag = null, lastInteract = 0, running = false, labelEls = [];
+  const v = new T.Vector3();
+  function size() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+  new ResizeObserver(size).observe(stage);
+  function set(d) {
+    if (dish) scene.remove(dish.root);
+    dish = d; scene.add(d.root); t = exploded ? 1 : 0;
+    const span = d.dist; shadow.scale.setScalar(span * 0.85); shadow.position.y = -0.02;
+    labelsEl.querySelectorAll(".lab").forEach((n) => n.remove()); labelEls = [];
+    d.parts.forEach((p) => { if (!p.label) { labelEls.push(null); return; } const n = document.createElement("div"); n.className = "lab"; n.textContent = p.label; labelsEl.appendChild(n); labelEls.push(n); });
+    size();
+  }
+  function setExploded(on) { exploded = on; }
+  const ease = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  let prev = performance.now();
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+    if (!dish) { requestAnimationFrame(frame); return; }
+    t += (exploded ? 1 : -1) * dt * 1.6; t = Math.max(0, Math.min(1, t)); const k = ease(t);
+    if (!drag) { if (now - lastInteract > 2500 && !reduce) rotY += dt * 0.35; rotY += vel; vel *= 0.92; }
+    dish.root.rotation.y = rotY;
+    dish.parts.forEach((p) => { p.obj.position.y = p.obj.userData.base + (p.obj.userData.exp - p.obj.userData.base) * k; });
+    const c = dish.center.clone(); c.y += (dish.expLift || 0.8) * k;
+    const tilt = dish.tilt || 0.32, dist = dish.dist * (1 + k * 0.25);
+    cam.position.set(0, c.y + Math.sin(tilt) * dist, Math.cos(tilt) * dist); cam.lookAt(c);
+    renderer.render(scene, cam);
+    // labels: anchor -> side column
+    const w = stage.clientWidth, h = stage.clientHeight; let lines = "";
+    dish.parts.forEach((p, i) => {
+      const el = labelEls[i]; if (!el) return;
+      v.copy(p.anchor); p.obj.localToWorld(v); v.project(cam);
+      const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
+      const right = i % 2 === 0; const lx = right ? w * 0.8 : w * 0.2;
+      el.classList.toggle("on", k > 0.85); el.classList.toggle("l", !right);
+      el.style.left = `${lx + (right ? 6 : -6)}px`; el.style.top = `${y}px`;
+      if (k > 0.85) lines += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${lx.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/>`;
+    });
+    linesSvg.innerHTML = lines;
+    requestAnimationFrame(frame);
+  }
+  function start() { if (running) return; running = true; prev = performance.now(); requestAnimationFrame(frame); }
+  function stop() { running = false; }
+  const cv = renderer.domElement;
+  cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, r: rotY }; lastInteract = performance.now(); cv.setPointerCapture(e.pointerId); host.querySelector(".hint")?.style.setProperty("opacity", "0"); });
+  cv.addEventListener("pointermove", (e) => { if (!drag) return; const dx = e.clientX - drag.x; const nr = drag.r + dx * 0.01; vel = (nr - rotY) * 0.4; rotY = nr; lastInteract = performance.now(); });
+  const up = () => { drag = null; lastInteract = performance.now(); };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  return { set, setExploded, start, stop, size };
+}
+
+/* --- dish builders keyed by menu item --- */
+function findItem(name) { for (const c of MENU) for (const g of c.groups) for (const it of g.items) if (it[1] === name) return it; return null; }
+function pizzaByNo(no) { for (const g of MENU[0].groups) for (const it of g.items) if (it[0] === no) return it; return null; }
+function dishFor(catId, it) {
+  if (catId === "pizza") return () => buildPizza(it);
+  if (catId === "burgare" && BURGERS[it[1]]) return () => buildBurger(it[1]);
+  if (catId === "alacarte" && PLANKS[it[1]]) return () => buildPlank(it[1]);
+  return null;
+}
+
+/* --- hero studio --- */
+let hero = null, modal = null;
+const studio = $("#studio");
+if (has3D) {
+  try {
+    hero = Viewer(studio);
+    const pick = $("#pick");
+    const show = (d, b) => {
+      pick.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      $("#s-name").textContent = d.name; $("#s-price").textContent = d.price;
+      hero.set(d.pizza ? buildPizza(pizzaByNo(d.pizza)) : /planka/i.test(d.name) ? buildPlank(d.name) : buildBurger(d.name));
+    };
+    HERO_DISHES.forEach((d, i) => { const b = document.createElement("button"); b.type = "button"; b.textContent = d.label; b.addEventListener("click", () => show(d, b)); pick.append(b); if (i === 0) show(d, b); });
+    const xb = $("#explode");
+    xb.addEventListener("click", () => { const on = xb.getAttribute("aria-pressed") !== "true"; xb.setAttribute("aria-pressed", String(on)); xb.textContent = on ? "Sätt ihop" : "Visa ingredienser"; hero.setExploded(on); });
+    $("#loading").remove();
+    new IntersectionObserver((es) => es[0].isIntersecting ? hero.start() : hero.stop()).observe(studio);
+    // open in layers once, a moment after load, to show what the button does
+    if (!reduce) setTimeout(() => { if (xb.getAttribute("aria-pressed") === "false") xb.click(); setTimeout(() => { if (xb.getAttribute("aria-pressed") === "true") xb.click(); }, 3800); }, 2600);
+  } catch (e) { console.error(e); $("#loading").textContent = "3D-vyn kunde inte startas på den här enheten."; }
+} else {
+  $("#loading").textContent = "3D-vyn kräver en nyare webbläsare.";
+}
+const dlg = $("#dlg");
+function open3D(catId, it) {
+  if (!has3D) return;
+  if (!modal) { modal = Viewer($("#studio2")); const xb = $("#explode2"); xb.addEventListener("click", () => { const on = xb.getAttribute("aria-pressed") !== "true"; xb.setAttribute("aria-pressed", String(on)); xb.textContent = on ? "Sätt ihop" : "Visa ingredienser"; modal.setExploded(on); }); }
+  const build = dishFor(catId, it); if (!build) return;
+  $("#s-name2").textContent = (it[0] !== "" ? `${it[0]}. ` : "") + it[1];
+  $("#s-price2").textContent = Array.isArray(it[3]) ? `från ${it[3][0][1]} kr` : `${it[3]} kr`;
+  dlg.showModal(); hero && hero.stop();
+  requestAnimationFrame(() => { modal.size(); modal.set(build()); modal.start(); const xb = $("#explode2"); xb.setAttribute("aria-pressed", "false"); xb.textContent = "Visa ingredienser"; modal.setExploded(false); setTimeout(() => xb.click(), 700); });
+}
+$("#dlg-close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener("close", () => { modal && modal.stop(); if (hero && studio.getBoundingClientRect().bottom > 0) hero.start(); });
+
+/* ================= menu UI ================= */
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const norm = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const hl = (txt, q) => { if (!q) return esc(txt); const i = norm(txt).indexOf(q); return i < 0 ? esc(txt) : esc(txt.slice(0, i)) + "<mark>" + esc(txt.slice(i, i + q.length)) + "</mark>" + esc(txt.slice(i + q.length)); };
+const S = { cat: "pizza", sub: 0, q: "" };
+const courses = $("#courses");
+MENU.forEach((c) => {
+  const n = c.groups.reduce((a, g) => a + g.items.length, 0);
+  const b = document.createElement("button"); b.type = "button"; b.className = "course"; b.setAttribute("role", "tab"); b.dataset.id = c.id;
+  b.innerHTML = `<span>${esc(c.name)}</span><small>${n}</small>`;
+  b.addEventListener("click", () => { S.cat = c.id; S.sub = 0; S.q = ""; $("#q").value = ""; renderMenu(); });
+  courses.append(b);
+});
+const ICON3D = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.5l5.5 3v7L8 14.5 2.5 11.5v-7z M8 7.5l5.5-3 M8 7.5v7 M8 7.5l-5.5-3"/></svg>`;
+function itemHTML(catId, it, k, q) {
+  const [no, name, desc, price, tags = []] = it; const sized = Array.isArray(price);
+  const can3D = has3D && !!dishFor(catId, it);
+  return `<div class="item" style="--k:${k}">
+    <span class="no">${no}</span><span class="nm">${hl(name, q)}</span><span class="price">${sized ? `från ${price[0][1]} kr` : `${price} kr`}</span>
+    ${desc ? `<p class="ds">${hl(desc, q)}</p>` : ""}
+    ${(sized || tags.length || can3D) ? `<div class="meta">${sized ? price.map(([s, p]) => `<span class="sz">${s}<b>${p} kr</b></span>`).join("") : ""}${tags.map((t) => `<span class="tg">${t}</span>`).join("")}${can3D ? `<button class="view3d" type="button" data-cat="${catId}" data-name="${esc(name)}">${ICON3D}Se i 3D</button>` : ""}</div>` : ""}
+  </div>`;
+}
+function renderMenu() {
+  const q = norm(S.q.trim());
+  courses.querySelectorAll(".course").forEach((b) => b.setAttribute("aria-selected", String(!q && b.dataset.id === S.cat)));
+  const subs = $("#subs"), items = $("#items");
+  if (q) {
+    $("#p-title").textContent = "Sökresultat"; subs.innerHTML = ""; $("#p-note").textContent = "";
+    const hits = []; MENU.forEach((c) => c.groups.forEach((g) => g.items.forEach((it) => { if (norm(it[1] + " " + it[2] + " " + it[0]).includes(q)) hits.push([c.id, it]); })));
+    items.innerHTML = hits.length ? hits.map(([c, it], k) => itemHTML(c, it, k, q)).join("") : `<p class="empty">Inget matchar ”${esc(S.q.trim())}”. Prova ett annat ord.</p>`;
+    return;
+  }
+  const c = MENU.find((x) => x.id === S.cat);
+  $("#p-title").textContent = c.name;
+  subs.innerHTML = c.groups.length > 1 ? c.groups.map((g, i) => `<button class="sub-b" type="button" data-i="${i}" aria-pressed="${i === S.sub}">${esc(g.name)}${g.price ? `<small>${g.price} kr</small>` : ""}</button>`).join("") : "";
+  subs.querySelectorAll(".sub-b").forEach((b) => b.addEventListener("click", () => { S.sub = +b.dataset.i; renderMenu(); }));
+  const g = c.groups[S.sub] || c.groups[0];
+  $("#p-note").textContent = g.note || "";
+  items.innerHTML = g.items.map((it, k) => itemHTML(c.id, it, k, "")).join("");
+}
+$("#items").addEventListener("click", (e) => { const b = e.target.closest(".view3d"); if (!b) return; const it = findItem(b.dataset.name); if (it) open3D(b.dataset.cat, it); });
+$("#q").addEventListener("input", (e) => { S.q = e.target.value; renderMenu(); });
+renderMenu();
+
+/* ================= hours ================= */
+const DAYS = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
+const HOURS = [[10, 21], [10, 21], [10, 21], [10, 21], [10, 22], [10, 22], [10, 21]];
+const dayIdx = (d) => (d.getDay() + 6) % 7;
+function renderHours() {
+  const t = dayIdx(new Date());
+  $("#hours").innerHTML = DAYS.map((d, i) => { const c = i === t ? ' class="today"' : ""; return `<dt${c}>${d}</dt><dd${c}>${HOURS[i][0]}–${HOURS[i][1]}</dd>`; }).join("");
+  const now = new Date(), h = now.getHours() + now.getMinutes() / 60, [o, cl] = HOURS[t], st = $("#status");
+  if (h >= o && h < cl) { st.className = "status open"; st.innerHTML = `<i></i><span><b>Öppet nu</b> · till ${cl}:00</span>`; }
+  else if (h < o) { st.className = "status"; st.innerHTML = `<i></i><span>Öppnar i dag kl ${o}:00</span>`; }
+  else { st.className = "status"; st.innerHTML = `<i></i><span>Stängt nu · öppnar i morgon kl ${HOURS[(t + 1) % 7][0]}:00</span>`; }
+}
+renderHours(); setInterval(renderHours, 60000);
+$("#copy").addEventListener("click", async (e) => { const b = e.currentTarget; try { await navigator.clipboard.writeText("0581-10074"); b.textContent = "Kopierat"; } catch { const r = document.createRange(); r.selectNodeContents($("#num")); getSelection().removeAllRanges(); getSelection().addRange(r); b.textContent = "Markerat"; } setTimeout(() => (b.textContent = "Kopiera"), 2000); });
+
+/* ================= booking ================= */
+const B = { party: 2, zone: "Inne", day: null, time: null };
+const TABLES = {
+  Inne: [ { x: 60, y: 60, s: 2 }, { x: 120, y: 60, s: 2 }, { x: 180, y: 60, s: 4 }, { x: 250, y: 60, s: 4 }, { x: 60, y: 140, s: 4 }, { x: 140, y: 150, s: 6 }, { x: 240, y: 150, s: 8 }, { x: 310, y: 150, s: 2 } ],
+  Ute: [ { x: 60, y: 70, s: 4 }, { x: 140, y: 70, s: 4 }, { x: 220, y: 70, s: 6 }, { x: 300, y: 70, s: 2 }, { x: 90, y: 160, s: 6 }, { x: 200, y: 160, s: 8 }, { x: 300, y: 160, s: 4 } ],
+};
+function drawFloor() {
+  const svg = $("#floor"); const ts = TABLES[B.zone];
+  let best = -1, bestS = 99; ts.forEach((t, i) => { if (t.s >= B.party && t.s < bestS) { best = i; bestS = t.s; } });
+  let html = `<rect class="room" x="6" y="10" width="348" height="210" rx="10"/>`;
+  html += B.zone === "Inne" ? `<text class="lbl" x="18" y="212">Entré</text><rect class="room" x="290" y="18" width="56" height="26" rx="4"/><text class="lbl" x="298" y="35">Kassa</text>` : `<text class="lbl" x="18" y="212">Uteservering</text>`;
+  ts.forEach((t, i) => {
+    const fit = t.s >= B.party, pick = i === best;
+    const r = 10 + t.s * 1.6, seats = Array.from({ length: t.s }, (_, k) => { const a = (k / t.s) * 6.283 - 1.57; return `<circle class="seat${pick && k < B.party ? " on" : ""}" cx="${(t.x + Math.cos(a) * (r + 8)).toFixed(1)}" cy="${(t.y + Math.sin(a) * (r + 8)).toFixed(1)}" r="4.2"/>`; }).join("");
+    html += `${seats}<circle class="tbl${fit ? " fit" : ""}${pick ? " pick" : ""}" cx="${t.x}" cy="${t.y}" r="${r}"/>`;
+  });
+  svg.innerHTML = html;
+  $("#floor-cap").textContent = best < 0 ? `Ring oss för sällskap på ${B.party}, vi ställer ihop bord` : `Bord för ${bestS} passar ${B.party} ${B.party === 1 ? "gäst" : "gäster"}`;
+  $("#floor-zone").textContent = B.zone === "Inne" ? "Inne" : "Uteservering";
+}
+function setParty(n) { B.party = Math.max(1, Math.min(20, n)); $("#party").textContent = B.party; $("#minus").disabled = B.party <= 1; $("#plus").disabled = B.party >= 20; drawFloor(); }
+$("#minus").addEventListener("click", () => setParty(B.party - 1));
+$("#plus").addEventListener("click", () => setParty(B.party + 1));
+$("#zone").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { $("#zone").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); B.zone = b.dataset.z; drawFloor(); }));
+function renderDays() {
+  const box = $("#days"); box.innerHTML = ""; const base = new Date(); base.setHours(12, 0, 0, 0);
+  for (let k = 0; k < 14; k++) {
+    const d = new Date(base); d.setDate(base.getDate() + k);
+    const b = document.createElement("button"); b.type = "button"; b.className = "day"; b.setAttribute("aria-pressed", "false");
+    b.innerHTML = `<small>${k === 0 ? "I dag" : d.toLocaleDateString("sv-SE", { weekday: "short" })}</small><b>${d.getDate()}</b><small>${d.toLocaleDateString("sv-SE", { month: "short" })}</small>`;
+    b.addEventListener("click", () => { box.querySelectorAll(".day").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); B.day = d; B.time = null; renderSlots(); });
+    box.append(b);
+    if (k === 0) { const [, cl] = HOURS[dayIdx(d)]; if (new Date().getHours() >= cl - 1) b.disabled = true, b.style.opacity = ".35"; }
+  }
+}
+function renderSlots() {
+  const box = $("#slots"); box.innerHTML = "";
+  if (!B.day) { box.innerHTML = `<p class="muted" style="grid-column:1/-1">Välj en dag först.</p>`; return; }
+  const [o, cl] = HOURS[dayIdx(B.day)]; const now = new Date(); const today = B.day.toDateString() === now.toDateString();
+  for (let m = o * 60 + 30; m <= (cl - 1) * 60; m += 30) {
+    if (today && m < now.getHours() * 60 + now.getMinutes() + 30) continue;
+    const s = `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+    const b = document.createElement("button"); b.type = "button"; b.className = "slot"; b.textContent = s; b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => { box.querySelectorAll(".slot").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); B.time = s; });
+    box.append(b);
+  }
+  if (!box.children.length) box.innerHTML = `<p class="muted" style="grid-column:1/-1">Inga fler tider i dag. Välj en annan dag.</p>`;
+}
+$("#ticket").addEventListener("submit", (e) => {
+  e.preventDefault(); const err = $("#err"); err.textContent = "";
+  const name = $("#f-name").value.trim(), phone = $("#f-phone").value.trim(), note = $("#f-note").value.trim();
+  if (!B.day) { err.textContent = "Välj en dag."; return; }
+  if (!B.time) { err.textContent = "Välj en tid."; return; }
+  if (!name) { err.textContent = "Skriv ditt namn."; $("#f-name").focus(); return; }
+  if (phone.replace(/\D/g, "").length < 8) { err.textContent = "Skriv ett mobilnummer så vi kan nå dig."; $("#f-phone").focus(); return; }
+  const when = B.day.toLocaleDateString("sv-SE", { weekday: "long", day: "numeric", month: "long" });
+  $("#sum-big").textContent = `${B.party} ${B.party === 1 ? "gäst" : "gäster"}, ${when} kl ${B.time}`;
+  $("#sum-text").textContent = `Bordsförfrågan till Grillköket\n${B.party} gäster · ${when} kl ${B.time} · ${B.zone === "Inne" ? "inne" : "uteservering"}\nNamn: ${name}\nTelefon: ${phone}${note ? `\nÖnskemål: ${note}` : ""}`;
+  $("#ticket").querySelectorAll(".row").forEach((r) => (r.hidden = true));
+  const s = $("#summary"); s.classList.add("on"); s.focus();
+});
+$("#sum-edit").addEventListener("click", () => { $("#ticket").querySelectorAll(".row").forEach((r) => (r.hidden = false)); $("#summary").classList.remove("on"); });
+$("#sum-copy").addEventListener("click", async (e) => { const b = e.currentTarget; try { await navigator.clipboard.writeText($("#sum-text").textContent); b.textContent = "Kopierad"; } catch { const r = document.createRange(); r.selectNodeContents($("#sum-text")); getSelection().removeAllRanges(); getSelection().addRange(r); b.textContent = "Markerad"; } setTimeout(() => (b.textContent = "Kopiera förfrågan"), 2000); });
+setParty(2); renderDays(); renderSlots();
+
+/* reveals + nav */
+if ("IntersectionObserver" in window && !reduce) {
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.08 });
+  document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+  const links = [...document.querySelectorAll(".nav a")];
+  const nio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-45% 0px -50% 0px" });
+  links.forEach((a) => { const s = $(a.getAttribute("href")); if (s) nio.observe(s); });
+} else document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
+})();
+</script>
