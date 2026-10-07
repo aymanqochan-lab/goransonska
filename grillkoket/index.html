@@ -435,24 +435,31 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .hero .flash{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(40% 40% at 50% 46%,rgba(226,180,106,.22),transparent 70%);opacity:0;transition:opacity 1.2s ease}
 .hero.swap .flash{opacity:1}
 
-/* ---- Folkmätaren ---- */
+/* ---- Folkmätaren: bred, smal remsa ---- */
 :root{--q:#8ad497;--m:#e2b46a;--f:#d9774f}
-.crowd{border:1px solid var(--rule);background:linear-gradient(160deg,var(--moss),var(--pine));padding:16px 18px 14px;max-width:440px}
-.crowd-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.crowd-top h3{font-size:20px;margin-top:6px}
-.crowd-pill{font:600 10.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;padding:6px 8px;border:1px solid currentColor;white-space:nowrap}
-.crowd-pill.lugnt{color:var(--q)}.crowd-pill.mellan{color:var(--m)}.crowd-pill.fullt{color:var(--f)}
-.crowd-bars{display:flex;align-items:flex-end;gap:3px;height:64px;margin-top:12px}
-.cb{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}
-.cb i{display:block;width:100%;border-radius:2px 2px 0 0;background:var(--q);opacity:.75;transition:height .6s}
-.cb.mellan i{background:var(--m)}.cb.fullt i{background:var(--f)}
-.cb.past i{opacity:.22}
-.cb.now i{opacity:1;box-shadow:0 0 0 2px var(--cream)}
-.cb{gap:4px}.cb span{font:500 9px var(--f-body);color:var(--sage);font-variant-numeric:tabular-nums}
-.cb:nth-child(even) span{visibility:hidden}
-.cb.now span{visibility:visible;color:var(--cream)}
-.crowd-note{margin-top:10px;font-size:12.5px;color:var(--sage)}
-.crowd-note b{color:var(--cream)}
+.crowd{margin-top:56px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:20px 48px;align-items:center;padding:24px 28px;border:1px solid var(--rule);background:linear-gradient(100deg,var(--moss),var(--pine) 70%)}
+.crowd-txt h3{font-size:24px;margin-top:8px}
+.crowd-txt h3 em{font-style:normal}
+.crowd-txt h3 em.lugnt{color:var(--q)}.crowd-txt h3 em.mellan{color:var(--m)}.crowd-txt h3 em.fullt{color:var(--f)}
+.crowd-txt p:last-child{margin-top:6px;font-size:14px;color:var(--sage)}
+.crowd-txt b{color:var(--cream)}
+.crowd-strip{position:relative;padding-top:24px}
+.cs-bars{display:flex;align-items:flex-end;gap:3px;height:46px}
+.cs-bars i{flex:1;height:var(--v);border-radius:3px 3px 1px 1px;background:var(--q);opacity:.85;transform-origin:bottom;transition:opacity .3s}
+.cs-bars i.mellan{background:var(--m)}.cs-bars i.fullt{background:var(--f)}
+.cs-bars i.past{opacity:.25}
+.cs-bars i:hover{opacity:1}
+.cs-now{position:absolute;top:0;bottom:22px;width:0;border-left:1.5px dashed var(--cream)}
+.cs-now b{position:absolute;top:-4px;left:50%;transform:translateX(-50%);font:600 10px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--pine);background:var(--cream);padding:4px 6px}
+.cs-hours{display:flex;justify-content:space-between;margin-top:6px;font:500 10.5px var(--f-body);color:var(--sage);font-variant-numeric:tabular-nums}
+.cs-hours span:nth-child(even){visibility:hidden}
+.cs-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;color:var(--sage)}
+.cs-legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--q)}
+.cs-legend .mellan::before{background:var(--m)}.cs-legend .fullt::before{background:var(--f)}
+.cs-legend em{font-style:normal;opacity:.7;margin-left:auto}
+.js .crowd.rv .cs-bars i{transform:scaleY(.1)}
+.js .crowd.rv.in .cs-bars i{transform:none;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .3s}
+@media (max-width:760px){.crowd{grid-template-columns:1fr;padding:20px 18px}.cs-legend em{margin-left:0;flex-basis:100%}}
 .status .cw{color:var(--sage)}
 .slot{position:relative;overflow:hidden}
 .slot i{position:absolute;left:0;bottom:0;height:3px;background:var(--q);opacity:.85}
@@ -519,7 +526,22 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .dl-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:10px 20px 0}
 .dl-chips:empty{display:none}
 .dl-chips span{font:500 12.5px var(--f-body);color:var(--cream);border:1px solid var(--rule);padding:5px 10px;background:rgba(7,18,12,.5)}
-.dish-dlg.mode-photo .dl-chips{display:none}
+.dish-dlg.mode-photo .dl-chips{padding-top:12px}
+.dish-dlg.nolayers #dl-m-layers{display:none}
+.dish-dlg.nolayers .dl-modes{display:none}
+.dish-dlg.nolayers #dl-toggle,.dish-dlg.nolayers #dl-note{display:none}
+.dish-dlg.mode-info .dl-stage,.dish-dlg.mode-info .dl-photo{display:none}
+.dish-dlg.mode-info .dl-chips{justify-content:flex-start;padding:18px 20px 6px}
+.dish-dlg.mode-info .dl-chips::before{content:"Innehåll";flex-basis:100%;font:600 11.5px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:6px}
+
+.rev-give{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;margin-top:6px;padding-top:16px;border-top:1px solid var(--rule);width:min(560px,100%)}
+.rev-q{font:400 18px var(--f-head);color:var(--cream)}
+.give-stars{display:flex;flex-direction:row-reverse;gap:2px}
+.give-stars a{display:block;width:26px;height:26px;padding:2px}
+.give-stars svg{width:100%;height:100%;fill:none;stroke:var(--gold);stroke-width:1.4;transition:fill .2s,transform .2s}
+.give-stars a:hover svg,.give-stars a:hover~a svg,.give-stars a:focus-visible svg,.give-stars a:focus-visible~a svg{fill:var(--gold);transform:scale(1.12)}
+.rev-write{font:600 12px var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--pine);background:var(--gold);padding:10px 14px;text-decoration:none;transition:background .2s}
+.rev-write:hover{background:#e7c983}
 </style>
 </head>
 <body>
@@ -617,6 +639,11 @@ mark{background:rgba(201,122,69,.28);color:inherit}
         <div class="rev-track" id="revTrack"><figure class="rev-card"><blockquote>”Bästa lunchrestaurangen/pizzerian i Lindesbergs trakten.”</blockquote><figcaption>Kalle L.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Vilket mos de har och allt smakade helt underbart! Kommer att bli fler besök.”</blockquote><figcaption>Crazy Swede</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Trevligt bemötande så fort man klev in. Det blev två gösplankor som smakade alldeles utmärkt.”</blockquote><figcaption>Staffan S.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”My go to spot i Lindesberg, its cozy the service is great and the food is always great.”</blockquote><figcaption>HappyCowe</figcaption><div class="rev-stars" aria-label="4 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Fin servering med stora fina uterum och innerrum. Uppläggning av god mat på fint porslin.”</blockquote><figcaption>Pontus L.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Köper ofta pizza här på väg mot stugan. Härlig personal, trevliga och service minded.”</blockquote><figcaption>Kirill N.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Fräscht och fint. Tog en dagens som var pannbiff, smakade alldeles utmärkt!”</blockquote><figcaption>Håkan T.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure><figure class="rev-card"><blockquote>”Supergod mat och ordning å reda. Fint med uteservering både med å utan tak.”</blockquote><figcaption>Malin E.</figcaption><div class="rev-stars" aria-label="5 av 5 stjärnor"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></div></figure></div>
       </div>
       <a class="rev-total" href="https://maps.app.goo.gl/Jcb8JFks59KW1x6b8" target="_blank" rel="noopener"><b>4,0</b> <span class="rev-stars sm" aria-hidden="true"><i class="on" style="--k:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="on" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></span> 844 omdömen på Google</a>
+      <div class="rev-give">
+        <span class="rev-q">Har du ätit hos oss?</span>
+        <div class="give-stars" role="group" aria-label="Betygsätt Grillköket på Google"><a href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener" aria-label="5 av 5 stjärnor" style="--k:5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></a><a href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener" aria-label="4 av 5 stjärnor" style="--k:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></a><a href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener" aria-label="3 av 5 stjärnor" style="--k:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></a><a href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener" aria-label="2 av 5 stjärnor" style="--k:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></a><a href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener" aria-label="1 av 5 stjärnor" style="--k:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></a></div>
+        <a class="rev-write" href="https://search.google.com/local/writereview?placeid=ChIJgXHXPVVJXEYRRry8AWmnccE" target="_blank" rel="noopener">Skriv ett omdöme <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
@@ -740,8 +767,9 @@ mark{background:rgba(201,122,69,.28);color:inherit}
         <div class="phone"><span class="phone-big" id="num">0581-100 74</span><button class="copy" type="button" id="copy">Kopiera</button></div>
         <p class="muted" style="margin-top:10px">Äta här eller hämta vid bilen. Uteservering när vädret tillåter.</p>
       </div>
-      <div class="rv" style="display:grid;gap:28px;min-width:0"><div class="hours"><h3 style="font-size:28px">Öppettider</h3><dl id="hours"></dl></div><div class="crowd" id="crowd"></div></div>
+      <div class="hours rv"><h3 style="font-size:28px">Öppettider</h3><dl id="hours"></dl></div>
     </div>
+    <div class="crowd rv" id="crowd"></div>
   </section>
 </main>
 
@@ -1065,9 +1093,16 @@ function renderCrowd() {
   const open = h >= o && h < cl, v = open ? popAt(di, h) : 0, [cls, word] = popWord(v);
   const left = bars.filter(([x]) => x + 1 > h);
   const best = (left.length ? left : bars).slice().sort((a, b) => a[1] - b[1])[0];
-  box.innerHTML = `<div class="crowd-top"><div><p class="eyebrow">Folkmätaren</p><h3>${open ? `Just nu: ${word.toLowerCase()}` : "Stängt just nu"}</h3></div>${open ? `<span class="crowd-pill ${cls}">${word}</span>` : ""}</div>
-    <div class="crowd-bars" role="img" aria-label="Hur mycket folk det brukar vara i dag, timme för timme">${bars.map(([x, p]) => `<div class="cb ${popWord(p)[0]}${open && Math.floor(h) === x ? " now" : ""}${open && x + 1 <= h ? " past" : ""}"><i style="height:${Math.max(6, p)}%"></i><span>${hh(x)}</span></div>`).join("")}</div>
-    <p class="crowd-note">${best ? `Lugnast ${left.length ? "resten av dagen" : "i dag"}: <b>kl ${hh(best[0])}–${hh(best[0] + 1)}</b>. ` : ""}Bygger på Googles statistik över när Grillköket brukar ha mest besökare.</p>`;
+  const pos = open ? ((h - o) / (cl - o)) * 100 : (h < o ? 0 : 100);
+  box.innerHTML = `<div class="crowd-txt"><p class="eyebrow">Folkmätaren · i dag</p>
+      <h3>${open ? `Just nu: <em class="${cls}">${word.toLowerCase()}</em>` : (h < o ? `Öppnar kl ${hh(o)}` : "Stängt för i dag")}</h3>
+      <p>${best ? `Lugnast ${left.length && open ? "resten av dagen" : "i dag"}: <b>kl ${hh(best[0])}–${hh(best[0] + 1)}</b>` : ""}</p></div>
+    <div class="crowd-strip" role="img" aria-label="Hur mycket folk det brukar vara i dag, kl ${hh(o)} till ${hh(cl)}">
+      <div class="cs-bars">${bars.map(([x, p]) => `<i class="${popWord(p)[0]}${open && x + 1 <= h ? " past" : ""}" style="--v:${Math.max(10, p)}%" title="kl ${hh(x)}: ${popWord(p)[1].toLowerCase()}"></i>`).join("")}</div>
+      ${open ? `<span class="cs-now" style="left:${pos}%"><b>Nu</b></span>` : ""}
+      <div class="cs-hours">${bars.map(([x]) => `<span>${hh(x)}</span>`).join("")}<span>${hh(cl)}</span></div>
+      <div class="cs-legend"><span class="lugnt">Lugnt</span><span class="mellan">Lagom</span><span class="fullt">Mycket folk</span><em>Enligt Googles besöksstatistik</em></div>
+    </div>`;
   const st = $("#status"); if (open && st) { st.querySelector(".cw")?.remove(); st.querySelector("span").insertAdjacentHTML("beforeend", `<span class="cw"> · ${word.toLowerCase()} just nu</span>`); }
 }
 renderCrowd(); setInterval(renderCrowd, 60000);
@@ -1200,6 +1235,6 @@ if ("IntersectionObserver" in window && !reduce) {
   <ul class="dl-list" id="dl-list"></ul>
   <div class="dl-foot"><small id="dl-note">Illustration av rättens lager. Riktiga rätten kan se lite annorlunda ut.</small><button class="btn btn-line" id="dl-toggle" type="button" aria-pressed="true">Stapla ihop</button></div>
 </dialog>
-<script src="layers.js?v=6" defer></script>
+<script src="layers.js?v=7" defer></script>
 </body>
 </html>

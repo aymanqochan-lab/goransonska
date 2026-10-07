@@ -581,6 +581,7 @@ function playPhotoLayers(d, file) {
 function playLayers(d) {
   const file = EXPLODED[d.cat + ":" + d.name] || (d.cat === "barn" ? null : EXPLODED[d.name]);
   if (file) return playPhotoLayers(d, file);
+  return; // drawn layers are retired: only real photos are shown
   inner.className = "dl-inner"; inner.style.cssText = ""; $("#dl-chips").innerHTML = "";
   $("#dl-note").textContent = "Illustration av rättens lager. Riktiga rätten kan se lite annorlunda ut.";
   setExploded(false); inner.classList.add("drop");
@@ -588,26 +589,32 @@ function playLayers(d) {
   requestAnimationFrame(() => { inner.classList.remove("drop"); setTimeout(() => open && cur === d && setExploded(true), reduce ? 0 : 650); });
 }
 function setMode(m) {
-  dlg.classList.toggle("mode-photo", m === "photo"); dlg.classList.toggle("mode-layers", m === "layers");
+  dlg.classList.toggle("mode-photo", m === "photo"); dlg.classList.toggle("mode-layers", m === "layers"); dlg.classList.toggle("mode-info", m === "info");
   $("#dl-m-photo").setAttribute("aria-selected", String(m === "photo")); $("#dl-m-layers").setAttribute("aria-selected", String(m === "layers"));
   if (m === "layers") playLayers(cur);
 }
+const layerFile = (d) => EXPLODED[d.cat + ":" + d.name] || (d.cat === "barn" ? null : EXPLODED[d.name]);
 function show(d) {
   cur = d;
   $("#dl-name").textContent = d.name;
   $("#dl-price").textContent = d.price;
   $("#dl-desc").textContent = d.desc || "";
-  const ph = $("#dl-photo"), im = $("#dl-img");
+  const ph = $("#dl-photo"), im = $("#dl-img"), hasLayers = !!layerFile(d);
   ph.classList.remove("ready", "burst"); ph.classList.toggle("crop", d.crop === "1");
-  dlg.classList.toggle("nophoto", !d.photo);
+  dlg.classList.toggle("nophoto", !d.photo); dlg.classList.toggle("nolayers", !hasLayers);
+  dlg.classList.remove("mode-info");
   if (!dlg.open) dlg.showModal();
   open = true;
+  // ingredient names under the photo when there is no layer picture
+  const keys = recipeFor(d).filter((k) => ING[k]);
+  $("#dl-chips").innerHTML = [...new Set([...keys].reverse().map((k) => ING[k].l))].map((l) => `<span>${l}</span>`).join("");
   if (d.photo) {
     im.onload = () => ph.classList.add("ready");
-    im.onerror = () => { dlg.classList.add("nophoto"); setMode("layers"); };
+    im.onerror = () => { dlg.classList.add("nophoto"); hasLayers ? setMode("layers") : setMode("info"); };
     im.alt = d.name; im.src = d.photo; if (im.complete && im.naturalWidth) ph.classList.add("ready");
     setMode("photo");
-  } else setMode("layers");
+  } else if (hasLayers) setMode("layers");
+  else setMode("info");
 }
 function readItem(el) {
   return { cat: el.dataset.cat, grp: el.dataset.grp || "", name: el.dataset.name, desc: el.dataset.desc || "", price: el.dataset.price || "", photo: el.dataset.photo || "", crop: el.dataset.crop || "0" };
