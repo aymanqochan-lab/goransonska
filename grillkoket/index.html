@@ -321,6 +321,57 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .dl-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (max-width:560px){.dl-head{padding:16px 14px 0}.dl-foot{padding:6px 14px 16px}.dl-stage{margin-inline:4px}}
 @media (prefers-reduced-motion:reduce){.dl-layer,.dl-layer canvas,.dl-label{transition:none!important;animation:none!important}}
+
+/* ---- Årets Företagare 2026 ---- */
+:root{--gold:#d6b46a}
+.prize-pill{display:inline-flex;align-items:center;gap:10px;margin-top:4px;padding:8px 14px 8px 10px;border:1px solid rgba(214,180,106,.5);background:rgba(7,18,12,.55);color:var(--gold);font:600 11.5px/1.2 var(--f-body);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .3s,background .3s}
+.prize-pill:hover{border-color:var(--gold);background:rgba(214,180,106,.12)}
+.prize-pill svg{width:22px;height:14px}
+.prize{position:relative;overflow:hidden;padding-block:110px;background:radial-gradient(80% 70% at 30% 100%,#22402f 0%,var(--pine) 65%);border-bottom:1px solid var(--rule);isolation:isolate}
+.prize .rays{position:absolute;left:72%;bottom:-40px;width:min(1300px,180vw);transform:translateX(-50%);z-index:-1;opacity:.28;pointer-events:none}
+.prize .rays line{stroke:var(--gold);stroke-width:1.2;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;transition:stroke-dashoffset 2.4s cubic-bezier(.3,.6,.2,1)}
+.prize.in .rays line{stroke-dashoffset:0}
+.prize-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:64px;align-items:center}
+.prize-grid>*{min-width:0}
+.prize .eyebrow{color:var(--gold)}
+.prize h2{font-family:var(--f-mark);font-size:clamp(40px,6.4vw,84px);letter-spacing:.04em;line-height:.95;margin-top:16px;background:linear-gradient(100deg,#f3dfaa 0%,var(--gold) 40%,#9c7a36 60%,#f3dfaa 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.prize .year{display:flex;align-items:center;gap:14px;margin-top:14px;font:400 15px/1 var(--f-mark);letter-spacing:.42em;color:var(--cream)}
+.prize .year::before{content:"";width:48px;height:1px;background:var(--gold)}
+.prize p.lead{margin-top:26px;color:var(--sage);font-size:18px;max-width:34em}
+.prize p.lead b{color:var(--cream);font-weight:600}
+.prize blockquote{margin:28px 0 0;padding-left:20px;border-left:1px solid var(--gold);font:400 22px/1.4 var(--f-head);color:var(--cream);max-width:24em}
+.prize blockquote cite{display:block;margin-top:10px;font:500 13px var(--f-body);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.prize-photos{position:relative;aspect-ratio:1/1.02;max-width:560px;width:100%;justify-self:center}
+.prize-photos figure{position:absolute;margin:0;border:1px solid rgba(214,180,106,.35);box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden;background:#000;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.prize-photos img{display:block;width:100%;height:100%;object-fit:cover}
+.prize-photos .p1{left:0;top:0;width:68%;aspect-ratio:1;transform:rotate(-4deg) translateY(30px)}
+.prize-photos .p2{right:0;bottom:0;width:58%;aspect-ratio:1;transform:rotate(5deg) translateY(-20px)}
+.prize.in .prize-photos .p1{transform:rotate(-3deg)}
+.prize.in .prize-photos .p2{transform:rotate(3deg)}
+.prize-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.75));font:500 12px var(--f-body);letter-spacing:.08em;color:var(--cream)}
+.prize-photos .seal{position:absolute;left:52%;top:50%;transform:translate(-50%,-50%) rotate(-8deg);width:118px;height:118px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 35% 30%,#f3dfaa,var(--gold) 45%,#8e6a2a);color:#2a1d08;font:400 13px/1.15 var(--f-mark);letter-spacing:.08em;box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 0 0 4px rgba(255,240,200,.35),inset 0 0 0 6px rgba(80,55,15,.35);z-index:3}
+.prize-photos .seal b{display:block;font-size:26px;letter-spacing:.02em}
+@media (max-width:880px){.prize{padding-block:80px}.prize-grid{grid-template-columns:1fr;gap:48px}}
+@media (prefers-reduced-motion:reduce){.prize h2{animation:none}.prize .rays line{stroke-dashoffset:0;transition:none}}
+
+/* ---- Presentkort + Veckans lunch ---- */
+.extras{padding-block:90px;border-top:1px solid var(--rule)}
+.extras-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}
+.extras-grid>*{min-width:0}
+.gift{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#0b1a12;border:1px solid var(--rule);overflow:hidden}
+.gift img{width:100%;height:100%;object-fit:cover;min-height:320px;display:block}
+.gift-txt{padding:34px 30px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.gift-txt h3{font-size:clamp(30px,3.4vw,42px)}
+.gift-txt p{color:var(--sage)}
+.lunch{position:relative;padding:34px 30px;border:1px solid var(--rule);background:linear-gradient(160deg,var(--moss),var(--pine));display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.lunch h3{font-size:clamp(30px,3.4vw,42px)}
+.lunch p{color:var(--sage)}
+.lunch .ig{display:inline-flex;align-items:center;gap:10px;color:var(--cream);font-weight:600;text-decoration:none;border-bottom:1px solid var(--ember);padding-bottom:4px;align-self:flex-start}
+.lunch .ig svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+.lunch .week{font:400 64px/1 var(--f-mark);color:var(--ember);letter-spacing:.04em}
+@media (max-width:880px){.extras-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.gift{grid-template-columns:1fr}.gift img{min-height:240px;max-height:300px}}
 </style>
 </head>
 <body>
@@ -350,6 +401,7 @@ mark{background:rgba(201,122,69,.28);color:inherit}
       <p class="hero-copy">Plankor, grill, pizza och hamburgare på Molinders väg i Lindesberg. Äta här eller hämta, alla dagar i veckan.</p>
       <div class="hero-cta"><a class="btn btn-solid" href="#meny">Se menyn</a><a class="btn btn-line" href="#boka">Boka bord</a></div>
       <p class="status" id="status"><i></i><span>Öppet alla dagar</span></p>
+      <a class="prize-pill" href="#pris"><svg viewBox="0 0 44 26" aria-hidden="true"><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="22" y1="24" x2="22" y2="3"/><line x1="22" y1="24" x2="10" y2="6"/><line x1="22" y1="24" x2="34" y2="6"/><line x1="22" y1="24" x2="3" y2="14"/><line x1="22" y1="24" x2="41" y2="14"/></g></svg>Årets Företagare · Lindesberg 2026</a>
     </div>
     <button class="skip" id="skip" type="button">Hoppa över</button>
   </section>
@@ -362,6 +414,24 @@ mark{background:rgba(201,122,69,.28);color:inherit}
       <div><b>7 dagar</b><span>öppet i veckan</span></div>
     </div>
   </div>
+
+  <section class="prize" id="pris" aria-labelledby="pris-h">
+    <svg class="rays" viewBox="0 0 1400 700" aria-hidden="true"><line x1="700" y1="700" x2="74" y2="567" style="transition-delay:70ms"/><line x1="700" y1="700" x2="115" y2="440" style="transition-delay:140ms"/><line x1="700" y1="700" x2="182" y2="324" style="transition-delay:210ms"/><line x1="700" y1="700" x2="272" y2="224" style="transition-delay:280ms"/><line x1="700" y1="700" x2="380" y2="146" style="transition-delay:350ms"/><line x1="700" y1="700" x2="502" y2="91" style="transition-delay:420ms"/><line x1="700" y1="700" x2="633" y2="64" style="transition-delay:490ms"/><line x1="700" y1="700" x2="767" y2="64" style="transition-delay:560ms"/><line x1="700" y1="700" x2="898" y2="91" style="transition-delay:630ms"/><line x1="700" y1="700" x2="1020" y2="146" style="transition-delay:700ms"/><line x1="700" y1="700" x2="1128" y2="224" style="transition-delay:770ms"/><line x1="700" y1="700" x2="1218" y2="324" style="transition-delay:840ms"/><line x1="700" y1="700" x2="1285" y2="440" style="transition-delay:910ms"/><line x1="700" y1="700" x2="1326" y2="567" style="transition-delay:980ms"/></svg>
+    <div class="wrap prize-grid">
+      <div>
+        <p class="eyebrow">Utmärkelse från Företagarna</p>
+        <h2 id="pris-h">Årets<br>Företagare</h2>
+        <p class="year">LINDESBERG 2026</p>
+        <p class="lead">I maj 2026 fick <b>Walat Dino och Grillköket</b> priset Årets Företagare i Lindesberg. Priset delades ut på scen inför stadens företagare och vi är stolta och tacksamma.</p>
+        <blockquote>”Det här är inget man gör ensam.”<cite>Walat Dino, Grillköket</cite></blockquote>
+      </div>
+      <div class="prize-photos">
+        <figure class="p1"><img src="img/award.webp" alt="Diplom och pris: Årets Företagare Lindesberg 2026, Walat Abdulrahman, Dino L AB" loading="lazy"><figcaption>Diplomet och priset i restaurangen</figcaption></figure>
+        <figure class="p2"><img src="img/gala.webp" alt="Grillköket utses till Årets företagare på scen" loading="lazy"><figcaption>Prisutdelningen på scen</figcaption></figure>
+        <div class="seal" aria-hidden="true"><span>Årets<br>Företagare<b>2026</b></span></div>
+      </div>
+    </div>
+  </section>
 
   <section class="fav wrap" id="favoriter" aria-labelledby="fav-h">
     <div class="fav-head rv">
@@ -450,6 +520,24 @@ mark{background:rgba(201,122,69,.28);color:inherit}
           </div>
         </div>
       </form>
+    </div>
+  </section>
+
+  <section class="extras" aria-label="Presentkort och veckans lunch">
+    <div class="wrap extras-grid">
+      <div class="gift rv">
+        <img src="img/presentkort.webp" alt="Grillkökets svarta presentkort med guldtext" loading="lazy">
+        <div class="gift-txt">
+          <p class="eyebrow">Presentkort</p>
+          <h3>Ge bort en kväll hos oss</h3>
+          <p>Ett presentkort från Grillköket passar till födelsedagar, studenten och farsdag. Köp det hos oss i restaurangen.</p>
+        </div>
+      </div>
+      <div class="lunch rv">
+        <div><p class="eyebrow">Veckans lunch</p><h3 style="margin-top:12px">Ny lunch varje vecka</h3></div>
+        <p>Husmanskost som korv med stekt potatis, köttfärslimpa och stekt fläsk, plus en vegetarisk rätt. Veckans meny läggs upp på Instagram.</p>
+        <a class="ig" href="https://www.instagram.com/grillkoket.lindesberg/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>@grillkoket.lindesberg</a>
+      </div>
     </div>
   </section>
 
@@ -826,8 +914,8 @@ $("#credits").innerHTML = "Matfoton märkta ”Från vårt kök” är Grillkök
 /* reveals */
 if ("IntersectionObserver" in window && !reduce) {
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.06 });
-  document.querySelectorAll(".rv").forEach((el) => io.observe(el));
-} else document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
+  document.querySelectorAll(".rv,.prize").forEach((el) => io.observe(el));
+} else document.querySelectorAll(".rv,.prize").forEach((el) => el.classList.add("in"));
 })();
 </script>
 
