@@ -57,7 +57,7 @@ p{margin:0}
 .mark .ring circle{fill:none;stroke:var(--ink)}
 .mark .ring text{fill:var(--ink);font-family:var(--f-mark)}
 .mark.seal .word{border-color:transparent;transform:scale(1.15)}
-.mark.seal .word span.x{max-width:0;opacity:0}
+.mark.seal .word span.x{max-width:0;opacity:0;padding:0}
 .mark.seal .sub{opacity:0}
 .mark.seal .ring{opacity:1;transform:translate(-50%,-56%) scale(1) rotate(0)}
 .mark.still *{transition:none!important}
@@ -88,7 +88,7 @@ p{margin:0}
 .shot{position:absolute;inset:-4%;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease;will-change:transform,opacity}
 .shot.on{opacity:1}
 .hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:
-  radial-gradient(120% 90% at 50% 45%,rgba(7,18,12,0) 30%,rgba(7,18,12,.75) 100%),
+  radial-gradient(60% 50% at 50% 48%,rgba(7,18,12,.62) 0%,rgba(7,18,12,.3) 70%,rgba(7,18,12,0) 100%),radial-gradient(120% 90% at 50% 45%,rgba(7,18,12,0) 30%,rgba(7,18,12,.75) 100%),
   linear-gradient(180deg,rgba(7,18,12,.55) 0%,rgba(7,18,12,.15) 35%,rgba(7,18,12,.35) 65%,var(--pine) 100%)}
 .bars::before,.bars::after{content:"";position:absolute;left:0;right:0;height:9%;background:#000;z-index:3;transition:transform 1.4s cubic-bezier(.7,0,.2,1)}
 .bars::before{top:0}.bars::after{bottom:0}
@@ -107,6 +107,7 @@ p{margin:0}
 .hero.title .mark.seal .word{border-color:transparent;transition-delay:0s}
 .hero.title .mark.seal .sub{opacity:0;transition-delay:0s}
 .hero-copy{max-width:34em;color:var(--cream);opacity:0;transform:translateY(10px);transition:opacity 1s ease,transform 1s ease;font-size:18px;text-shadow:0 1px 18px rgba(0,0,0,.6)}
+.hero .status{opacity:0;transition:opacity 1s ease .3s}.hero.done .status{opacity:1}
 .hero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 1s ease .15s,transform 1s ease .15s}
 .hero.done .hero-copy,.hero.done .hero-cta{opacity:1;transform:none}
 .status{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--sage)}
@@ -225,7 +226,7 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .plate{width:8%;aspect-ratio:1;margin:-4% 0 0 -4%;border-radius:50%;background:radial-gradient(circle,#f3ecdc 45%,#d9cfba 47%,#f3ecdc 60%);z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .seat.new,.plate.new{opacity:0}
 .more{position:absolute;right:0;bottom:4%;font-size:13px;color:var(--sage)}
-.ticket{background:var(--pine);border:1px solid var(--rule);border-radius:2px;padding:6px 26px 26px}
+.ticket{min-width:0;background:var(--pine);border:1px solid var(--rule);border-radius:2px;padding:6px 26px 26px}
 .row{padding:20px 0;border-bottom:1px solid var(--rule)}
 .row:last-of-type{border-bottom:0}
 .row h4{margin:0 0 12px;font:600 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ember)}
@@ -248,8 +249,8 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .slot{padding:0;font-weight:600;font-variant-numeric:tabular-nums}
 .slot[aria-pressed="true"]{background:var(--ember);color:#1a1009;border-color:var(--ember)}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.fields label{display:grid;gap:6px;font-size:13px;color:var(--sage)}
-.fields input,.fields textarea{min-height:46px;border-radius:2px;border:1px solid var(--rule);background:var(--moss);color:var(--cream);padding:10px 12px;font:16px var(--f-body);resize:vertical}
+.fields label{display:grid;gap:6px;font-size:13px;color:var(--sage);min-width:0}
+.fields input,.fields textarea{width:100%;min-width:0;min-height:46px;border-radius:2px;border:1px solid var(--rule);background:var(--moss);color:var(--cream);padding:10px 12px;font:16px var(--f-body);resize:vertical}
 .fields .wide{grid-column:1/-1}
 .fields input:focus,.fields textarea:focus{outline:none;border-color:var(--ember)}
 .err{color:#e9a07c;font-size:14px;min-height:1.4em;margin:12px 0 4px}
@@ -475,7 +476,7 @@ const img = (src, w) => src.startsWith("own:") ? own(src.slice(4), w) : uns(src.
 
 /* HERO: kamerans "tagningar" i ordning. Ändra bild, zoom (s) och panorering (x,y i %). */
 const SHOTS = [
-  { src: "uns:fire",       from: [1.05, 0, 2],  to: [1.28, -2, -3], ms: 3400 },
+  { src: "uns:fire",       from: [1.05, 0, 2],  to: [1.28, -2, -3], ms: 3000 },
   { src: "own:plankRoom",  from: [1.02, 0, 0],  to: [1.22, 0, 4],   ms: 5200 },
   { src: "own:plankDark",  from: [1.20, 3, 0],  to: [1.04, -2, 0],  ms: 6000 },
   { src: "own:burgers",    from: [1.04, 0, -2], to: [1.20, 2, 2],   ms: 6000 },
@@ -533,11 +534,11 @@ function finish() {
 async function play() {
   await loaded(shotEls[0]); shotEls.slice(1).forEach(loaded);
   if (reduce) { move(1); finish(); return; }
-  move(0); await wait(SHOTS[0].ms - 600);
+  move(0); await wait(SHOTS[0].ms - 1000);
   await loaded(shotEls[1]); move(1); hero.classList.add("lift");
-  await wait(1500); if (!finished) hero.classList.add("title");
-  await wait(2200); if (!finished) mark.classList.add("seal");
-  await wait(1900); if (!finished) mark.classList.remove("seal");
+  await wait(900); if (!finished) hero.classList.add("title");
+  await wait(1900); if (!finished) mark.classList.add("seal");
+  await wait(1700); if (!finished) mark.classList.remove("seal");
   await wait(700); finish();
   cur = 1;
   const loop = async () => { await wait(SHOTS[cur].ms); cur = cur + 1 < SHOTS.length ? cur + 1 : 1; await loaded(shotEls[cur]); move(cur); loop(); };
