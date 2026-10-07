@@ -98,7 +98,7 @@ p{margin:0}
 .studio canvas:active{cursor:grabbing}
 .labels{position:absolute;inset:0;pointer-events:none}
 .labels svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.labels line{stroke:rgba(236,229,211,.5);stroke-width:1}
+.labels polyline{stroke:rgba(236,229,211,.55);stroke-width:1}
 .labels circle{fill:var(--brass)}
 .lab{position:absolute;transform:translateY(-50%);font:500 13px/1.25 var(--sans);color:var(--linen);white-space:nowrap;padding:5px 10px;border-radius:99px;background:rgba(12,31,22,.82);border:1px solid var(--rule);opacity:0}
 .lab.l{transform:translate(-100%,-50%)}
@@ -757,7 +757,7 @@ function buildPizza(item) {
     fold.scale.y = 0.28; fold.position.y = 0.12; if (/halvinbakad/.test(desc)) fold.scale.set(0.5, 0.28, 1);
     const g = new T.Group(); g.add(fold); layer(g, /halvinbakad/.test(desc) ? "Halvinbakad deg" : "Inbakad deg", lift + 0.3);
   }
-  return { root, parts, center: new T.Vector3(0, 0.25, 0), dist: 7.4, expLift: lift * 0.5, tilt: 0.55 };
+  return { root, parts, center: new T.Vector3(0, 0.25, 0), dist: 8.6, expLift: lift * 0.5, tilt: 0.62, zoomOut: 0.08 * parts.length };
 }
 
 /* ---- plank / plate ---- */
@@ -821,7 +821,7 @@ function buildPlank(name) {
   // sauces
   const sc = { "rödvinssås": 0x4a1810, "bearnaisesås": 0xf0c95a, "räkdillsås": 0xf2c7b0 };
   cfg.sauces.forEach((s, i) => { const b = bowl(sc[s] || 0xeeeeee); b.position.set(1.55 - i * 0.9, top, cfg.side === "mash" ? 0.05 : -0.95); const g = new T.Group(); g.add(b); add(g, s[0].toUpperCase() + s.slice(1), 0.95 + i * 0.25, new T.Vector3(1.55 - i * 0.9, top + 0.3, 0)); });
-  return { root, parts, center: new T.Vector3(0, 0.3, 0), dist: 7.6, expLift: 0.9, tilt: 0.6 };
+  return { root, parts, center: new T.Vector3(0.3, 0.3, 0), dist: 10.5, expLift: 0.9, tilt: 0.72, zoomOut: 0.18 };
 }
 
 /* --- viewer --- */
@@ -849,7 +849,7 @@ function Viewer(host) {
   new ResizeObserver(size).observe(stage);
   function set(d) {
     if (dish) scene.remove(dish.root);
-    dish = d; scene.add(d.root); t = exploded ? 1 : 0;
+    dish = d; scene.add(d.root); t = 0;
     const span = d.dist; shadow.scale.setScalar(span * 0.85); shadow.position.y = -0.02;
     labelsEl.querySelectorAll(".lab").forEach((n) => n.remove()); labelEls = [];
     d.parts.forEach((p) => { if (!p.label) { labelEls.push(null); return; } const n = document.createElement("div"); n.className = "lab"; n.textContent = p.label; labelsEl.appendChild(n); labelEls.push(n); });
@@ -872,14 +872,23 @@ function Viewer(host) {
     renderer.render(scene, cam);
     // labels: anchor -> side column
     const w = stage.clientWidth, h = stage.clientHeight; let lines = "";
+    const op = Math.max(0, Math.min(1, (k - 0.7) / 0.3));
+    const pts = [];
     dish.parts.forEach((p, i) => {
       const el = labelEls[i]; if (!el) return;
       v.copy(p.anchor); p.obj.localToWorld(v); v.project(cam);
-      const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
-      const right = i % 2 === 0; const lx = right ? w * 0.76 : w * 0.24;
-      el.style.opacity = Math.max(0, Math.min(1, (k - 0.7) / 0.3)).toFixed(2); el.classList.toggle("l", !right);
-      el.style.left = `${lx + (right ? 6 : -6)}px`; el.style.top = `${y}px`;
-      if (k > 0.85) lines += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${lx.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/>`;
+      pts.push({ el, x: (v.x * 0.5 + 0.5) * w, y: (-v.y * 0.5 + 0.5) * h, right: pts.length % 2 === 0 });
+    });
+    [true, false].forEach((side) => {
+      const col = pts.filter((p) => p.right === side).sort((a, b) => a.y - b.y);
+      let last = 56; col.forEach((p) => { p.ly = Math.max(p.y, last + 30); last = p.ly; });
+      let over = last - (h - 70); if (over > 0) col.forEach((p) => (p.ly -= over));
+    });
+    pts.forEach((p) => {
+      const lx = p.right ? w * 0.78 : w * 0.22;
+      p.el.style.opacity = op.toFixed(2); p.el.classList.toggle("l", !p.right);
+      p.el.style.left = `${lx + (p.right ? 4 : -4)}px`; p.el.style.top = `${p.ly}px`;
+      if (op > 0.1) lines += `<polyline fill="none" stroke-opacity="${op}" points="${p.x.toFixed(1)},${p.y.toFixed(1)} ${(p.x + (lx - p.x) * 0.6).toFixed(1)},${p.ly.toFixed(1)} ${lx.toFixed(1)},${p.ly.toFixed(1)}"/><circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill-opacity="${op}"/>`;
     });
     linesSvg.innerHTML = lines;
     requestAnimationFrame(frame);
@@ -912,6 +921,7 @@ if (has3D) {
     hero = Viewer(studio);
     const pick = $("#pick");
     const show = (d, b) => {
+      const xb0 = $("#explode"); xb0.setAttribute("aria-pressed", "false"); xb0.textContent = "Visa ingredienser"; hero.setExploded(false);
       pick.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       $("#s-name").textContent = d.name; $("#s-price").textContent = d.price;
       hero.set(d.pizza ? buildPizza(pizzaByNo(d.pizza)) : /planka/i.test(d.name) ? buildPlank(d.name) : buildBurger(d.name));
