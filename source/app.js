@@ -53,12 +53,28 @@ const REVIEWS = [
 {
   const q = $("#quote");
   let i = 0;
+  const stars = $("#stars");
+  let seen = false;
+  const replayStars = () => {
+    if (!seen) return;
+    stars.classList.remove("go");
+    void stars.offsetWidth;
+    stars.classList.add("go");
+  };
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((es, o) => {
+      if (es.some((e) => e.isIntersecting)) { seen = true; replayStars(); o.disconnect(); }
+    }, { threshold: 0.4 }).observe(stars);
+  } else { seen = true; stars.classList.add("go"); }
   const show = () => {
     const [t, a] = REVIEWS[i % REVIEWS.length];
     q.style.opacity = 0;
+    q.style.transform = "translateY(10px)";
     setTimeout(() => {
       q.innerHTML = `“${esc(t)}”<cite>${esc(a)}</cite>`;
       q.style.opacity = 1;
+      q.style.transform = "none";
+      if (i > 1) replayStars();
     }, reduceMotion ? 0 : 450);
     i++;
   };
@@ -132,6 +148,22 @@ function renderBordet(menu) {
   buildRing(start);
 }
 
+/* real photos from the restaurant, used behind dishes that have no photo of their own yet */
+const AMB = [
+  [/sallad/i, "dbb097_c68587be565043c2ba90908005864db0~mv2.webp", true],
+  [/förrätt|snacks|dipp/i, "dbb097_bcc069648d0f4c22955aed902b26c108~mv2.jpg"],
+  [/varm/i, "dbb097_e53e985a548a4bd2aa88e50caa6056aa~mv2.jpg"],
+  [/cocktail|vin|öl|cider|alkohol/i, "dbb097_526f2e6eaca4483b9d5a565873bf7efa~mv2.jpg"],
+  [/./, "dbb097_6a6c052538eb473d822f370b7b468570~mv2.jpg"],
+];
+function photoFor(it, section) {
+  if (it.image?.url) return { url: it.image.url, own: true };
+  for (const [re, id, byName] of AMB) {
+    if (byName ? re.test(it.name) : re.test(section?.name || "")) return { url: id, own: !!byName };
+  }
+  return null;
+}
+
 function cardSize() {
   const w = innerWidth < 640 ? 190 : 240;
   return { w, h: Math.round(w * 1.32) };
@@ -151,9 +183,12 @@ function buildRing(section) {
     const c = el("button", "card");
     c.type = "button";
     c.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px)`;
-    const media = it.image?.url
-      ? `<img src="${img(it.image.url, w * 2, Math.round(h * 1.4))}" alt="${esc(it.image.altText || it.name)}" loading="lazy" draggable="false">`
-      : `<span class="mono" aria-hidden="true">${esc(it.name)}</span>`;
+    const ph = photoFor(it, section);
+    const media = ph?.own
+      ? `<img src="${img(ph.url, w * 2, Math.round(h * 1.4))}" alt="${esc(it.image?.altText || it.name)}" loading="lazy" draggable="false">`
+      : ph
+        ? `<img class="amb" src="${img(ph.url, w, Math.round(h * 0.75))}" alt="" loading="lazy" draggable="false"><span class="amb-name" aria-hidden="true">${esc(it.name)}</span>`
+        : `<span class="mono" aria-hidden="true">${esc(it.name)}</span>`;
     c.innerHTML = `<span class="cm">${media}</span><span class="cb"><span class="cn">${esc(it.name)}</span><span class="cp">${priceOf(it)}</span></span>`;
     c.setAttribute("aria-label", `${it.name}, ${priceOf(it)}`);
     c.addEventListener("click", (e) => {
@@ -234,10 +269,11 @@ addEventListener("resize", () => {
 /* dish dialog */
 const dlg = $("#dish");
 function openDish(it, section) {
-  $("#dish-media").innerHTML = it.image?.url
-    ? `<img src="${img(it.image.url, 960, 720)}" alt="${esc(it.image.altText || it.name)}">`
+  const ph = photoFor(it, section);
+  $("#dish-media").innerHTML = ph?.own
+    ? `<img src="${img(ph.url, 960, 720)}" alt="${esc(it.image?.altText || it.name)}">`
     : "";
-  $("#dish-media").hidden = !it.image?.url;
+  $("#dish-media").hidden = !ph?.own;
   $("#dish-sec").textContent = section?.name || "";
   $("#dish-name").textContent = it.name;
   $("#dish-desc").textContent = it.description || "";
@@ -311,12 +347,68 @@ const S = { party: 2, date: null, slot: null, min: 1, max: 20 };
 const partyOut = $("#party");
 function setParty(n) {
   S.party = Math.min(S.max, Math.max(S.min, n));
-  partyOut.textContent = S.party;
+  if (partyOut.textContent !== String(S.party)) {
+    partyOut.textContent = S.party;
+    partyOut.classList.remove("bump"); void partyOut.offsetWidth; partyOut.classList.add("bump");
+  }
+  drawTable(S.party);
   $("#party-l").textContent = S.party === 1 ? "gäst" : "gäster";
   $("#minus").disabled = S.party <= S.min;
   $("#plus").disabled = S.party >= S.max;
   if (S.date) loadSlots();
 }
+/* the little table: one chair pops up per guest */
+const SVGNS = "http://www.w3.org/2000/svg";
+const tv = $("#tableviz");
+const svgEl = (tag, attrs) => { const n = document.createElementNS(SVGNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+let tvSeats = [], tvTable, tvCloth, tvGlow;
+function initTable() {
+  tv.append(svgEl("defs", {})).innerHTML = `<radialGradient id="tvglow"><stop offset="0" stop-color="#f2c76b" stop-opacity=".45"/><stop offset="1" stop-color="#f2c76b" stop-opacity="0"/></radialGradient>`;
+  tvTable = tv.appendChild(svgEl("circle", { class: "tv-table", cx: 0, cy: 0, r: 40 }));
+  tvCloth = tv.appendChild(svgEl("circle", { class: "tv-cloth", cx: 0, cy: 0, r: 32 }));
+  tvGlow = tv.appendChild(svgEl("circle", { class: "tv-glow", cx: 0, cy: -8, r: 22 }));
+  tv.append(svgEl("rect", { class: "tv-candle", x: -2.5, y: -9, width: 5, height: 12, rx: 1.5 }));
+  tv.append(svgEl("path", { class: "tv-flame", d: "M0 -17 C3 -13 2.5 -10 0 -9.5 C-2.5 -10 -3 -13 0 -17Z" }));
+}
+function tableRadius(n) { return n <= 2 ? 30 : n <= 4 ? 36 : n <= 6 ? 44 : n <= 8 ? 52 : n <= 12 ? 64 : n <= 16 ? 78 : 90; }
+function drawTable(n) {
+  if (!tv) return;
+  if (!tvTable) initTable();
+  const R = tableRadius(n);
+  tvTable.setAttribute("r", R); tvTable.style.r = `${R}px`;
+  tvCloth.setAttribute("r", R - 8); tvCloth.style.r = `${R - 8}px`;
+  const sc = Math.min(1, 120 / (R + 34));
+  tv.style.transform = `scale(${sc})`;
+  tv.style.transition = "transform .5s cubic-bezier(.3,1.3,.5,1)";
+  while (tvSeats.length > n) {
+    const g = tvSeats.pop();
+    g.classList.add("bye");
+    setTimeout(() => g.remove(), 260);
+  }
+  while (tvSeats.length < n) {
+    const g = svgEl("g", { class: "tv-seat" });
+    const inner = g.appendChild(svgEl("g", { class: "inner" }));
+    inner.append(
+      svgEl("rect", { class: "tv-back", x: -10, y: -15, width: 20, height: 6, rx: 3 }),
+      svgEl("rect", { class: "tv-chair", x: -8.5, y: -9, width: 17, height: 15, rx: 5 }),
+      svgEl("circle", { class: "tv-plate", cx: 0, cy: 26, r: 6.5 }),
+      svgEl("circle", { class: "tv-plate-in", cx: 0, cy: 26, r: 4 })
+    );
+    const prev = tvSeats[tvSeats.length - 1];
+    g.style.transform = prev ? prev.style.transform : "rotate(0deg) translate(0px,-60px)";
+    tv.insertBefore(g, tvGlow);
+    tvSeats.push(g);
+    requestAnimationFrame(() => requestAnimationFrame(() => g.classList.add("on")));
+  }
+  const d = R + 16;
+  tvSeats.forEach((g, i) => {
+    const a = (360 / n) * i;
+    g.style.transform = `rotate(${a}deg) translate(0px,${-d}px)`;
+    // keep plates on the table edge whatever the size
+    g.querySelectorAll(".tv-plate,.tv-plate-in").forEach((c) => c.setAttribute("cy", 16 + Math.min(12, R * 0.22)));
+  });
+}
+
 $("#minus").addEventListener("click", () => setParty(S.party - 1));
 $("#plus").addEventListener("click", () => setParty(S.party + 1));
 
@@ -455,5 +547,45 @@ async function loadLocation() {
   }
 }
 
+/* ---------- motion: parallax, magnetic buttons, reveals, active nav ---------- */
+const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+if (!reduceMotion && finePointer) {
+  const hero = $(".hero"), ringW = $(".ring-wrap"), photo = $(".hero-photo");
+  hero.addEventListener("pointermove", (e) => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+    ringW.style.setProperty("--mx", `${x * -26}px`); ringW.style.setProperty("--my", `${y * -18}px`);
+    photo.style.setProperty("--px", `${x * 22}px`); photo.style.setProperty("--py", `${y * 16}px`);
+  });
+  hero.addEventListener("pointerleave", () => {
+    ["--mx", "--my"].forEach((k) => ringW.style.setProperty(k, "0px"));
+    ["--px", "--py"].forEach((k) => photo.style.setProperty(k, "0px"));
+  });
+  document.querySelectorAll(".btn, .spin, .round").forEach((b) => {
+    b.style.transition += ",translate .35s cubic-bezier(.2,.8,.3,1)";
+    b.addEventListener("pointermove", (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.translate = `${(e.clientX - r.left - r.width / 2) * 0.22}px ${(e.clientY - r.top - r.height / 2) * 0.3}px`;
+    });
+    b.addEventListener("pointerleave", () => (b.style.translate = "0 0"));
+  });
+}
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const targets = document.querySelectorAll(".lunch-intro, .lunch-list, .bordet-head, .kvallar h2, .kv-lede, .film figure, .quotes .wrap, .boka-intro, .ticket, .hitta-grid > *");
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  targets.forEach((t, i) => {
+    t.classList.add("rv");
+    if (t.matches(".film figure")) t.style.transitionDelay = `${(i % 6) * 0.08}s`;
+    io.observe(t);
+  });
+  const links = [...document.querySelectorAll(".nav a")];
+  const secs = links.map((a) => $(a.getAttribute("href"))).filter(Boolean);
+  const nio = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  secs.forEach((s) => nio.observe(s));
+}
+
+drawTable(S.party);
 loadMenu();
 loadLocation();
