@@ -1,0 +1,49 @@
+name: Upscale (fast, parallel)
+
+on:
+  push:
+    branches: [upscale3]
+
+permissions:
+  contents: write
+
+jobs:
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
+          pip install spandrel==0.4.0 pillow numpy
+          curl -sL -o x4v3.pth https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth
+      - name: Upscale
+        run: python tools/upscale/upscale3.py x4v3.pth ${{ matrix.shard }} 8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: out-${{ matrix.shard }}
+          path: out
+  commit:
+    needs: shard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - name: Commit to branch upscaled3
+        run: |
+          git config user.name "upscale-bot"
+          git config user.email "upscale-bot@users.noreply.github.com"
+          git checkout -b upscaled3
+          git add out
+          git commit -m "Upscaled images (Real-ESRGAN general x4v3)"
+          git push -f origin upscaled3
