@@ -507,7 +507,7 @@ mark{background:rgba(201,122,69,.28);color:inherit}
 .rev-dot{width:7px;height:7px;border-radius:99px;border:0;padding:0;background:rgba(236,227,207,.22);cursor:pointer;transition:width .4s ease,background .4s}
 .rev-dot[aria-current="true"]{width:26px;background:var(--gold)}
 .rev-track{display:grid;width:100%}
-.rev-card{grid-area:1/1;margin:0;display:grid;justify-items:center;gap:8px;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.rev-card{grid-area:1/1;margin:0;display:grid;justify-items:center;gap:8px;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
 .rev-card.on{opacity:1;transform:none;pointer-events:auto}
 .rev-card.out{opacity:0;transform:translateY(-10px)}
 .rev-card blockquote{margin:0;font:400 clamp(18px,2.3vw,25px)/1.35 var(--f-head);color:var(--cream);text-wrap:balance}
@@ -1234,7 +1234,7 @@ $("#credits").innerHTML = "Foton märkta ”Från vårt kök”, lokalen och ute
 /* omdömen: ett i taget, byts automatiskt */
 (() => {
   const sl = $("#revSlider"); if (!sl) return;
-  const cards = [...sl.querySelectorAll(".rev-card")], nav = $("#revNav"), DUR = 6000;
+  const cards = [...sl.querySelectorAll(".rev-card")], nav = $("#revNav"), DUR = 4200;
   sl.style.setProperty("--dur", DUR + "ms");
   const dots = cards.map((_, k) => { const b = document.createElement("button"); b.type = "button"; b.className = "rev-dot"; b.setAttribute("aria-label", `Omdöme ${k + 1} av ${cards.length}`); b.addEventListener("click", () => go(k, true)); nav.append(b); return b; });
   let i = 0, t = 0, paused = false;
