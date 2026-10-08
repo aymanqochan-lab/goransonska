@@ -1,0 +1,13 @@
+{
+  "name": "Grillköket Lindesberg",
+  "short_name": "Grillköket",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10241a",
+  "theme_color": "#10241a",
+  "icons": [
+    {"src": "img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
